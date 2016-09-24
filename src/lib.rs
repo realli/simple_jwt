@@ -5,7 +5,10 @@ extern crate serde;
 extern crate serde_json;
 extern crate rustc_serialize;
 
+mod errors;
+mod utils;
 mod header;
+mod claim;
 
 #[cfg(test)]
 mod tests {
@@ -14,35 +17,22 @@ mod tests {
     #[test]
     fn header_can_be_convert_from_and_to_base64() {
         let header = Header::default();
-        let b_string = header.to_base64_str();
-        let new_header = Header::from_base64_str(&b_string);
+        let b_string = header.to_base64_str().unwrap();
+        let new_header = Header::from_base64_str(&b_string).unwrap();
         assert_eq!(header, new_header);
+    }
+
+    #[test]
+    fn claim_can_be_convert_form_and_to_base64() {
+        let claim = Claim::default();
+        let b_string = claim.to_base64_str().unwrap();
+        println!("bstring is {}",b_string);
+        let new_claim = Claim::from_base64_str(&b_string).unwrap();
+        assert_eq!(claim, new_claim);
     }
 }
 
-
-use std::default::Default;
-use serde_json::value::{Map, Value};
-use serde::{Serialize, Deserialize};
-
+pub use self::utils::JWTStringConvertable;
 pub use self::header::{Header, Algorithm};
-
-
-#[derive(Debug, Serialize, Deserialize)]
-struct RegisteredClaim {
-    exp: Option<u32>,
-    nbf: Option<u32>,
-    iat: Option<u32>,
-    iss: Option<String>,
-    aud: Option<String>,
-    prn: Option<String>,
-    jti: Option<String>,
-    typ: Option<String>
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-struct Claim {
-    registered: RegisteredClaim,
-    payload: Map<String, Value>
-}
+pub use self::claim::{Claim};
 
