@@ -8,7 +8,9 @@ use std::error;
 pub enum JWTError {
     JsonError(Error),
     Base64Error(FromBase64Error),
-    BadJsonFormat,
+    UnsupportAlgorithm,
+    InvalidFormat,
+    InvalidSignature,
 }
 
 impl fmt::Display for JWTError {
@@ -16,7 +18,10 @@ impl fmt::Display for JWTError {
         match *self {
             JWTError::JsonError(ref err) => write!(f, "Json en/de error: {}", err),
             JWTError::Base64Error(ref err) => write!(f, "Base64 Decode error: {}", err),
-            JWTError::BadJsonFormat => write!(f, "Json is not a object"),
+            JWTError::InvalidFormat => write!(f, "Format is invalidate"),
+            JWTError::InvalidSignature => write!(f, "signature is invalid!"),
+            JWTError::UnsupportAlgorithm => write!(f, "algorithm is not support"),
+
         }
     }
 }
@@ -26,7 +31,9 @@ impl error::Error for JWTError {
         match *self {
             JWTError::JsonError(ref err) => err.description(),
             JWTError::Base64Error(ref err) => err.description(),
-            JWTError::BadJsonFormat => "Bad Json Format for Registered Fields",
+            JWTError::InvalidFormat => "Format is invalidate",
+            JWTError::InvalidSignature => "signature is invalid!",
+            JWTError::UnsupportAlgorithm => "algorithm is not support",
         }
     }
 
@@ -34,7 +41,7 @@ impl error::Error for JWTError {
         match *self{
             JWTError::JsonError(ref err) => Some(err),
             JWTError::Base64Error(ref err) => Some(err),
-            JWTError::BadJsonFormat => None
+            _ => None
         }
     }
 }

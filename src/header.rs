@@ -7,8 +7,8 @@ pub enum Algorithm {
 
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub struct Header {
-    alg: Algorithm,
-    typ: String
+    pub alg: Algorithm,
+    pub typ: String
 }
 
 impl Default for Header {
