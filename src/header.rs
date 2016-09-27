@@ -3,6 +3,8 @@ use std::default::Default;
 #[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
 pub enum Algorithm {
     HS256,
+    HS384,
+    HS512
 }
 
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
@@ -11,9 +13,9 @@ pub struct Header {
     pub typ: String
 }
 
-impl Default for Header {
-    fn default() -> Header {
-        Header {alg: Algorithm::HS256, typ: "JWT".to_string()}
+impl Default for Algorithm {
+    fn default() -> Algorithm {
+        Algorithm::HS256
     }
 }
 
