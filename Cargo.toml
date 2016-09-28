@@ -3,7 +3,7 @@ name = "simple_jwt"
 version = "0.1.0"
 authors = ["realli <lrlanswer@gmail.com>"]
 build = "build.rs"
-keywords = ["json", "jwt", "web token"]
+keywords = ["json", "jwt", "web", "token"]
 description = "json web token encode/decode"
 repository = "https://github.com/realli/simple_jwt"
 
