@@ -1,19 +1,19 @@
 #[allow(unused_attributes)]
 #[derive(Debug, Default, PartialEq, Serialize, Deserialize)]
-struct RegisteredClaim {
-    exp: Option<u64>,
-    nbf: Option<u64>,
-    iat: Option<u64>,
-    iss: Option<String>,
-    aud: Option<String>,
-    prn: Option<String>,
-    jti: Option<String>,
-    typ: Option<String>
+pub struct RegisteredClaim {
+    pub exp: Option<u64>,
+    pub nbf: Option<u64>,
+    pub iat: Option<u64>,
+    pub iss: Option<String>,
+    pub aud: Option<String>,
+    pub prn: Option<String>,
+    pub jti: Option<String>,
+    pub typ: Option<String>
 }
 
 #[allow(unused_attributes)]
 #[derive(Debug, Default, PartialEq)]
 pub struct Claim {
-    registered: RegisteredClaim,
+    pub registered: RegisteredClaim,
     pub payload: Map<String, Value>
 }

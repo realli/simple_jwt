@@ -1,6 +1,35 @@
 #![cfg_attr(feature = "serde_macros", feature(plugin, custom_derive))]
 #![cfg_attr(feature = "serde_macros", plugin(serde_macros))]
 
+//! # Introduction
+//!
+//! A very simple crate to deal with [json web token](http://jwt.io), 
+//! this lib use the `rust-openssl`, so you may want to check the
+//! [rust-openssl](https://github.com/sfackler/rust-openssl) to find the
+//! set-up of openssl runtime lib. 
+//!
+//! # Support Algirithm
+//!
+//! * HS256/384/512
+//! * RS256/384/512
+//! * to be added...
+//!
+//! # Example
+//!
+//! ```
+//! use simple_jwt::{encode, decode, Claim, Algorithm};
+//! let mut claim = Claim::default();
+//! claim.set_iss("some iss");
+//! claim.set_payload_field("stringhh", 12);
+//! let result = encode(&claim, "secret", Algorithm::HS256).unwrap();
+//! println!("hashed result is {}", result);
+//! let new_claim = decode(&result, "secret").unwrap();
+//! assert_eq!(claim, new_claim);
+//! ```
+//!
+//! The test in lib.rs contains more example
+//!
+
 extern crate serde;
 extern crate serde_json;
 extern crate rustc_serialize;
@@ -15,8 +44,6 @@ mod claim;
 #[cfg(test)]
 mod tests {
     use super::*;
-    use super::header::*;
-    use serde_json::value::{to_value};
 
     #[test]
     fn header_can_be_convert_from_and_to_base64() {
@@ -29,19 +56,19 @@ mod tests {
     #[test]
     fn claim_can_be_convert_form_and_to_base64() {
         let mut claim = Claim::default();
-        claim.iss("realli");
+        claim.set_iss("realli");
         let b_string = claim.to_base64_str().unwrap();
         println!("bstring is {}",b_string);
         let mut new_claim = Claim::from_base64_str(&b_string).unwrap();
-        new_claim.iss("realli");
+        new_claim.set_iss("realli");
         assert_eq!(claim, new_claim);
     }
 
     #[test]
     fn encoding_and_decoding_should_work_back_forth() {
         let mut claim = Claim::default();
-        claim.iss("realli");
-        claim.payload.insert("stringhh".to_string(), to_value(12));
+        claim.set_iss("realli");
+        claim.set_payload_field("stringhh", 12);
         let result = encode(&claim, "secret", Algorithm::default()).unwrap();
         println!("hashed result is {}", result);
         let new_claim = decode(&result, "secret").unwrap();
@@ -51,8 +78,8 @@ mod tests {
     #[test]
     fn hs256_hs384_hs512_should_work() {
         let mut claim = Claim::default();
-        claim.iss("realli");
-        claim.payload.insert("stringhh".to_string(), to_value(12));
+        claim.set_iss("realli");
+        claim.set_payload_field("stringhh", 12);
         let result0 = encode(&claim, "secret", Algorithm::HS256).unwrap();
         let result1 = encode(&claim, "secret", Algorithm::HS384).unwrap();
         let result2 = encode(&claim, "secret", Algorithm::HS512).unwrap();
@@ -74,8 +101,9 @@ MIICWwIBAAKBgQDdlatRjRjogo3WojgGHFHYLugdUWAY9iR3fy4arWNA1KoS8kVw33cJibXr8bvwUAUp
 -----END RSA PRIVATE KEY-----";
 
         let mut claim = Claim::default();
-        claim.iss("realli");
-        claim.payload.insert("stringhh".to_string(), to_value(12));
+        claim.set_payload_field("sub", "1234567890");
+        claim.set_payload_field("name", "John Doe");
+        claim.set_payload_field("admin", true);
         let result0 = encode(&claim, private_key_pem, Algorithm::RS256).unwrap();
         let result1 = encode(&claim, private_key_pem, Algorithm::RS384).unwrap();
         let result2 = encode(&claim, private_key_pem, Algorithm::RS512).unwrap();
@@ -93,13 +121,14 @@ MIICWwIBAAKBgQDdlatRjRjogo3WojgGHFHYLugdUWAY9iR3fy4arWNA1KoS8kVw33cJibXr8bvwUAUp
 }
 
 pub use self::utils::JWTStringConvertable;
-use self::header::{Header, Algorithm};
+pub use self::header::{Header, Algorithm};
 pub use self::claim::{Claim};
 pub use self::errors::{JWTError, Result};
 use self::digest::{hs_signature, hs_verify, rsa_signature, rsa_verify};
 use openssl::crypto::hash::Type;
 use rustc_serialize::base64::FromBase64;
 
+/// encode a Claim to jwt string, if you are using RS256/384/512, secret should be your private key
 pub fn encode(body: &Claim, secret: &str, alg: Algorithm) -> Result<String> {
     let header = Header::new(alg);
 
@@ -120,6 +149,7 @@ pub fn encode(body: &Claim, secret: &str, alg: Algorithm) -> Result<String> {
     Ok(jwt_base64)
 }
 
+/// decode a jwt string using algorithm in the jwt header field
 pub fn decode(jwtstr: &str, secret: &str) -> Result<Claim> {
     let vec: Vec<&str> = jwtstr.split('.').collect();
     if vec.len() != 3 {
@@ -134,7 +164,7 @@ pub fn decode(jwtstr: &str, secret: &str) -> Result<Claim> {
     data.push('.');
     data.push_str(vec[1]);
 
-    let sig = try!(vec[2].from_base64().map_err(JWTError::Base64Error));
+    let sig = try!(vec[2].from_base64());
 
     try!(match header.alg {
         Algorithm::HS256 => hs_verify(secret, &data, &sig, Type::SHA256),

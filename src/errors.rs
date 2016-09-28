@@ -3,8 +3,10 @@ use rustc_serialize::base64::FromBase64Error;
 use std::result as std_result;
 use std::fmt;
 use std::error;
+use std::convert::From;
 use openssl::error::ErrorStack;
 
+/// all the errors may raised during jwt encode/decode
 #[derive(Debug)]
 pub enum JWTError {
     JsonError(Error),
@@ -13,6 +15,24 @@ pub enum JWTError {
     UnsupportAlgorithm,
     InvalidFormat,
     InvalidSignature,
+}
+
+impl From<Error> for JWTError {
+    fn from(e: Error) -> JWTError {
+        JWTError::JsonError(e)
+    }
+}
+
+impl From<FromBase64Error> for JWTError {
+    fn from(e: FromBase64Error) -> JWTError {
+        JWTError::Base64Error(e)
+    }
+}
+
+impl From<ErrorStack> for JWTError {
+    fn from(e: ErrorStack) -> JWTError {
+        JWTError::CryptoFailure(e)
+    }
 }
 
 impl fmt::Display for JWTError {
@@ -50,5 +70,6 @@ impl error::Error for JWTError {
         }
     }
 }
+
 
 pub type Result<T> = std_result::Result<T, JWTError>;
