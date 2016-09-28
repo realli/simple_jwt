@@ -6,25 +6,11 @@ use rustc_serialize::base64::{FromBase64, ToBase64, URL_SAFE};
 use super::errors::{JWTError, Result};
 use super::utils::JWTStringConvertable;
 
-#[allow(unused_attributes)]
-#[derive(Debug, Display, Default, PartialEq, Serialize, Deserialize)]
-struct RegisteredClaim {
-    exp: Option<u64>,
-    nbf: Option<u64>,
-    iat: Option<u64>,
-    iss: Option<String>,
-    aud: Option<String>,
-    prn: Option<String>,
-    jti: Option<String>,
-    typ: Option<String>
-}
+#[cfg(feature = "serde_macros")]
+include!("claim.in.rs");
 
-#[allow(unused_attributes)]
-#[derive(Debug, Display, Default, PartialEq)]
-pub struct Claim {
-    registered: RegisteredClaim,
-    pub payload: Map<String, Value>
-}
+#[cfg(feature = "serde_codegen")]
+include!(concat!(env!("OUT_DIR"), "/claim.rs"));
 
 impl Claim {
     pub fn exp(&mut self, v: u64) -> &mut Claim {

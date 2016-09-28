@@ -1,5 +1,5 @@
 use openssl::crypto::hmac::hmac;
-use openssl::crypto::hash::Type;
+use openssl::crypto::hash::{Type, hash};
 use openssl::crypto::rsa::RSA;
 use rustc_serialize::base64::{ToBase64, URL_SAFE};
 
@@ -38,9 +38,10 @@ pub fn rsa_signature(pem_string: &str,
     match t {
         Type::SHA256 | Type::SHA384 | Type::SHA512 
             => {
-                let byte_vec = try!(rsa.sign(t, data.as_bytes())
+                let byte_vec = try!(hash(t, data.as_bytes())
                                     .map_err(JWTError::CryptoFailure));
-                return Ok(byte_vec.to_base64(URL_SAFE));
+                let result = try!(rsa.sign(t, &byte_vec).map_err(JWTError::CryptoFailure));
+                return Ok(result.to_base64(URL_SAFE));
             },
         _ => return Err(JWTError::UnsupportAlgorithm),
     }
@@ -54,7 +55,9 @@ pub fn rsa_verify(pem_string: &str,
     match t {
         Type::SHA256 | Type::SHA384 | Type::SHA512 
             => {
-                try!(rsa.verify(t, data.as_bytes(), sig)
+                let byte_vec = try!(hash(t, data.as_bytes())
+                                    .map_err(JWTError::CryptoFailure));
+                try!(rsa.verify(t, &byte_vec, sig)
                      .map_err(JWTError::CryptoFailure));
                 return Ok(());
             },

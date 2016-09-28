@@ -2,10 +2,18 @@
 name = "simple_jwt"
 version = "0.1.0"
 authors = ["realli"]
+build = "build.rs"
+
+[features]
+default = ["serde_codegen"]
+unstable = ["serde_macros"]
+
+[build-dependencies]
+serde_codegen = { version = "0.8", optional = true }
 
 [dependencies]
 serde = "0.8"
-serde_macros = "0.8"
+serde_macros = { version  = "0.8", optional = true }
 serde_json = "0.8"
 rustc-serialize = "0.3"
 
