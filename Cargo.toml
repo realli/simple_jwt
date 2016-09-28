@@ -1,6 +1,7 @@
 [package]
 name = "simple_jwt"
 version = "0.1.0"
+license = "MIT"
 authors = ["realli <lrlanswer@gmail.com>"]
 build = "build.rs"
 keywords = ["json", "jwt", "web", "token"]
