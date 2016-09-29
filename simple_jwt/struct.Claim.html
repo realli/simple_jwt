@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Claim` struct in crate `simple_jwt`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Claim">
+
+    <title>simple_jwt::Claim - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='index.html'>simple_jwt</a></p><script>window.sidebarCurrent = {name: 'Claim', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>simple_jwt</a>::<wbr><a class='struct' href=''>Claim</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-618' class='srclink' href='../src/simple_jwt/Users/realli/proj/simple_jwt/target/release/build/simple_jwt-1b63af71664ce6d0/out/claim.rs.html#346-349' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Claim {
+    pub registered: RegisteredClaim,
+    pub payload: <a class='type' href='../serde_json/value/type.Map.html' title='serde_json::value::Map'>Map</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>,&nbsp;<a class='enum' href='../serde_json/value/enum.Value.html' title='serde_json::value::Value'>Value</a>&gt;,
+}</pre><h2 class='fields'>Fields</h2><span id='structfield.registered' class='structfield'>
+                           <span id='registered.v' class='invisible'>
+                           <code>registered: RegisteredClaim</code>
+                           </span></span><span class='stab '></span><span id='structfield.payload' class='structfield'>
+                           <span id='payload.v' class='invisible'>
+                           <code>payload: <a class='type' href='../serde_json/value/type.Map.html' title='serde_json::value::Map'>Map</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>,&nbsp;<a class='enum' href='../serde_json/value/enum.Value.html' title='serde_json::value::Value'>Value</a>&gt;</code>
+                           </span></span><span class='stab '></span><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../simple_jwt/struct.Claim.html' title='simple_jwt::Claim'>Claim</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-645' class='srclink' href='../src/simple_jwt/src/claim.rs.html#33-72' title='goto source code'>[src]</a></span></h3>
+<div class='docblock'>
+<h1 id='jwt-claim' class='section-header'><a href='#jwt-claim'>JWT Claim</a></h1>
+<p>some util function to set/get fields</p>
+
+<h1 id='example' class='section-header'><a href='#example'>Example</a></h1>
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>simple_jwt</span>::<span class='ident'>Claim</span>;
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>claim</span> <span class='op'>=</span> <span class='ident'>Claim</span>::<span class='ident'>default</span>();
+<span class='ident'>claim</span>.<span class='ident'>set_iss</span>(<span class='string'>&quot;some iss&quot;</span>);
+<span class='ident'>claim</span>.<span class='ident'>set_payload_field</span>(<span class='string'>&quot;sub&quot;</span>, <span class='string'>&quot;some sub&quot;</span>);
+
+<span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{:?}&quot;</span>, <span class='ident'>claim</span>.<span class='ident'>registered</span>.<span class='ident'>iss</span>);
+<span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{:?}&quot;</span>, <span class='ident'>claim</span>.<span class='ident'>get_payload_field</span>(<span class='string'>&quot;sub&quot;</span>));
+
+<span class='comment'>// payload is acctually a BTreeMap&lt;String, serde_json::Value&gt;</span>
+<span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{:?}&quot;</span>, <span class='ident'>claim</span>.<span class='ident'>payload</span>.<span class='ident'>get</span>(<span class='string'>&quot;sub&quot;</span>))<a class='test-arrow' target='_blank' href=''>Run</a></pre>
+</div><div class='impl-items'><h4 id='method.set_exp' class='method'><span id='set_exp.v' class='invisible'><code>fn <a href='#method.set_exp' class='fnname'>set_exp</a>(&amp;mut self, v: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>) -&gt; &amp;mut <a class='struct' href='../simple_jwt/struct.Claim.html' title='simple_jwt::Claim'>Claim</a></code></span></h4>
+<h4 id='method.set_nbf' class='method'><span id='set_nbf.v' class='invisible'><code>fn <a href='#method.set_nbf' class='fnname'>set_nbf</a>(&amp;mut self, v: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>) -&gt; &amp;mut <a class='struct' href='../simple_jwt/struct.Claim.html' title='simple_jwt::Claim'>Claim</a></code></span></h4>
+<h4 id='method.set_iat' class='method'><span id='set_iat.v' class='invisible'><code>fn <a href='#method.set_iat' class='fnname'>set_iat</a>(&amp;mut self, v: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>) -&gt; &amp;mut <a class='struct' href='../simple_jwt/struct.Claim.html' title='simple_jwt::Claim'>Claim</a></code></span></h4>
+<h4 id='method.set_iss' class='method'><span id='set_iss.v' class='invisible'><code>fn <a href='#method.set_iss' class='fnname'>set_iss</a>(&amp;mut self, v: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; &amp;mut <a class='struct' href='../simple_jwt/struct.Claim.html' title='simple_jwt::Claim'>Claim</a></code></span></h4>
+<h4 id='method.set_aud' class='method'><span id='set_aud.v' class='invisible'><code>fn <a href='#method.set_aud' class='fnname'>set_aud</a>(&amp;mut self, v: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; &amp;mut <a class='struct' href='../simple_jwt/struct.Claim.html' title='simple_jwt::Claim'>Claim</a></code></span></h4>
+<h4 id='method.set_sub' class='method'><span id='set_sub.v' class='invisible'><code>fn <a href='#method.set_sub' class='fnname'>set_sub</a>(&amp;mut self, v: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; &amp;mut <a class='struct' href='../simple_jwt/struct.Claim.html' title='simple_jwt::Claim'>Claim</a></code></span></h4>
+<h4 id='method.set_jti' class='method'><span id='set_jti.v' class='invisible'><code>fn <a href='#method.set_jti' class='fnname'>set_jti</a>(&amp;mut self, v: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; &amp;mut <a class='struct' href='../simple_jwt/struct.Claim.html' title='simple_jwt::Claim'>Claim</a></code></span></h4>
+<h4 id='method.set_payload_field' class='method'><span id='set_payload_field.v' class='invisible'><code>fn <a href='#method.set_payload_field' class='fnname'>set_payload_field</a>&lt;V:&nbsp;<a class='trait' href='../serde/ser/trait.Serialize.html' title='serde::ser::Serialize'>Serialize</a>&gt;(&amp;mut self, key: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, v: V) -&gt; &amp;mut <a class='struct' href='../simple_jwt/struct.Claim.html' title='simple_jwt::Claim'>Claim</a></code></span></h4>
+<h4 id='method.get_payload_field' class='method'><span id='get_payload_field.v' class='invisible'><code>fn <a href='#method.get_payload_field' class='fnname'>get_payload_field</a>(&amp;self, key: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;<a class='enum' href='../serde_json/value/enum.Value.html' title='serde_json::value::Value'>Value</a>&gt;</code></span></h4>
+</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> for <a class='struct' href='../simple_jwt/struct.Claim.html' title='simple_jwt::Claim'>Claim</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-621' class='srclink' href='../src/simple_jwt/Users/realli/proj/simple_jwt/target/release/build/simple_jwt-1b63af71664ce6d0/out/claim.rs.html#345' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.eq' class='method'><span id='eq.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq' class='fnname'>eq</a>(&amp;self, __arg_0: &amp;<a class='struct' href='../simple_jwt/struct.Claim.html' title='simple_jwt::Claim'>Claim</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+<div class='docblock'><p>This method tests for <code>self</code> and <code>other</code> values to be equal, and is used by <code>==</code>. <a href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq">Read more</a></p>
+</div><h4 id='method.ne' class='method'><span id='ne.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.ne' class='fnname'>ne</a>(&amp;self, __arg_0: &amp;<a class='struct' href='../simple_jwt/struct.Claim.html' title='simple_jwt::Claim'>Claim</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+<div class='docblock'><p>This method tests for <code>!=</code>.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html' title='core::default::Default'>Default</a> for <a class='struct' href='../simple_jwt/struct.Claim.html' title='simple_jwt::Claim'>Claim</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-636' class='srclink' href='../src/simple_jwt/Users/realli/proj/simple_jwt/target/release/build/simple_jwt-1b63af71664ce6d0/out/claim.rs.html#345' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.default' class='method'><span id='default.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default' class='fnname'>default</a>() -&gt; <a class='struct' href='../simple_jwt/struct.Claim.html' title='simple_jwt::Claim'>Claim</a></code></span></h4>
+<div class='docblock'><p>Returns the &quot;default value&quot; for a type. <a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default">Read more</a></p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../simple_jwt/struct.Claim.html' title='simple_jwt::Claim'>Claim</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-638' class='srclink' href='../src/simple_jwt/Users/realli/proj/simple_jwt/target/release/build/simple_jwt-1b63af71664ce6d0/out/claim.rs.html#345' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class='method'><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></span></h4>
+<div class='docblock'><p>Formats the value using the given formatter.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='../simple_jwt/trait.JWTStringConvertable.html' title='simple_jwt::JWTStringConvertable'>JWTStringConvertable</a> for <a class='struct' href='../simple_jwt/struct.Claim.html' title='simple_jwt::Claim'>Claim</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-675' class='srclink' href='../src/simple_jwt/src/claim.rs.html#74-157' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.from_base64_str' class='method'><span id='from_base64_str.v' class='invisible'><code>fn <a href='../simple_jwt/trait.JWTStringConvertable.html#tymethod.from_base64_str' class='fnname'>from_base64_str</a>(string: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='type' href='../simple_jwt/type.Result.html' title='simple_jwt::Result'>Result</a>&lt;<a class='struct' href='../simple_jwt/struct.Claim.html' title='simple_jwt::Claim'>Claim</a>&gt;</code></span></h4>
+<h4 id='method.to_base64_str' class='method'><span id='to_base64_str.v' class='invisible'><code>fn <a href='../simple_jwt/trait.JWTStringConvertable.html#tymethod.to_base64_str' class='fnname'>to_base64_str</a>(&amp;self) -&gt; <a class='type' href='../simple_jwt/type.Result.html' title='simple_jwt::Result'>Result</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></span></h4>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "simple_jwt";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    
+    <script defer src="../search-index.js"></script>
+</body>
+</html>
