@@ -22,12 +22,17 @@ Example
 ===========
 
 ```rust
+	extern crate simple_jwt;
     use simple_jwt::{encode, decode, Claim, Algorithm};
-    let mut claim = Claim::default();
-    claim.set_iss("some iss");
-    claim.set_payload_field("stringhh", 12);
-    let result = encode(&claim, "secret", Algorithm::HS256).unwrap();
-    println!("hashed result is {}", result);
-    let new_claim = decode(&result, "secret").unwrap();
-    assert_eq!(claim, new_claim);
+    
+    fn main() {}
+    	let mut claim = Claim::default();
+    	claim.set_iss("some iss");
+    	claim.set_payload_field("stringhh", 12);
+    	let result = encode(&claim, "secret", Algorithm::HS256).unwrap();
+    	println!("hashed result is {}", result);
+    	let new_claim = decode(&result, "secret").unwrap();
+    	assert_eq!(claim, new_claim);
+    }
 ```
+

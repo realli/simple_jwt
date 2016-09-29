@@ -51,16 +51,12 @@ impl Claim {
         self.registered.aud = Some(v.to_string());
         self
     }
-    pub fn set_prn(&mut self, v: &str) -> &mut Claim {
-        self.registered.prn = Some(v.to_string());
+    pub fn set_sub(&mut self, v: &str) -> &mut Claim {
+        self.registered.sub = Some(v.to_string());
         self
     }
     pub fn set_jti(&mut self, v: &str) -> &mut Claim {
         self.registered.jti = Some(v.to_string());
-        self
-    }
-    pub fn set_typ(&mut self, v: &str) -> &mut Claim {
-        self.registered.typ = Some(v.to_string());
         self
     }
 
@@ -117,19 +113,13 @@ impl JWTStringConvertable for Claim {
                 None => None,
                 _ => return Err(JWTError::InvalidFormat),
             };
-            reg.prn = match map.remove("prn") {
+            reg.sub = match map.remove("sub") {
                 Some(Value::String(u)) => Some(u),
                 Some(Value::Null) => None,
                 None => None,
                 _ => return Err(JWTError::InvalidFormat),
             };
             reg.jti = match map.remove("jti") {
-                Some(Value::String(u)) => Some(u),
-                Some(Value::Null) => None,
-                None => None,
-                _ => return Err(JWTError::InvalidFormat),
-            };
-            reg.typ = match map.remove("typ") {
                 Some(Value::String(u)) => Some(u),
                 Some(Value::Null) => None,
                 None => None,
@@ -157,14 +147,8 @@ impl JWTStringConvertable for Claim {
         if let Some(ref v) = self.registered.aud {
             map.insert("aud".to_string(), to_value(v));
         };
-        if let Some(ref v) = self.registered.prn {
-            map.insert("prn".to_string(), to_value(v));
-        };
-        if let Some(ref v) = self.registered.jti {
-            map.insert("jti".to_string(), to_value(v));
-        };
-        if let Some(ref v) = self.registered.typ {
-            map.insert("typ".to_string(), to_value(v));
+        if let Some(ref v) = self.registered.sub {
+            map.insert("sub".to_string(), to_value(v));
         };
 
         let b_string = try!(serde_json::to_vec(&map));

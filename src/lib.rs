@@ -101,7 +101,7 @@ MIICWwIBAAKBgQDdlatRjRjogo3WojgGHFHYLugdUWAY9iR3fy4arWNA1KoS8kVw33cJibXr8bvwUAUp
 -----END RSA PRIVATE KEY-----";
 
         let mut claim = Claim::default();
-        claim.set_payload_field("sub", "1234567890");
+        claim.set_sub("1234567890");
         claim.set_payload_field("name", "John Doe");
         claim.set_payload_field("admin", true);
         let result0 = encode(&claim, private_key_pem, Algorithm::RS256).unwrap();
