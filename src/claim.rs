@@ -7,7 +7,7 @@ use rustc_serialize::base64::{FromBase64, ToBase64, URL_SAFE};
 use super::errors::{JWTError, Result};
 use super::utils::JWTStringConvertable;
 
-#[cfg(feature = "serde_macros")]
+#[cfg(feature = "serde_derive")]
 include!("claim.in.rs");
 
 #[cfg(feature = "serde_codegen")]

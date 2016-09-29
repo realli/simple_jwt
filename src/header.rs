@@ -1,6 +1,6 @@
 use std::default::Default;
 
-#[cfg(feature = "serde_macros")]
+#[cfg(feature = "serde_derive")]
 include!("header.in.rs");
 
 #[cfg(feature = "serde_codegen")]

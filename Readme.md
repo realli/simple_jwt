@@ -1,5 +1,11 @@
 Simple JWT
 =============
+
+[![](http://meritbadge.herokuapp.com/simple_jwt)](https://crates.io/crates/simple_jwt)
+
+[Document](http://realli.github.io/simple_jwt/simple_jwt/)
+
+
 A very simple crate to deal with [json web token](http://jwt.io), 
 this lib use the `rust-openssl`, so you may want to check the
 [rust-openssl](https://github.com/sfackler/rust-openssl) to find the

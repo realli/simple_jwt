@@ -10,14 +10,14 @@ repository = "https://github.com/realli/simple_jwt"
 
 [features]
 default = ["serde_codegen"]
-unstable = ["serde_macros"]
+unstable = ["serde_derive"]
 
 [build-dependencies]
 serde_codegen = { version = "0.8", optional = true }
 
 [dependencies]
 serde = "0.8"
-serde_macros = { version  = "0.8", optional = true }
+serde_derive = { version  = "0.8", optional = true }
 serde_json = "0.8"
 rustc-serialize = "0.3"
 

@@ -1,5 +1,5 @@
-#![cfg_attr(feature = "serde_macros", feature(plugin, custom_derive))]
-#![cfg_attr(feature = "serde_macros", plugin(serde_macros))]
+#![cfg_attr(feature = "serde_derive", feature(rustc_macro))]
+#![cfg_attr(feature = "serde_derive", feature(rustc_attrs))]
 
 //! # Introduction
 //!
@@ -29,6 +29,10 @@
 //!
 //! The test in lib.rs contains more example
 //!
+
+#[cfg(feature = "serde_derive")]
+#[macro_use]
+extern crate serde_derive;
 
 extern crate serde;
 extern crate serde_json;
