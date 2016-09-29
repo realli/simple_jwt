@@ -7,6 +7,7 @@ build = "build.rs"
 keywords = ["json", "jwt", "web", "token"]
 description = "json web token encode/decode"
 repository = "https://github.com/realli/simple_jwt"
+documentation = "http://realli.github.io/simple_jwt/simple_jwt/"
 
 [features]
 default = ["serde_codegen"]
