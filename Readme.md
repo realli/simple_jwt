@@ -1,10 +1,22 @@
 Simple JWT
 =============
+A very simple crate to deal with [json web token](http://jwt.io), 
+this lib use the `rust-openssl`, so you may want to check the
+[rust-openssl](https://github.com/sfackler/rust-openssl) to find the
+set-up of openssl runtime lib. 
 
-A rust lib that used to encode/decode json web token. This lib use [serde](https://serde.rs) to ser/deserialize json.
-Compiled only using rust nightly....
+# Support Algirithm
+* HS256/384/512
+* RS256/384/512
+* to be added...
 
-So it's Experimental, and more function (and document) will be added in future.
+Usage
+=======
+
+```
+[denpendencies]
+simple_jwt = "0.1.0"
+```
 
 Example
 ===========
