@@ -21,7 +21,7 @@ Usage
 
 ```
 [denpendencies]
-simple_jwt = "0.1.0"
+simple_jwt = "*"
 ```
 
 Example
