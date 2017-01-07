@@ -96,6 +96,27 @@ mod tests {
     }
 
     #[test]
+    fn hs256_hs384_hs512_invalid_signature_should_be_recognized() {
+        let mut claim = Claim::default();
+        claim.set_iss("realli");
+        claim.set_payload_field("stringhh", 12);
+        let result = encode(&claim, "secret", Algorithm::HS256).unwrap();
+
+        let vec: Vec<&str> = result.split('.').collect();
+        assert_eq!(vec.len(), 3);
+        let mut fake_jwt_str = vec[0].to_string();
+        fake_jwt_str.push('.');
+        fake_jwt_str.push_str(vec[1]);
+        fake_jwt_str.push('.');
+        fake_jwt_str.push_str(vec[2]);
+        fake_jwt_str.push_str("ABgCd");
+
+        let new_claim = decode(&fake_jwt_str, "secret");
+        assert!(new_claim.is_err());
+        assert_eq!(JWTError::InvalidSignature, new_claim.unwrap_err());
+    }
+
+    #[test]
     fn rsa256_384_512_should_work() {
         let public_key_pem = "-----BEGIN PUBLIC KEY-----
 MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDdlatRjRjogo3WojgGHFHYLugdUWAY9iR3fy4arWNA1KoS8kVw33cJibXr8bvwUAUparCwlvdbH6dvEOfou0/gCFQsHUfQrSDv+MuSUMAe8jzKE4qW+jK+xQU9a03GUnKHkkle+Q0pX/g6jXZ7r1/xAK5Do2kQ+X5xK9cipRgEKwIDAQAB
@@ -129,7 +150,6 @@ pub use self::header::{Header, Algorithm};
 pub use self::claim::{Claim};
 pub use self::errors::{JWTError, Result};
 use self::digest::{hs_signature, hs_verify, rsa_signature, rsa_verify};
-use openssl::crypto::hash::Type;
 use rustc_serialize::base64::FromBase64;
 
 /// encode a Claim to jwt string, if you are using RS256/384/512, secret should be your private key
@@ -141,12 +161,10 @@ pub fn encode(body: &Claim, secret: &str, alg: Algorithm) -> Result<String> {
 
     let mut jwt_base64 = header_base64 + "." + &body_base64;
     let secured_base64 = try!(match header.alg {
-        Algorithm::HS256 => hs_signature(secret, &jwt_base64, Type::SHA256),
-        Algorithm::HS384 => hs_signature(secret, &jwt_base64, Type::SHA384),
-        Algorithm::HS512 => hs_signature(secret, &jwt_base64, Type::SHA512),
-        Algorithm::RS256 => rsa_signature(secret, &jwt_base64, Type::SHA256),
-        Algorithm::RS384 => rsa_signature(secret, &jwt_base64, Type::SHA384),
-        Algorithm::RS512 => rsa_signature(secret, &jwt_base64, Type::SHA512),
+        Algorithm::HS256 | Algorithm::HS384 | Algorithm::HS512
+            => hs_signature(secret, &jwt_base64, header.alg),
+        Algorithm::RS256 | Algorithm::RS384 | Algorithm::RS512
+            => rsa_signature(secret, &jwt_base64, header.alg),
     });
     jwt_base64.push('.');
     jwt_base64.push_str(&secured_base64);
@@ -171,14 +189,11 @@ pub fn decode(jwtstr: &str, secret: &str) -> Result<Claim> {
     let sig = try!(vec[2].from_base64());
 
     try!(match header.alg {
-        Algorithm::HS256 => hs_verify(secret, &data, &sig, Type::SHA256),
-        Algorithm::HS384 => hs_verify(secret, &data, &sig, Type::SHA384),
-        Algorithm::HS512 => hs_verify(secret, &data, &sig, Type::SHA512),
-        Algorithm::RS256 => rsa_verify(secret, &data, &sig, Type::SHA256),
-        Algorithm::RS384 => rsa_verify(secret, &data, &sig, Type::SHA384),
-        Algorithm::RS512 => rsa_verify(secret, &data, &sig, Type::SHA512),
+        Algorithm::HS256 | Algorithm::HS384 | Algorithm::HS512 
+            => hs_verify(secret, &data, &sig, header.alg),
+        Algorithm::RS256 | Algorithm::RS384 | Algorithm::RS512
+            => rsa_verify(secret, &data, &sig, header.alg),
     });
-
     Ok(claim)
     // may be check claim fields ?
 }

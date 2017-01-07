@@ -17,6 +17,13 @@ pub enum JWTError {
     InvalidSignature,
 }
 
+impl PartialEq for JWTError {
+    fn eq(&self, other: &JWTError) -> bool {
+        <error::Error>::cause(self).is_none() && <error::Error>::cause(other).is_none()
+
+    }
+}
+
 impl From<Error> for JWTError {
     fn from(e: Error) -> JWTError {
         JWTError::JsonError(e)
