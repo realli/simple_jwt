@@ -45,6 +45,7 @@ mod header;
 mod digest;
 mod claim;
 
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -93,6 +94,14 @@ mod tests {
         assert_eq!(claim, new_claim0);
         assert_eq!(claim, new_claim1);
         assert_eq!(claim, new_claim2);
+
+        /*
+        let s = TestStruct {field_u32: 32, field_str: String::from("hello")};
+        let result = encode(&s, "secret", Algorithm::HS256).unwrap();
+        let new_s = decode(&result, "secret").unwrap();
+        assert_eq!(s.field_u32, new_s.field_u32);
+        assert_eq!(s.field_str, new_s.field_str);
+        */
     }
 
     #[test]
@@ -111,7 +120,7 @@ mod tests {
         fake_jwt_str.push_str(vec[2]);
         fake_jwt_str.push_str("ABgCd");
 
-        let new_claim = decode(&fake_jwt_str, "secret");
+        let new_claim: Result<Claim> = decode(&fake_jwt_str, "secret");
         assert!(new_claim.is_err());
         assert_eq!(JWTError::InvalidSignature, new_claim.unwrap_err());
     }
@@ -119,11 +128,35 @@ mod tests {
     #[test]
     fn rsa256_384_512_should_work() {
         let public_key_pem = "-----BEGIN PUBLIC KEY-----
-MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDdlatRjRjogo3WojgGHFHYLugdUWAY9iR3fy4arWNA1KoS8kVw33cJibXr8bvwUAUparCwlvdbH6dvEOfou0/gCFQsHUfQrSDv+MuSUMAe8jzKE4qW+jK+xQU9a03GUnKHkkle+Q0pX/g6jXZ7r1/xAK5Do2kQ+X5xK9cipRgEKwIDAQAB
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCx5gqY8ZZK5MNFHI5V1OYkNXI7
+qFka5lHJcUFq6SaZqAXYteKcR4kugITcoILZIpVhM3yOp0octAackM2AOCGfo5Fo
+E/W/iSrd8euMy4UkdtD6XfGYkkfO4yfhXpZjyvprhZ027p2X0l7eoRY3KycPYVF1
+gC3TfsCAVObIW0MuBQIDAQAB
 -----END PUBLIC KEY-----";
         let private_key_pem = "-----BEGIN RSA PRIVATE KEY-----
-MIICWwIBAAKBgQDdlatRjRjogo3WojgGHFHYLugdUWAY9iR3fy4arWNA1KoS8kVw33cJibXr8bvwUAUparCwlvdbH6dvEOfou0/gCFQsHUfQrSDv+MuSUMAe8jzKE4qW+jK+xQU9a03GUnKHkkle+Q0pX/g6jXZ7r1/xAK5Do2kQ+X5xK9cipRgEKwIDAQABAoGAD+onAtVye4ic7VR7V50DF9bOnwRwNXrARcDhq9LWNRrRGElESYYTQ6EbatXS3MCyjjX2eMhu/aF5YhXBwkppwxg+EOmXeh+MzL7Zh284OuPbkglAaGhV9bb6/5CpuGb1esyPbYW+Ty2PC0GSZfIXkXs76jXAu9TOBvD0ybc2YlkCQQDywg2R/7t3Q2OE2+yo382CLJdrlSLVROWKwb4tb2PjhY4XAwV8d1vy0RenxTB+K5Mu57uVSTHtrMK0GAtFr833AkEA6avx20OHo61Yela/4k5kQDtjEf1N0LfI+BcWZtxsS3jDM3i1Hp0KSu5rsCPb8acJo5RO26gGVrfAsDcIXKC+bQJAZZ2XIpsitLyPpuiMOvBbzPavd4gY6Z8KWrfYzJoI/Q9FuBo6rKwl4BFoToD7WIUS+hpkagwWiz+6zLoX1dbOZwJACmH5fSSjAkLRi54PKJ8TFUeOP15h9sQzydI8zJU+upvDEKZsZc/UhT/SySDOxQ4G/523Y0sz/OZtSWcol/UMgQJALesy++GdvoIDLfJX5GBQpuFgFenRiRDabxrE9MNUZ2aPFaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==
+MIICXAIBAAKBgQCx5gqY8ZZK5MNFHI5V1OYkNXI7qFka5lHJcUFq6SaZqAXYteKc
+R4kugITcoILZIpVhM3yOp0octAackM2AOCGfo5FoE/W/iSrd8euMy4UkdtD6XfGY
+kkfO4yfhXpZjyvprhZ027p2X0l7eoRY3KycPYVF1gC3TfsCAVObIW0MuBQIDAQAB
+AoGAVO7oVlbZE06er8tPZUksy1K9BCB+0inuGEe7HMjNhgTDLdDArS42H356cD8t
+2W76dJq5N/5EkumcUnmLs1CZNCt+xSVBL2ihS6LQm5k69vLqGlYMnKMRqAuQMr2C
+61/nPgFEaqjjjVyI6yYLMcU2eG2NPoNPBJkjC9yERGlFta0CQQDYlzXtVVTKvhZB
+Y4m8UD1GcLFz3cxOPHfs1DzgxxqcME7LeyQHhFkEiqKiUeDEccCMJ4oq9AKqUPvf
+MgyAnKm/AkEA0kSOEJ1qwOgLcStmHh4Q9T7zPdnhsDacvBY2EHA248YYgEjOmUFd
+5OQmiN9rtiB78E4wSNWSvsG8edQcjvWxOwJAQwrbOHGXY4JfZTIoak/0B5/Obe0T
+1ovFG1u+1F0NEZeqbDXbuy/uVgeLu+7YQjZrwXZjwFPzl0CmFjppwE2+BQJBALbI
+56Kj5Whaj4/KhVQLGPzIw1TyMhIn92o9+LOjiOPKkgP6xrZNL51JhAIaDp1dccA9
+iBXYq19uNTTG4iiYhn8CQG9KpMDscoqocTeBE78jA6pX6ZH0Ppu7me5sds0UtwuS
+p5HP/xmDtWJQv5hScT2aWKjjl2kC8eZOHTGgQvjrSm8=
 -----END RSA PRIVATE KEY-----";
+        /*
+        let rsa_ = Rsa::generate(1024).unwrap();
+        let private_key_pem_b = rsa_.private_key_to_pem().unwrap();
+        let private_key_pem = &String::from_utf8(private_key_pem_b).unwrap();
+        let public_key_pem_b = rsa_.public_key_to_pem().unwrap();
+        let public_key_pem = &String::from_utf8(public_key_pem_b).unwrap();
+
+        println!("\n\n {0} \n\n {1} \n\n", private_key_pem, public_key_pem);
+        */
 
         let mut claim = Claim::default();
         claim.set_sub("1234567890");
@@ -132,9 +165,11 @@ MIICWwIBAAKBgQDdlatRjRjogo3WojgGHFHYLugdUWAY9iR3fy4arWNA1KoS8kVw33cJibXr8bvwUAUp
         let result0 = encode(&claim, private_key_pem, Algorithm::RS256).unwrap();
         let result1 = encode(&claim, private_key_pem, Algorithm::RS384).unwrap();
         let result2 = encode(&claim, private_key_pem, Algorithm::RS512).unwrap();
+        /*
         println!("{}", result0);
         println!("{}", result1);
         println!("{}", result2);
+        */
         let new_claim0 = decode(&result0, public_key_pem).unwrap();
         let new_claim1 = decode(&result1, public_key_pem).unwrap();
         let new_claim2 = decode(&result2, public_key_pem).unwrap();
@@ -153,7 +188,7 @@ use self::digest::{hs_signature, hs_verify, rsa_signature, rsa_verify};
 use rustc_serialize::base64::FromBase64;
 
 /// encode a Claim to jwt string, if you are using RS256/384/512, secret should be your private key
-pub fn encode(body: &Claim, secret: &str, alg: Algorithm) -> Result<String> {
+pub fn encode<T: JWTStringConvertable>(body: &T, secret: &str, alg: Algorithm) -> Result<String> {
     let header = Header::new(alg);
 
     let header_base64 = try!(header.to_base64_str());
@@ -172,7 +207,7 @@ pub fn encode(body: &Claim, secret: &str, alg: Algorithm) -> Result<String> {
 }
 
 /// decode a jwt string using algorithm in the jwt header field
-pub fn decode(jwtstr: &str, secret: &str) -> Result<Claim> {
+pub fn decode<T: JWTStringConvertable>(jwtstr: &str, secret: &str) -> Result<T> {
     let vec: Vec<&str> = jwtstr.split('.').collect();
     if vec.len() != 3 {
         return Err(JWTError::InvalidFormat);
@@ -180,7 +215,7 @@ pub fn decode(jwtstr: &str, secret: &str) -> Result<Claim> {
 
     // decode header first
     let header = try!(Header::from_base64_str(vec[0]));
-    let claim = try!(Claim::from_base64_str(vec[1]));
+    let claim = try!(T::from_base64_str(vec[1]));
 
     let mut data = vec[0].to_string();
     data.push('.');
@@ -195,5 +230,4 @@ pub fn decode(jwtstr: &str, secret: &str) -> Result<Claim> {
             => rsa_verify(secret, &data, &sig, header.alg),
     });
     Ok(claim)
-    // may be check claim fields ?
 }

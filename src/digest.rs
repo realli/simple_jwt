@@ -48,6 +48,7 @@ pub fn hs_verify(secret: &str,
 pub fn rsa_signature(pem_string: &str,
                      data: &str,
                      alg: Algorithm) -> Result<String> {
+
     let rsa = try!(Rsa::private_key_from_pem(pem_string.as_bytes()));
     let message_digest = create_message_digest(alg);
     let key = try!(PKey::from_rsa(rsa));
