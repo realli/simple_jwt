@@ -9,18 +9,11 @@ description = "json web token encode/decode"
 repository = "https://github.com/realli/simple_jwt"
 documentation = "http://realli.github.io/simple_jwt/simple_jwt/"
 
-[features]
-default = ["serde_codegen"]
-unstable = ["serde_derive"]
-
-[build-dependencies]
-serde_codegen = { version = "0.8", optional = true }
-
 [dependencies]
-serde = "0.8"
-serde_derive = { version  = "0.8", optional = true }
-serde_json = "0.8"
-rustc-serialize = "0.3"
+serde = "1.0"
+serde_derive = "1.0"
+serde_json = "1.0"
+base64 = "~0.4.0"
 
 [dependencies.openssl]
 version = "0.9.2"

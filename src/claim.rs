@@ -2,17 +2,29 @@ use std::default::Default;
 use serde::{Serialize};
 use serde_json;
 use serde_json::value::{Map, Value, to_value};
-use rustc_serialize::base64::{FromBase64, ToBase64, URL_SAFE};
+use base64::{encode_config, decode_config, URL_SAFE};
 
 use super::errors::{JWTError, Result};
 use super::utils::JWTStringConvertable;
 
-#[cfg(feature = "serde_derive")]
-include!("claim.in.rs");
+#[allow(unused_attributes)]
+#[derive(Debug, Default, PartialEq, Serialize, Deserialize)]
+pub struct RegisteredClaim {
+    pub iss: Option<String>,
+    pub sub: Option<String>,
+    pub exp: Option<u64>,
+    pub nbf: Option<u64>,
+    pub iat: Option<u64>,
+    pub aud: Option<String>,
+    pub jti: Option<String>,
+}
 
-#[cfg(feature = "serde_codegen")]
-include!(concat!(env!("OUT_DIR"), "/claim.rs"));
-
+#[allow(unused_attributes)]
+#[derive(Debug, Default, PartialEq)]
+pub struct Claim {
+    pub registered: RegisteredClaim,
+    pub payload: Map<String, Value>
+}
 
 /// # JWT Claim
 /// some util function to set/get fields
@@ -62,7 +74,7 @@ impl Claim {
     }
 
     pub fn set_payload_field<V: Serialize>(&mut self, key: &str, v: V) -> &mut Claim{
-        self.payload.insert(key.to_string(), to_value(v));
+        self.payload.insert(key.to_string(), to_value(v).unwrap());
         self
     }
 
@@ -74,7 +86,7 @@ impl Claim {
 
 impl JWTStringConvertable for Claim {
     fn from_base64_str(string: &str) -> Result<Claim> {
-        let slice = try!(string.from_base64());
+        let slice = try!(decode_config(string, URL_SAFE));
         let obj: Value = try!(serde_json::from_slice(&slice));
         let mut map = match obj {
             Value::Object(map) => map,
@@ -85,19 +97,19 @@ impl JWTStringConvertable for Claim {
         {
             let reg: &mut RegisteredClaim = &mut claim.registered;
             reg.exp = match map.remove("exp") {
-                Some(Value::U64(u)) => Some(u),
+                Some(Value::Number(u)) => u.as_u64(),
                 Some(Value::Null) => None,
                 None => None,
                 _ => return Err(JWTError::InvalidFormat),
             };
             reg.nbf = match map.remove("nbf") {
-                Some(Value::U64(u)) => Some(u),
+                Some(Value::Number(u)) => u.as_u64(),
                 Some(Value::Null) => None,
                 None => None,
                 _ => return Err(JWTError::InvalidFormat),
             };
             reg.iat = match map.remove("iat") {
-                Some(Value::U64(u)) => Some(u),
+                Some(Value::Number(u)) => u.as_u64(),
                 Some(Value::Null) => None,
                 None => None,
                 _ => return Err(JWTError::InvalidFormat),
@@ -134,25 +146,32 @@ impl JWTStringConvertable for Claim {
     fn to_base64_str(&self) -> Result<String> {
         let mut map: Map<String, Value> = self.payload.clone();
         if let Some(v) = self.registered.exp {
-            map.insert("exp".to_string(), to_value(v));
+            let value = try!(to_value(v));
+            map.insert("exp".to_string(), value);
         };
         if let Some(ref v) = self.registered.nbf {
-            map.insert("nbf".to_string(), to_value(v));
+            let value = try!(to_value(v));
+            map.insert("nbf".to_string(), value);
         };
         if let Some(ref v) = self.registered.iat {
-            map.insert("iat".to_string(), to_value(v));
+            let value = try!(to_value(v));
+            map.insert("iat".to_string(), value);
         };
         if let Some(ref v) = self.registered.iss {
-            map.insert("iss".to_string(), to_value(v));
+            let value = try!(to_value(v));
+            map.insert("iss".to_string(), value);
         };
         if let Some(ref v) = self.registered.aud {
-            map.insert("aud".to_string(), to_value(v));
+            let value = try!(to_value(v));
+            map.insert("aud".to_string(), value);
         };
         if let Some(ref v) = self.registered.sub {
-            map.insert("sub".to_string(), to_value(v));
+            let value = try!(to_value(v));
+            map.insert("sub".to_string(), value);
         };
 
         let b_string = try!(serde_json::to_vec(&map));
-        Ok(b_string.to_base64(URL_SAFE))
+        Ok(encode_config(&b_string, URL_SAFE))
     }
 }
+

@@ -1,6 +1,3 @@
-#![cfg_attr(feature = "serde_derive", feature(rustc_macro))]
-#![cfg_attr(feature = "serde_derive", feature(rustc_attrs))]
-
 //! # Introduction
 //!
 //! A very simple crate to deal with [json web token](http://jwt.io), 
@@ -30,13 +27,12 @@
 //! The test in lib.rs contains more example
 //!
 
-#[cfg(feature = "serde_derive")]
 #[macro_use]
 extern crate serde_derive;
 
 extern crate serde;
 extern crate serde_json;
-extern crate rustc_serialize;
+extern crate base64;
 extern crate openssl;
 
 mod errors;
@@ -117,8 +113,8 @@ mod tests {
         fake_jwt_str.push('.');
         fake_jwt_str.push_str(vec[1]);
         fake_jwt_str.push('.');
+        fake_jwt_str.push_str("YWJj");
         fake_jwt_str.push_str(vec[2]);
-        fake_jwt_str.push_str("ABgCd");
 
         let new_claim: Result<Claim> = decode(&fake_jwt_str, "secret");
         assert!(new_claim.is_err());
@@ -180,12 +176,13 @@ p5HP/xmDtWJQv5hScT2aWKjjl2kC8eZOHTGgQvjrSm8=
 
 }
 
-pub use self::utils::JWTStringConvertable;
+use base64::{decode_config, URL_SAFE};
+
 pub use self::header::{Header, Algorithm};
-pub use self::claim::{Claim};
+pub use self::claim::Claim;
+pub use self::utils::JWTStringConvertable;
 pub use self::errors::{JWTError, Result};
 use self::digest::{hs_signature, hs_verify, rsa_signature, rsa_verify};
-use rustc_serialize::base64::FromBase64;
 
 /// encode a Claim to jwt string, if you are using RS256/384/512, secret should be your private key
 pub fn encode<T: JWTStringConvertable>(body: &T, secret: &str, alg: Algorithm) -> Result<String> {
@@ -221,7 +218,7 @@ pub fn decode<T: JWTStringConvertable>(jwtstr: &str, secret: &str) -> Result<T> 
     data.push('.');
     data.push_str(vec[1]);
 
-    let sig = try!(vec[2].from_base64());
+    let sig = try!(decode_config(&vec[2], URL_SAFE));
 
     try!(match header.alg {
         Algorithm::HS256 | Algorithm::HS384 | Algorithm::HS512 

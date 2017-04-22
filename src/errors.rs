@@ -1,5 +1,5 @@
 use serde_json::error::{Error};
-use rustc_serialize::base64::FromBase64Error;
+use base64::Base64Error;
 use std::result as std_result;
 use std::fmt;
 use std::error;
@@ -10,7 +10,7 @@ use openssl::error::ErrorStack;
 #[derive(Debug)]
 pub enum JWTError {
     JsonError(Error),
-    Base64Error(FromBase64Error),
+    Base64Error(Base64Error),
     CryptoFailure(ErrorStack),
     UnsupportAlgorithm,
     InvalidFormat,
@@ -30,8 +30,8 @@ impl From<Error> for JWTError {
     }
 }
 
-impl From<FromBase64Error> for JWTError {
-    fn from(e: FromBase64Error) -> JWTError {
+impl From<Base64Error> for JWTError {
+    fn from(e: Base64Error) -> JWTError {
         JWTError::Base64Error(e)
     }
 }

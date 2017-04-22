@@ -2,8 +2,8 @@ use openssl::hash::{MessageDigest};
 use openssl::pkey::PKey;
 use openssl::rsa::Rsa;
 use openssl::sign::{Signer, Verifier};
-use rustc_serialize::base64::{ToBase64, URL_SAFE};
 use openssl::memcmp::eq;
+use base64::{encode_config, URL_SAFE};
 
 use super::errors::{Result, JWTError};
 use super::header::Algorithm;
@@ -19,7 +19,7 @@ fn create_message_digest(alg: Algorithm) -> MessageDigest {
 pub fn hs_signature(secret: &str,
                  data: &str,
                  alg: Algorithm) -> Result<String> {
-    _hs_signature(secret, data, alg).map(|u8s| u8s.to_base64(URL_SAFE))
+    _hs_signature(secret, data, alg).map(|u8s| encode_config(&u8s, URL_SAFE))
 }
 
 fn _hs_signature(secret: &str,
@@ -55,7 +55,7 @@ pub fn rsa_signature(pem_string: &str,
     let mut signer = try!(Signer::new(message_digest, &key));
     try!(signer.update(data.as_bytes()));
     let result = try!(signer.finish());
-    return Ok(result.to_base64(URL_SAFE));
+    return Ok(encode_config(&result, URL_SAFE));
 }
 
 pub fn rsa_verify(pem_string: &str,

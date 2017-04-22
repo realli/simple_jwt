@@ -1,7 +1,8 @@
 use std::marker::Sized;
-use serde::{Serialize, Deserialize};
+use serde::{Serialize};
+use serde::de::DeserializeOwned;
 use serde_json;
-use rustc_serialize::base64::{FromBase64, ToBase64, URL_SAFE};
+use base64::{encode_config, decode_config, URL_SAFE};
 
 use super::errors::{JWTError, Result};
 
@@ -13,15 +14,15 @@ pub trait JWTStringConvertable : Sized{
 }
 
 impl<T> JWTStringConvertable for T
-    where T: Serialize + Deserialize {
+    where T: Serialize + DeserializeOwned {
     fn from_base64_str(string: &str) -> Result<T> {
-        let slice = try!(string.from_base64());
+        let slice = try!(decode_config(string, URL_SAFE));
         serde_json::from_slice(&slice).map_err(JWTError::JsonError)
     }
 
     fn to_base64_str(&self) -> Result<String> {
         let b_string = try!(serde_json::to_vec(&self));
-        Ok(b_string.to_base64(URL_SAFE))
+        Ok(encode_config(&b_string,URL_SAFE))
     }
 }
 
