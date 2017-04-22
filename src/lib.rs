@@ -15,6 +15,7 @@
 //!
 //! ```
 //! use simple_jwt::{encode, decode, Claim, Algorithm};
+//!
 //! let mut claim = Claim::default();
 //! claim.set_iss("some iss");
 //! claim.set_payload_field("stringhh", 12);
@@ -22,7 +23,36 @@
 //! println!("hashed result is {}", result);
 //! let new_claim = decode(&result, "secret").unwrap();
 //! assert_eq!(claim, new_claim);
+//!
 //! ```
+//!
+//! Or simple use your custom struct
+//!
+//! ```
+//! #[macro_use]
+//! extern crate serde_derive;
+//! extern crate serde;
+//! extern crate simple_jwt;
+//!
+//! use serde::{Serialize, Deserialize};
+//! use simple_jwt::{encode, decode, Claim, Algorithm};
+//!
+//! #[derive(Serialize, Deserialize, PartialEq, Debug)]
+//! struct MyStruct {
+//!     field_u32: u32,
+//!     field_str: String
+//! }
+//!
+//! fn main() {
+//!     let myStruct = MyStruct {field_str: String::from("hello"), field_u32: 32};
+//!
+//!     let result = encode(&myStruct, "secret", Algorithm::HS256).unwrap();
+//!     println!("hashed result is {}", result);
+//!     let newStruct = decode(&result, "secret").unwrap();
+//!     assert_eq!(myStruct, newStruct);
+//! }
+//! ```
+//!
 //!
 //! The test in lib.rs contains more example
 //!
@@ -45,6 +75,12 @@ mod claim;
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[derive(Serialize, Deserialize)]
+    struct TestStruct {
+        field_u32: u32,
+        field_str: String
+    }
 
     #[test]
     fn header_can_be_convert_from_and_to_base64() {
@@ -91,13 +127,11 @@ mod tests {
         assert_eq!(claim, new_claim1);
         assert_eq!(claim, new_claim2);
 
-        /*
         let s = TestStruct {field_u32: 32, field_str: String::from("hello")};
         let result = encode(&s, "secret", Algorithm::HS256).unwrap();
-        let new_s = decode(&result, "secret").unwrap();
+        let new_s: TestStruct = decode(&result, "secret").unwrap();
         assert_eq!(s.field_u32, new_s.field_u32);
         assert_eq!(s.field_str, new_s.field_str);
-        */
     }
 
     #[test]
@@ -172,6 +206,12 @@ p5HP/xmDtWJQv5hScT2aWKjjl2kC8eZOHTGgQvjrSm8=
         assert_eq!(claim, new_claim0);
         assert_eq!(claim, new_claim1);
         assert_eq!(claim, new_claim2);
+
+        let s = TestStruct {field_u32: 32, field_str: String::from("hello")};
+        let result = encode(&s, private_key_pem, Algorithm::RS512).unwrap();
+        let new_s: TestStruct = decode(&result, public_key_pem).unwrap();
+        assert_eq!(s.field_u32, new_s.field_u32);
+        assert_eq!(s.field_str, new_s.field_str);
     }
 
 }
