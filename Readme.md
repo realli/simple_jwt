@@ -70,3 +70,4 @@ Or simple use your custom struct
     }
 ```
 
+The test in `lib.rs` contains more example
