@@ -4,11 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/Users/realli/.cargo/registry/src/github.com-1ecc6299db9ec823/dtoa-0.2.2/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/realli/.cargo/registry/src/github.com-1ecc6299db9ec823/dtoa-0.4.1/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
     
@@ -203,16 +204,16 @@
 <span class='kw'>use</span> <span class='ident'>std</span>::{<span class='ident'>io</span>, <span class='ident'>mem</span>, <span class='ident'>ops</span>, <span class='ident'>ptr</span>, <span class='ident'>slice</span>};
 
 <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>write</span><span class='op'>&lt;</span><span class='ident'>W</span>: <span class='ident'>io</span>::<span class='ident'>Write</span>, <span class='ident'>V</span>: <span class='ident'>Floating</span><span class='op'>&gt;</span>(<span class='ident'>wr</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>W</span>, <span class='ident'>value</span>: <span class='ident'>V</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>write</span><span class='op'>&lt;</span><span class='ident'>W</span>: <span class='ident'>io</span>::<span class='ident'>Write</span>, <span class='ident'>V</span>: <span class='ident'>Floating</span><span class='op'>&gt;</span>(<span class='ident'>wr</span>: <span class='ident'>W</span>, <span class='ident'>value</span>: <span class='ident'>V</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span> {
     <span class='ident'>value</span>.<span class='ident'>write</span>(<span class='ident'>wr</span>)
 }
 
 <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Floating</span> {
-    <span class='kw'>fn</span> <span class='ident'>write</span><span class='op'>&lt;</span><span class='ident'>W</span>: <span class='ident'>io</span>::<span class='ident'>Write</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>W</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span>;
+    <span class='kw'>fn</span> <span class='ident'>write</span><span class='op'>&lt;</span><span class='ident'>W</span>: <span class='ident'>io</span>::<span class='ident'>Write</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>W</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span>;
 }
 
 <span class='kw'>impl</span> <span class='ident'>Floating</span> <span class='kw'>for</span> <span class='ident'>f32</span> {
-    <span class='kw'>fn</span> <span class='ident'>write</span><span class='op'>&lt;</span><span class='ident'>W</span>: <span class='ident'>io</span>::<span class='ident'>Write</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>wr</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>W</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>write</span><span class='op'>&lt;</span><span class='ident'>W</span>: <span class='ident'>io</span>::<span class='ident'>Write</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>wr</span>: <span class='ident'>W</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span> {
         <span class='macro'>dtoa</span><span class='macro'>!</span> {
             <span class='ident'>floating_type</span>: <span class='ident'>f32</span>,
             <span class='ident'>significand_type</span>: <span class='ident'>u32</span>,
@@ -234,7 +235,7 @@
 }
 
 <span class='kw'>impl</span> <span class='ident'>Floating</span> <span class='kw'>for</span> <span class='ident'>f64</span> {
-    <span class='kw'>fn</span> <span class='ident'>write</span><span class='op'>&lt;</span><span class='ident'>W</span>: <span class='ident'>io</span>::<span class='ident'>Write</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>wr</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>W</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>write</span><span class='op'>&lt;</span><span class='ident'>W</span>: <span class='ident'>io</span>::<span class='ident'>Write</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>wr</span>: <span class='ident'>W</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span> {
         <span class='macro'>dtoa</span><span class='macro'>!</span> {
             <span class='ident'>floating_type</span>: <span class='ident'>f64</span>,
             <span class='ident'>significand_type</span>: <span class='ident'>u64</span>,
@@ -392,11 +393,9 @@
     <script>
         window.rootPath = "../../";
         window.currentCrate = "dtoa";
-        window.playgroundUrl = "";
     </script>
     <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
-    
     <script defer src="../../search-index.js"></script>
 </body>
 </html>

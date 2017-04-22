@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["DH",""]]});
+initSidebarItems({"struct":[["Dh",""],["DhRef",""]]});

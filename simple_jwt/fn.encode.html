@@ -9,6 +9,7 @@
 
     <title>simple_jwt::encode - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
     <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
     
@@ -47,8 +48,8 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-721' class='srclink' href='../src/simple_jwt/src/lib.rs.html#136-154' title='goto source code'>[src]</a></span></h1>
-<pre class='rust fn'>pub fn encode(body: &amp;<a class='struct' href='../simple_jwt/struct.Claim.html' title='simple_jwt::Claim'>Claim</a>, secret: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, alg: <a class='enum' href='../simple_jwt/enum.Algorithm.html' title='simple_jwt::Algorithm'>Algorithm</a>) -&gt; <a class='type' href='../simple_jwt/type.Result.html' title='simple_jwt::Result'>Result</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</pre><div class='docblock'><p>encode a Claim to jwt string, if you are using RS256/384/512, secret should be your private key</p>
+               </span><a class='srclink' href='../src/simple_jwt/lib.rs.html#228-244' title='goto source code'>[src]</a></span></h1>
+<pre class='rust fn'>pub fn encode&lt;T:&nbsp;<a class='trait' href='../simple_jwt/trait.JWTStringConvertable.html' title='simple_jwt::JWTStringConvertable'>JWTStringConvertable</a>&gt;(body: &amp;T,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; secret: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; alg: <a class='enum' href='../simple_jwt/enum.Algorithm.html' title='simple_jwt::Algorithm'>Algorithm</a>)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class='type' href='../simple_jwt/type.Result.html' title='simple_jwt::Result'>Result</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</pre><div class='docblock'><p>encode a Claim to jwt string, if you are using RS256/384/512, secret should be your private key</p>
 </div></section>
     <section id='search' class="content hidden"></section>
 
@@ -105,11 +106,9 @@
     <script>
         window.rootPath = "../";
         window.currentCrate = "simple_jwt";
-        window.playgroundUrl = "";
     </script>
     <script src="../jquery.js"></script>
     <script src="../main.js"></script>
-    
     <script defer src="../search-index.js"></script>
 </body>
 </html>

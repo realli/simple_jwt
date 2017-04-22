@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Asn1Time","Corresponds to the ASN.1 structure Time defined in RFC5280"],["Asn1TimeRef","A borrowed Asn1Time"]]});
+initSidebarItems({"struct":[["Asn1BitString",""],["Asn1BitStringRef",""],["Asn1GeneralizedTime",""],["Asn1GeneralizedTimeRef",""],["Asn1Integer",""],["Asn1IntegerRef",""],["Asn1Object",""],["Asn1ObjectRef",""],["Asn1String",""],["Asn1StringRef",""],["Asn1Time",""],["Asn1TimeRef",""]]});
