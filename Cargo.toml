@@ -1,11 +1,10 @@
 [package]
 name = "simple_jwt"
-version = "1.0.0"
+version = "1.1.0"
 license = "MIT"
 authors = ["realli <lrlanswer@gmail.com>"]
-build = "build.rs"
 keywords = ["jwt", "web", "json", "token"]
-description = "json web token encode/decode"
+description = "json web token(JWT) encode/decode"
 repository = "https://github.com/realli/simple_jwt"
 documentation = "http://realli.github.io/simple_jwt/simple_jwt/"
 
@@ -14,6 +13,7 @@ serde = "1.0"
 serde_derive = "1.0"
 serde_json = "1.0"
 base64 = "~0.4.0"
+error-chain = "0.10"
 
 [dependencies.openssl]
 version = "0.9.2"

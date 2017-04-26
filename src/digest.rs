@@ -5,7 +5,7 @@ use openssl::sign::{Signer, Verifier};
 use openssl::memcmp::eq;
 use base64::{encode_config, URL_SAFE};
 
-use super::errors::{Result, JWTError};
+use super::errors::*;
 use super::header::Algorithm;
 
 fn create_message_digest(alg: Algorithm) -> MessageDigest {
@@ -40,7 +40,7 @@ pub fn hs_verify(secret: &str,
     let digest_u8s = &try!(_hs_signature(secret, data, alg));
     if digest_u8s.len() != sig.len()
         || !eq(digest_u8s, sig) {
-        return Err(JWTError::InvalidSignature);
+        return Err(ErrorKind::InvalidSignature.into());
     }
     Ok(())
 }
@@ -71,6 +71,6 @@ pub fn rsa_verify(pem_string: &str,
     if b {
         Ok(())
     } else {
-        Err(JWTError::InvalidSignature)
+        Err(ErrorKind::InvalidSignature.into())
     }
 }

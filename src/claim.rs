@@ -4,7 +4,7 @@ use serde_json;
 use serde_json::value::{Map, Value, to_value};
 use base64::{encode_config, decode_config, URL_SAFE};
 
-use super::errors::{JWTError, Result};
+use super::errors::*;
 use super::utils::JWTStringConvertable;
 
 #[allow(unused_attributes)]
@@ -90,7 +90,7 @@ impl JWTStringConvertable for Claim {
         let obj: Value = try!(serde_json::from_slice(&slice));
         let mut map = match obj {
             Value::Object(map) => map,
-            _ => return Err(JWTError::InvalidFormat)
+            _ => return Err(ErrorKind::InvalidFormat.into())
         };
         // dispatch every items to 
         let mut claim = Claim::default();
@@ -100,43 +100,43 @@ impl JWTStringConvertable for Claim {
                 Some(Value::Number(u)) => u.as_u64(),
                 Some(Value::Null) => None,
                 None => None,
-                _ => return Err(JWTError::InvalidFormat),
+                _ => return Err(ErrorKind::InvalidFormat.into()),
             };
             reg.nbf = match map.remove("nbf") {
                 Some(Value::Number(u)) => u.as_u64(),
                 Some(Value::Null) => None,
                 None => None,
-                _ => return Err(JWTError::InvalidFormat),
+                _ => return Err(ErrorKind::InvalidFormat.into()),
             };
             reg.iat = match map.remove("iat") {
                 Some(Value::Number(u)) => u.as_u64(),
                 Some(Value::Null) => None,
                 None => None,
-                _ => return Err(JWTError::InvalidFormat),
+                _ => return Err(ErrorKind::InvalidFormat.into()),
             };
             reg.iss = match map.remove("iss") {
                 Some(Value::String(u)) => Some(u),
                 Some(Value::Null) => None,
                 None => None,
-                _ => return Err(JWTError::InvalidFormat),
+                _ => return Err(ErrorKind::InvalidFormat.into()),
             };
             reg.aud = match map.remove("aud") {
                 Some(Value::String(u)) => Some(u),
                 Some(Value::Null) => None,
                 None => None,
-                _ => return Err(JWTError::InvalidFormat),
+                _ => return Err(ErrorKind::InvalidFormat.into()),
             };
             reg.sub = match map.remove("sub") {
                 Some(Value::String(u)) => Some(u),
                 Some(Value::Null) => None,
                 None => None,
-                _ => return Err(JWTError::InvalidFormat),
+                _ => return Err(ErrorKind::InvalidFormat.into()),
             };
             reg.jti = match map.remove("jti") {
                 Some(Value::String(u)) => Some(u),
                 Some(Value::Null) => None,
                 None => None,
-                _ => return Err(JWTError::InvalidFormat),
+                _ => return Err(ErrorKind::InvalidFormat.into()),
             };
         }
         claim.payload = map;

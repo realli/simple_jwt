@@ -28,6 +28,7 @@
 //!
 //! Or simple use your custom struct
 //!
+//!
 //! ```
 //! #[macro_use]
 //! extern crate serde_derive;
@@ -56,6 +57,10 @@
 //!
 //! The test in lib.rs contains more example
 //!
+#![recursion_limit = "1024"]
+
+#[macro_use]
+extern crate error_chain;
 
 #[macro_use]
 extern crate serde_derive;
@@ -75,6 +80,17 @@ mod claim;
 #[cfg(test)]
 mod tests {
     use super::*;
+    // A helper macro to compare error
+    // copy from https://github.com/brson/error-chain/issues/95
+    //
+    // usage: 
+    // assert_error_kind!(some_err, ErrorKind::MyErrorType)
+    macro_rules! assert_error_kind {
+        ($err:expr, $kind:pat) => (match $err.kind() {
+            &$kind => assert!(true, "{:?} is of kind {:?}", $err, stringify!($kind)),
+            _     => assert!(false, "{:?} is NOT of kind {:?}", $err, stringify!($kind))
+        });
+    }
 
     #[derive(Serialize, Deserialize)]
     struct TestStruct {
@@ -152,7 +168,8 @@ mod tests {
 
         let new_claim: Result<Claim> = decode(&fake_jwt_str, "secret");
         assert!(new_claim.is_err());
-        assert_eq!(JWTError::InvalidSignature, new_claim.unwrap_err());
+        let err = new_claim.unwrap_err();
+        assert_error_kind!(err, ErrorKind::InvalidSignature);
     }
 
     #[test]
@@ -221,7 +238,7 @@ use base64::{decode_config, URL_SAFE};
 pub use self::header::{Header, Algorithm};
 pub use self::claim::Claim;
 pub use self::utils::JWTStringConvertable;
-pub use self::errors::{JWTError, Result};
+pub use self::errors::*;
 use self::digest::{hs_signature, hs_verify, rsa_signature, rsa_verify};
 
 /// encode a Claim to jwt string, if you are using RS256/384/512, secret should be your private key
@@ -247,7 +264,7 @@ pub fn encode<T: JWTStringConvertable>(body: &T, secret: &str, alg: Algorithm) -
 pub fn decode<T: JWTStringConvertable>(jwtstr: &str, secret: &str) -> Result<T> {
     let vec: Vec<&str> = jwtstr.split('.').collect();
     if vec.len() != 3 {
-        return Err(JWTError::InvalidFormat);
+        return Err(ErrorKind::InvalidFormat.into());
     }
 
     // decode header first
