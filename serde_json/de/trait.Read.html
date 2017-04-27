@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc trait">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../index.html'>serde_json</a>::<wbr><a href='index.html'>de</a></p><script>window.sidebarCurrent = {name: 'Read', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Trait Read</p><div class="block items"><ul><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='../index.html'>serde_json</a>::<wbr><a href='index.html'>de</a></p><script>window.sidebarCurrent = {name: 'Read', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -43,8 +43,8 @@
         </form>
     </nav>
 
-    <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>serde_json</a>::<wbr><a href='index.html'>de</a>::<wbr><a class='trait' href=''>Read</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>serde_json</a>::<wbr><a href='index.html'>de</a>::<wbr><a class="trait" href=''>Read</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
@@ -52,15 +52,14 @@
 <pre class='rust trait'>pub trait Read&lt;'de&gt;: Sealed { }</pre><div class='docblock'><p>Trait used by the deserializer for iterating over input. This is manually
 &quot;specialized&quot; for iterating over &amp;[u8]. Once feature(specialization) is
 stable we can use actual specialization.</p>
-
 <p>This trait is sealed and cannot be implemented for types outside of
 <code>serde_json</code>.</p>
 </div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;'de, R&gt; Read&lt;'de&gt; for <a class='struct' href='../../serde_json/de/struct.IoRead.html' title='serde_json::de::IoRead'>IoRead</a>&lt;R&gt; <span class='where fmt-newline'>where R: <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Read.html' title='std::io::Read'>Read</a></span></code></li>
-<li><code>impl&lt;'a&gt; Read&lt;'a&gt; for <a class='struct' href='../../serde_json/de/struct.SliceRead.html' title='serde_json::de::SliceRead'>SliceRead</a>&lt;'a&gt;</code></li>
-<li><code>impl&lt;'a&gt; Read&lt;'a&gt; for <a class='struct' href='../../serde_json/de/struct.StrRead.html' title='serde_json::de::StrRead'>StrRead</a>&lt;'a&gt;</code></li>
+    <li><code>impl&lt;'de, R&gt; Read&lt;'de&gt; for <a class="struct" href="../../serde_json/de/struct.IoRead.html" title="struct serde_json::de::IoRead">IoRead</a>&lt;R&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;R: <a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Read.html" title="trait std::io::Read">Read</a>,&nbsp;</span></code></li>
+<li><code>impl&lt;'a&gt; Read&lt;'a&gt; for <a class="struct" href="../../serde_json/de/struct.SliceRead.html" title="struct serde_json::de::SliceRead">SliceRead</a>&lt;'a&gt;</code></li>
+<li><code>impl&lt;'a&gt; Read&lt;'a&gt; for <a class="struct" href="../../serde_json/de/struct.StrRead.html" title="struct serde_json::de::StrRead">StrRead</a>&lt;'a&gt;</code></li>
 </ul><script type="text/javascript" async
                          src="../../implementors/serde_json/de/trait.Read.js">
                  </script></section>

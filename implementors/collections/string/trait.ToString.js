@@ -1,6 +1,7 @@
 (function() {var implementors = {};
+implementors["error_chain"] = [];
 implementors["libc"] = [];
-implementors["openssl"] = ["impl <a class='trait' href='https://doc.rust-lang.org/nightly/collections/string/trait.ToString.html' title='collections::string::ToString'>ToString</a> for <a class='enum' href='openssl/x509/extension/enum.Extension.html' title='openssl::x509::extension::Extension'>Extension</a>",];
+implementors["openssl"] = ["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/collections/string/trait.ToString.html\" title=\"trait collections::string::ToString\">ToString</a> for <a class=\"enum\" href=\"openssl/x509/extension/enum.Extension.html\" title=\"enum openssl::x509::extension::Extension\">Extension</a>",];
 implementors["serde"] = [];
 implementors["syn"] = [];
 

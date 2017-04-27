@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc trait">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='index.html'>simple_jwt</a></p><script>window.sidebarCurrent = {name: 'JWTStringConvertable', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Trait JWTStringConvertable</p><div class="block items"><ul><li><a href="#required-methods">Required Methods</a></li><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='index.html'>simple_jwt</a></p><script>window.sidebarCurrent = {name: 'JWTStringConvertable', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -43,25 +43,25 @@
         </form>
     </nav>
 
-    <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>simple_jwt</a>::<wbr><a class='trait' href=''>JWTStringConvertable</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>simple_jwt</a>::<wbr><a class="trait" href=''>JWTStringConvertable</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../src/simple_jwt/utils.rs.html#11-14' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait JWTStringConvertable: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> {
-    fn <a href='#tymethod.from_base64_str' class='fnname'>from_base64_str</a>(string: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='type' href='../simple_jwt/type.Result.html' title='simple_jwt::Result'>Result</a>&lt;Self&gt;;
-    fn <a href='#tymethod.to_base64_str' class='fnname'>to_base64_str</a>(&amp;self) -&gt; <a class='type' href='../simple_jwt/type.Result.html' title='simple_jwt::Result'>Result</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;;
+<pre class='rust trait'>pub trait JWTStringConvertable: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> {
+    fn <a href='#tymethod.from_base64_str' class='fnname'>from_base64_str</a>(string: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a class="type" href="../simple_jwt/type.Result.html" title="type simple_jwt::Result">Result</a>&lt;Self&gt;;
+    fn <a href='#tymethod.to_base64_str' class='fnname'>to_base64_str</a>(&amp;self) -&gt; <a class="type" href="../simple_jwt/type.Result.html" title="type simple_jwt::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>&gt;;
 }</pre><div class='docblock'><p>trait that can be convert to/from base64 string
 impl for serde::Serialize+serde::Deserialize are already defined</p>
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.from_base64_str' class='method'><span id='from_base64_str.v' class='invisible'><code>fn <a href='#tymethod.from_base64_str' class='fnname'>from_base64_str</a>(string: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='type' href='../simple_jwt/type.Result.html' title='simple_jwt::Result'>Result</a>&lt;Self&gt;</code></span></h3><h3 id='tymethod.to_base64_str' class='method'><span id='to_base64_str.v' class='invisible'><code>fn <a href='#tymethod.to_base64_str' class='fnname'>to_base64_str</a>(&amp;self) -&gt; <a class='type' href='../simple_jwt/type.Result.html' title='simple_jwt::Result'>Result</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></span></h3></div>
+        <h3 id='tymethod.from_base64_str' class='method'><span id='from_base64_str.v' class='invisible'><code>fn <a href='#tymethod.from_base64_str' class='fnname'>from_base64_str</a>(string: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a class="type" href="../simple_jwt/type.Result.html" title="type simple_jwt::Result">Result</a>&lt;Self&gt;</code></span></h3><h3 id='tymethod.to_base64_str' class='method'><span id='to_base64_str.v' class='invisible'><code>fn <a href='#tymethod.to_base64_str' class='fnname'>to_base64_str</a>(&amp;self) -&gt; <a class="type" href="../simple_jwt/type.Result.html" title="type simple_jwt::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>&gt;</code></span></h3></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;T&gt; JWTStringConvertable for T <span class='where fmt-newline'>where T: <a class='trait' href='../serde/ser/trait.Serialize.html' title='serde::ser::Serialize'>Serialize</a> + <a class='trait' href='../serde/de/trait.DeserializeOwned.html' title='serde::de::DeserializeOwned'>DeserializeOwned</a></span></code></li>
-<li><code>impl JWTStringConvertable for <a class='struct' href='../simple_jwt/struct.Claim.html' title='simple_jwt::Claim'>Claim</a></code></li>
+    <li><code>impl&lt;T&gt; JWTStringConvertable for T <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../serde/ser/trait.Serialize.html" title="trait serde::ser::Serialize">Serialize</a> + <a class="trait" href="../serde/de/trait.DeserializeOwned.html" title="trait serde::de::DeserializeOwned">DeserializeOwned</a>,&nbsp;</span></code></li>
+<li><code>impl JWTStringConvertable for <a class="struct" href="../simple_jwt/struct.Claim.html" title="struct simple_jwt::Claim">Claim</a></code></li>
 </ul><script type="text/javascript" async
                          src="../implementors/simple_jwt/trait.JWTStringConvertable.js">
                  </script></section>

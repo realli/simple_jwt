@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -313,173 +313,207 @@
 <span id="268">268</span>
 <span id="269">269</span>
 <span id="270">270</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! # Introduction</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! A very simple crate to deal with [json web token](http://jwt.io), </span>
-<span class='doccomment'>//! this lib use the `rust-openssl`, so you may want to check the</span>
-<span class='doccomment'>//! [rust-openssl](https://github.com/sfackler/rust-openssl) to find the</span>
-<span class='doccomment'>//! set-up of openssl runtime lib. </span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! # Support Algirithm</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! * HS256/384/512</span>
-<span class='doccomment'>//! * RS256/384/512</span>
-<span class='doccomment'>//! * to be added...</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! # Example</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ```</span>
-<span class='doccomment'>//! use simple_jwt::{encode, decode, Claim, Algorithm};</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! let mut claim = Claim::default();</span>
-<span class='doccomment'>//! claim.set_iss(&quot;some iss&quot;);</span>
-<span class='doccomment'>//! claim.set_payload_field(&quot;stringhh&quot;, 12);</span>
-<span class='doccomment'>//! let result = encode(&amp;claim, &quot;secret&quot;, Algorithm::HS256).unwrap();</span>
-<span class='doccomment'>//! println!(&quot;hashed result is {}&quot;, result);</span>
-<span class='doccomment'>//! let new_claim = decode(&amp;result, &quot;secret&quot;).unwrap();</span>
-<span class='doccomment'>//! assert_eq!(claim, new_claim);</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ```</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! Or simple use your custom struct</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ```</span>
-<span class='doccomment'>//! #[macro_use]</span>
-<span class='doccomment'>//! extern crate serde_derive;</span>
-<span class='doccomment'>//! extern crate serde;</span>
-<span class='doccomment'>//! extern crate simple_jwt;</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! use serde::{Serialize, Deserialize};</span>
-<span class='doccomment'>//! use simple_jwt::{encode, decode, Claim, Algorithm};</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! #[derive(Serialize, Deserialize, PartialEq, Debug)]</span>
-<span class='doccomment'>//! struct MyStruct {</span>
-<span class='doccomment'>//!     field_u32: u32,</span>
-<span class='doccomment'>//!     field_str: String</span>
-<span class='doccomment'>//! }</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! fn main() {</span>
-<span class='doccomment'>//!     let myStruct = MyStruct {field_str: String::from(&quot;hello&quot;), field_u32: 32};</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!     let result = encode(&amp;myStruct, &quot;secret&quot;, Algorithm::HS256).unwrap();</span>
-<span class='doccomment'>//!     println!(&quot;hashed result is {}&quot;, result);</span>
-<span class='doccomment'>//!     let newStruct = decode(&amp;result, &quot;secret&quot;).unwrap();</span>
-<span class='doccomment'>//!     assert_eq!(myStruct, newStruct);</span>
-<span class='doccomment'>//! }</span>
-<span class='doccomment'>//! ```</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! The test in lib.rs contains more example</span>
-<span class='doccomment'>//!</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! # Introduction</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! A very simple crate to deal with [json web token](http://jwt.io), </span>
+<span class="doccomment">//! this lib use the `rust-openssl`, so you may want to check the</span>
+<span class="doccomment">//! [rust-openssl](https://github.com/sfackler/rust-openssl) to find the</span>
+<span class="doccomment">//! set-up of openssl runtime lib. </span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! # Support Algirithm</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! * HS256/384/512</span>
+<span class="doccomment">//! * RS256/384/512</span>
+<span class="doccomment">//! * to be added...</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! # Example</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//! use simple_jwt::{encode, decode, Claim, Algorithm};</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! let mut claim = Claim::default();</span>
+<span class="doccomment">//! claim.set_iss(&quot;some iss&quot;);</span>
+<span class="doccomment">//! claim.set_payload_field(&quot;stringhh&quot;, 12);</span>
+<span class="doccomment">//! let result = encode(&amp;claim, &quot;secret&quot;, Algorithm::HS256).unwrap();</span>
+<span class="doccomment">//! println!(&quot;hashed result is {}&quot;, result);</span>
+<span class="doccomment">//! let new_claim = decode(&amp;result, &quot;secret&quot;).unwrap();</span>
+<span class="doccomment">//! assert_eq!(claim, new_claim);</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Or simple use your custom struct</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//! #[macro_use]</span>
+<span class="doccomment">//! extern crate serde_derive;</span>
+<span class="doccomment">//! extern crate serde;</span>
+<span class="doccomment">//! extern crate simple_jwt;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! use serde::{Serialize, Deserialize};</span>
+<span class="doccomment">//! use simple_jwt::{encode, decode, Claim, Algorithm};</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! #[derive(Serialize, Deserialize, PartialEq, Debug)]</span>
+<span class="doccomment">//! struct MyStruct {</span>
+<span class="doccomment">//!     field_u32: u32,</span>
+<span class="doccomment">//!     field_str: String</span>
+<span class="doccomment">//! }</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! fn main() {</span>
+<span class="doccomment">//!     let myStruct = MyStruct {field_str: String::from(&quot;hello&quot;), field_u32: 32};</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     let result = encode(&amp;myStruct, &quot;secret&quot;, Algorithm::HS256).unwrap();</span>
+<span class="doccomment">//!     println!(&quot;hashed result is {}&quot;, result);</span>
+<span class="doccomment">//!     let newStruct = decode(&amp;result, &quot;secret&quot;).unwrap();</span>
+<span class="doccomment">//!     assert_eq!(myStruct, newStruct);</span>
+<span class="doccomment">//! }</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! The test in lib.rs contains more example</span>
+<span class="doccomment">//!</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">recursion_limit</span> <span class="op">=</span> <span class="string">&quot;1024&quot;</span>]</span>
 
-<span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>serde_derive</span>;
+<span class="attribute">#[<span class="ident">macro_use</span>]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">error_chain</span>;
 
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>serde</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>serde_json</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>base64</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>openssl</span>;
+<span class="attribute">#[<span class="ident">macro_use</span>]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">serde_derive</span>;
 
-<span class='kw'>mod</span> <span class='ident'>errors</span>;
-<span class='kw'>mod</span> <span class='ident'>utils</span>;
-<span class='kw'>mod</span> <span class='ident'>header</span>;
-<span class='kw'>mod</span> <span class='ident'>digest</span>;
-<span class='kw'>mod</span> <span class='ident'>claim</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">serde</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">serde_json</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">base64</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">openssl</span>;
+
+<span class="kw">mod</span> <span class="ident">errors</span>;
+<span class="kw">mod</span> <span class="ident">utils</span>;
+<span class="kw">mod</span> <span class="ident">header</span>;
+<span class="kw">mod</span> <span class="ident">digest</span>;
+<span class="kw">mod</span> <span class="ident">claim</span>;
 
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span>
-<span class='kw'>mod</span> <span class='ident'>tests</span> {
-    <span class='kw'>use</span> <span class='kw'>super</span>::<span class='kw-2'>*</span>;
-
-    <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Serialize</span>, <span class='ident'>Deserialize</span>)]</span>
-    <span class='kw'>struct</span> <span class='ident'>TestStruct</span> {
-        <span class='ident'>field_u32</span>: <span class='ident'>u32</span>,
-        <span class='ident'>field_str</span>: <span class='ident'>String</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
+<span class="kw">mod</span> <span class="ident">tests</span> {
+    <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
+    <span class="comment">// A helper macro to compare error</span>
+    <span class="comment">// copy from https://github.com/brson/error-chain/issues/95</span>
+    <span class="comment">//</span>
+    <span class="comment">// usage: </span>
+    <span class="comment">// assert_error_kind!(some_err, ErrorKind::MyErrorType)</span>
+    <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">assert_error_kind</span> {
+        (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">err</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">kind</span>:<span class="ident">pat</span>) <span class="op">=&gt;</span> (<span class="kw">match</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">err</span>.<span class="ident">kind</span>() {
+            <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">kind</span> <span class="op">=&gt;</span> <span class="macro">assert</span><span class="macro">!</span>(<span class="bool-val">true</span>, <span class="string">&quot;{:?} is of kind {:?}&quot;</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">err</span>, <span class="macro">stringify</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">kind</span>)),
+            _     <span class="op">=&gt;</span> <span class="macro">assert</span><span class="macro">!</span>(<span class="bool-val">false</span>, <span class="string">&quot;{:?} is NOT of kind {:?}&quot;</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">err</span>, <span class="macro">stringify</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">kind</span>))
+        });
     }
 
-    <span class='attribute'>#[<span class='ident'>test</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>header_can_be_convert_from_and_to_base64</span>() {
-        <span class='kw'>let</span> <span class='ident'>header</span> <span class='op'>=</span> <span class='ident'>Header</span>::<span class='ident'>new</span>(<span class='ident'>Algorithm</span>::<span class='ident'>default</span>());
-        <span class='kw'>let</span> <span class='ident'>b_string</span> <span class='op'>=</span> <span class='ident'>header</span>.<span class='ident'>to_base64_str</span>().<span class='ident'>unwrap</span>();
-        <span class='kw'>let</span> <span class='ident'>new_header</span> <span class='op'>=</span> <span class='ident'>Header</span>::<span class='ident'>from_base64_str</span>(<span class='kw-2'>&amp;</span><span class='ident'>b_string</span>).<span class='ident'>unwrap</span>();
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>header</span>, <span class='ident'>new_header</span>);
+    <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>)]</span>
+    <span class="kw">struct</span> <span class="ident">TestStruct</span> {
+        <span class="ident">field_u32</span>: <span class="ident">u32</span>,
+        <span class="ident">field_str</span>: <span class="ident">String</span>
     }
 
-    <span class='attribute'>#[<span class='ident'>test</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>claim_can_be_convert_form_and_to_base64</span>() {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>claim</span> <span class='op'>=</span> <span class='ident'>Claim</span>::<span class='ident'>default</span>();
-        <span class='ident'>claim</span>.<span class='ident'>set_iss</span>(<span class='string'>&quot;realli&quot;</span>);
-        <span class='kw'>let</span> <span class='ident'>b_string</span> <span class='op'>=</span> <span class='ident'>claim</span>.<span class='ident'>to_base64_str</span>().<span class='ident'>unwrap</span>();
-        <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;bstring is {}&quot;</span>,<span class='ident'>b_string</span>);
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>new_claim</span> <span class='op'>=</span> <span class='ident'>Claim</span>::<span class='ident'>from_base64_str</span>(<span class='kw-2'>&amp;</span><span class='ident'>b_string</span>).<span class='ident'>unwrap</span>();
-        <span class='ident'>new_claim</span>.<span class='ident'>set_iss</span>(<span class='string'>&quot;realli&quot;</span>);
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>claim</span>, <span class='ident'>new_claim</span>);
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">header_can_be_convert_from_and_to_base64</span>() {
+        <span class="kw">let</span> <span class="ident">header</span> <span class="op">=</span> <span class="ident">Header</span>::<span class="ident">new</span>(<span class="ident">Algorithm</span>::<span class="ident">default</span>());
+        <span class="kw">let</span> <span class="ident">b_string</span> <span class="op">=</span> <span class="ident">header</span>.<span class="ident">to_base64_str</span>().<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">new_header</span> <span class="op">=</span> <span class="ident">Header</span>::<span class="ident">from_base64_str</span>(<span class="kw-2">&amp;</span><span class="ident">b_string</span>).<span class="ident">unwrap</span>();
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">header</span>, <span class="ident">new_header</span>);
     }
 
-    <span class='attribute'>#[<span class='ident'>test</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>encoding_and_decoding_should_work_back_forth</span>() {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>claim</span> <span class='op'>=</span> <span class='ident'>Claim</span>::<span class='ident'>default</span>();
-        <span class='ident'>claim</span>.<span class='ident'>set_iss</span>(<span class='string'>&quot;realli&quot;</span>);
-        <span class='ident'>claim</span>.<span class='ident'>set_payload_field</span>(<span class='string'>&quot;stringhh&quot;</span>, <span class='number'>12</span>);
-        <span class='kw'>let</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>encode</span>(<span class='kw-2'>&amp;</span><span class='ident'>claim</span>, <span class='string'>&quot;secret&quot;</span>, <span class='ident'>Algorithm</span>::<span class='ident'>default</span>()).<span class='ident'>unwrap</span>();
-        <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;hashed result is {}&quot;</span>, <span class='ident'>result</span>);
-        <span class='kw'>let</span> <span class='ident'>new_claim</span> <span class='op'>=</span> <span class='ident'>decode</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>, <span class='string'>&quot;secret&quot;</span>).<span class='ident'>unwrap</span>();
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>claim</span>, <span class='ident'>new_claim</span>);
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">claim_can_be_convert_form_and_to_base64</span>() {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">claim</span> <span class="op">=</span> <span class="ident">Claim</span>::<span class="ident">default</span>();
+        <span class="ident">claim</span>.<span class="ident">set_iss</span>(<span class="string">&quot;realli&quot;</span>);
+        <span class="kw">let</span> <span class="ident">b_string</span> <span class="op">=</span> <span class="ident">claim</span>.<span class="ident">to_base64_str</span>().<span class="ident">unwrap</span>();
+        <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;bstring is {}&quot;</span>,<span class="ident">b_string</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new_claim</span> <span class="op">=</span> <span class="ident">Claim</span>::<span class="ident">from_base64_str</span>(<span class="kw-2">&amp;</span><span class="ident">b_string</span>).<span class="ident">unwrap</span>();
+        <span class="ident">new_claim</span>.<span class="ident">set_iss</span>(<span class="string">&quot;realli&quot;</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">claim</span>, <span class="ident">new_claim</span>);
     }
 
-    <span class='attribute'>#[<span class='ident'>test</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>hs256_hs384_hs512_should_work</span>() {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>claim</span> <span class='op'>=</span> <span class='ident'>Claim</span>::<span class='ident'>default</span>();
-        <span class='ident'>claim</span>.<span class='ident'>set_iss</span>(<span class='string'>&quot;realli&quot;</span>);
-        <span class='ident'>claim</span>.<span class='ident'>set_payload_field</span>(<span class='string'>&quot;stringhh&quot;</span>, <span class='number'>12</span>);
-        <span class='kw'>let</span> <span class='ident'>result0</span> <span class='op'>=</span> <span class='ident'>encode</span>(<span class='kw-2'>&amp;</span><span class='ident'>claim</span>, <span class='string'>&quot;secret&quot;</span>, <span class='ident'>Algorithm</span>::<span class='ident'>HS256</span>).<span class='ident'>unwrap</span>();
-        <span class='kw'>let</span> <span class='ident'>result1</span> <span class='op'>=</span> <span class='ident'>encode</span>(<span class='kw-2'>&amp;</span><span class='ident'>claim</span>, <span class='string'>&quot;secret&quot;</span>, <span class='ident'>Algorithm</span>::<span class='ident'>HS384</span>).<span class='ident'>unwrap</span>();
-        <span class='kw'>let</span> <span class='ident'>result2</span> <span class='op'>=</span> <span class='ident'>encode</span>(<span class='kw-2'>&amp;</span><span class='ident'>claim</span>, <span class='string'>&quot;secret&quot;</span>, <span class='ident'>Algorithm</span>::<span class='ident'>HS512</span>).<span class='ident'>unwrap</span>();
-        <span class='kw'>let</span> <span class='ident'>new_claim0</span> <span class='op'>=</span> <span class='ident'>decode</span>(<span class='kw-2'>&amp;</span><span class='ident'>result0</span>, <span class='string'>&quot;secret&quot;</span>).<span class='ident'>unwrap</span>();
-        <span class='kw'>let</span> <span class='ident'>new_claim1</span> <span class='op'>=</span> <span class='ident'>decode</span>(<span class='kw-2'>&amp;</span><span class='ident'>result1</span>, <span class='string'>&quot;secret&quot;</span>).<span class='ident'>unwrap</span>();
-        <span class='kw'>let</span> <span class='ident'>new_claim2</span> <span class='op'>=</span> <span class='ident'>decode</span>(<span class='kw-2'>&amp;</span><span class='ident'>result2</span>, <span class='string'>&quot;secret&quot;</span>).<span class='ident'>unwrap</span>();
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>claim</span>, <span class='ident'>new_claim0</span>);
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>claim</span>, <span class='ident'>new_claim1</span>);
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>claim</span>, <span class='ident'>new_claim2</span>);
-
-        <span class='kw'>let</span> <span class='ident'>s</span> <span class='op'>=</span> <span class='ident'>TestStruct</span> {<span class='ident'>field_u32</span>: <span class='number'>32</span>, <span class='ident'>field_str</span>: <span class='ident'>String</span>::<span class='ident'>from</span>(<span class='string'>&quot;hello&quot;</span>)};
-        <span class='kw'>let</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>encode</span>(<span class='kw-2'>&amp;</span><span class='ident'>s</span>, <span class='string'>&quot;secret&quot;</span>, <span class='ident'>Algorithm</span>::<span class='ident'>HS256</span>).<span class='ident'>unwrap</span>();
-        <span class='kw'>let</span> <span class='ident'>new_s</span>: <span class='ident'>TestStruct</span> <span class='op'>=</span> <span class='ident'>decode</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>, <span class='string'>&quot;secret&quot;</span>).<span class='ident'>unwrap</span>();
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>.<span class='ident'>field_u32</span>, <span class='ident'>new_s</span>.<span class='ident'>field_u32</span>);
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>.<span class='ident'>field_str</span>, <span class='ident'>new_s</span>.<span class='ident'>field_str</span>);
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">encoding_and_decoding_should_work_back_forth</span>() {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">claim</span> <span class="op">=</span> <span class="ident">Claim</span>::<span class="ident">default</span>();
+        <span class="ident">claim</span>.<span class="ident">set_iss</span>(<span class="string">&quot;realli&quot;</span>);
+        <span class="ident">claim</span>.<span class="ident">set_payload_field</span>(<span class="string">&quot;stringhh&quot;</span>, <span class="number">12</span>);
+        <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">encode</span>(<span class="kw-2">&amp;</span><span class="ident">claim</span>, <span class="string">&quot;secret&quot;</span>, <span class="ident">Algorithm</span>::<span class="ident">default</span>()).<span class="ident">unwrap</span>();
+        <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;hashed result is {}&quot;</span>, <span class="ident">result</span>);
+        <span class="kw">let</span> <span class="ident">new_claim</span> <span class="op">=</span> <span class="ident">decode</span>(<span class="kw-2">&amp;</span><span class="ident">result</span>, <span class="string">&quot;secret&quot;</span>).<span class="ident">unwrap</span>();
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">claim</span>, <span class="ident">new_claim</span>);
     }
 
-    <span class='attribute'>#[<span class='ident'>test</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>hs256_hs384_hs512_invalid_signature_should_be_recognized</span>() {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>claim</span> <span class='op'>=</span> <span class='ident'>Claim</span>::<span class='ident'>default</span>();
-        <span class='ident'>claim</span>.<span class='ident'>set_iss</span>(<span class='string'>&quot;realli&quot;</span>);
-        <span class='ident'>claim</span>.<span class='ident'>set_payload_field</span>(<span class='string'>&quot;stringhh&quot;</span>, <span class='number'>12</span>);
-        <span class='kw'>let</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>encode</span>(<span class='kw-2'>&amp;</span><span class='ident'>claim</span>, <span class='string'>&quot;secret&quot;</span>, <span class='ident'>Algorithm</span>::<span class='ident'>HS256</span>).<span class='ident'>unwrap</span>();
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">hs256_hs384_hs512_should_work</span>() {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">claim</span> <span class="op">=</span> <span class="ident">Claim</span>::<span class="ident">default</span>();
+        <span class="ident">claim</span>.<span class="ident">set_iss</span>(<span class="string">&quot;realli&quot;</span>);
+        <span class="ident">claim</span>.<span class="ident">set_payload_field</span>(<span class="string">&quot;stringhh&quot;</span>, <span class="number">12</span>);
+        <span class="kw">let</span> <span class="ident">result0</span> <span class="op">=</span> <span class="ident">encode</span>(<span class="kw-2">&amp;</span><span class="ident">claim</span>, <span class="string">&quot;secret&quot;</span>, <span class="ident">Algorithm</span>::<span class="ident">HS256</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">result1</span> <span class="op">=</span> <span class="ident">encode</span>(<span class="kw-2">&amp;</span><span class="ident">claim</span>, <span class="string">&quot;secret&quot;</span>, <span class="ident">Algorithm</span>::<span class="ident">HS384</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">result2</span> <span class="op">=</span> <span class="ident">encode</span>(<span class="kw-2">&amp;</span><span class="ident">claim</span>, <span class="string">&quot;secret&quot;</span>, <span class="ident">Algorithm</span>::<span class="ident">HS512</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">new_claim0</span> <span class="op">=</span> <span class="ident">decode</span>(<span class="kw-2">&amp;</span><span class="ident">result0</span>, <span class="string">&quot;secret&quot;</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">new_claim1</span> <span class="op">=</span> <span class="ident">decode</span>(<span class="kw-2">&amp;</span><span class="ident">result1</span>, <span class="string">&quot;secret&quot;</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">new_claim2</span> <span class="op">=</span> <span class="ident">decode</span>(<span class="kw-2">&amp;</span><span class="ident">result2</span>, <span class="string">&quot;secret&quot;</span>).<span class="ident">unwrap</span>();
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">claim</span>, <span class="ident">new_claim0</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">claim</span>, <span class="ident">new_claim1</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">claim</span>, <span class="ident">new_claim2</span>);
 
-        <span class='kw'>let</span> <span class='ident'>vec</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>str</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>result</span>.<span class='ident'>split</span>(<span class='string'>&#39;.&#39;</span>).<span class='ident'>collect</span>();
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>vec</span>.<span class='ident'>len</span>(), <span class='number'>3</span>);
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>fake_jwt_str</span> <span class='op'>=</span> <span class='ident'>vec</span>[<span class='number'>0</span>].<span class='ident'>to_string</span>();
-        <span class='ident'>fake_jwt_str</span>.<span class='ident'>push</span>(<span class='string'>&#39;.&#39;</span>);
-        <span class='ident'>fake_jwt_str</span>.<span class='ident'>push_str</span>(<span class='ident'>vec</span>[<span class='number'>1</span>]);
-        <span class='ident'>fake_jwt_str</span>.<span class='ident'>push</span>(<span class='string'>&#39;.&#39;</span>);
-        <span class='ident'>fake_jwt_str</span>.<span class='ident'>push_str</span>(<span class='string'>&quot;YWJj&quot;</span>);
-        <span class='ident'>fake_jwt_str</span>.<span class='ident'>push_str</span>(<span class='ident'>vec</span>[<span class='number'>2</span>]);
-
-        <span class='kw'>let</span> <span class='ident'>new_claim</span>: <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Claim</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>decode</span>(<span class='kw-2'>&amp;</span><span class='ident'>fake_jwt_str</span>, <span class='string'>&quot;secret&quot;</span>);
-        <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>new_claim</span>.<span class='ident'>is_err</span>());
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>JWTError</span>::<span class='ident'>InvalidSignature</span>, <span class='ident'>new_claim</span>.<span class='ident'>unwrap_err</span>());
+        <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">TestStruct</span> {<span class="ident">field_u32</span>: <span class="number">32</span>, <span class="ident">field_str</span>: <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;hello&quot;</span>)};
+        <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">encode</span>(<span class="kw-2">&amp;</span><span class="ident">s</span>, <span class="string">&quot;secret&quot;</span>, <span class="ident">Algorithm</span>::<span class="ident">HS256</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">new_s</span>: <span class="ident">TestStruct</span> <span class="op">=</span> <span class="ident">decode</span>(<span class="kw-2">&amp;</span><span class="ident">result</span>, <span class="string">&quot;secret&quot;</span>).<span class="ident">unwrap</span>();
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">s</span>.<span class="ident">field_u32</span>, <span class="ident">new_s</span>.<span class="ident">field_u32</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">s</span>.<span class="ident">field_str</span>, <span class="ident">new_s</span>.<span class="ident">field_str</span>);
     }
 
-    <span class='attribute'>#[<span class='ident'>test</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>rsa256_384_512_should_work</span>() {
-        <span class='kw'>let</span> <span class='ident'>public_key_pem</span> <span class='op'>=</span> <span class='string'>&quot;-----BEGIN PUBLIC KEY-----
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">hs256_hs384_hs512_invalid_signature_should_be_recognized</span>() {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">claim</span> <span class="op">=</span> <span class="ident">Claim</span>::<span class="ident">default</span>();
+        <span class="ident">claim</span>.<span class="ident">set_iss</span>(<span class="string">&quot;realli&quot;</span>);
+        <span class="ident">claim</span>.<span class="ident">set_payload_field</span>(<span class="string">&quot;stringhh&quot;</span>, <span class="number">12</span>);
+        <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">encode</span>(<span class="kw-2">&amp;</span><span class="ident">claim</span>, <span class="string">&quot;secret&quot;</span>, <span class="ident">Algorithm</span>::<span class="ident">HS256</span>).<span class="ident">unwrap</span>();
+
+        <span class="kw">let</span> <span class="ident">vec</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">result</span>.<span class="ident">split</span>(<span class="string">&#39;.&#39;</span>).<span class="ident">collect</span>();
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">vec</span>.<span class="ident">len</span>(), <span class="number">3</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">fake_jwt_str</span> <span class="op">=</span> <span class="ident">vec</span>[<span class="number">0</span>].<span class="ident">to_string</span>();
+        <span class="ident">fake_jwt_str</span>.<span class="ident">push</span>(<span class="string">&#39;.&#39;</span>);
+        <span class="ident">fake_jwt_str</span>.<span class="ident">push_str</span>(<span class="ident">vec</span>[<span class="number">1</span>]);
+        <span class="ident">fake_jwt_str</span>.<span class="ident">push</span>(<span class="string">&#39;.&#39;</span>);
+        <span class="ident">fake_jwt_str</span>.<span class="ident">push_str</span>(<span class="string">&quot;YWJj&quot;</span>);
+        <span class="ident">fake_jwt_str</span>.<span class="ident">push_str</span>(<span class="ident">vec</span>[<span class="number">2</span>]);
+
+        <span class="kw">let</span> <span class="ident">new_claim</span>: <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Claim</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">decode</span>(<span class="kw-2">&amp;</span><span class="ident">fake_jwt_str</span>, <span class="string">&quot;secret&quot;</span>);
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">new_claim</span>.<span class="ident">is_err</span>());
+        <span class="kw">let</span> <span class="ident">err</span> <span class="op">=</span> <span class="ident">new_claim</span>.<span class="ident">unwrap_err</span>();
+        <span class="macro">assert_error_kind</span><span class="macro">!</span>(<span class="ident">err</span>, <span class="ident">ErrorKind</span>::<span class="ident">InvalidSignature</span>);
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">rsa256_384_512_should_work</span>() {
+        <span class="kw">let</span> <span class="ident">public_key_pem</span> <span class="op">=</span> <span class="string">&quot;-----BEGIN PUBLIC KEY-----
 MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCx5gqY8ZZK5MNFHI5V1OYkNXI7
 qFka5lHJcUFq6SaZqAXYteKcR4kugITcoILZIpVhM3yOp0octAackM2AOCGfo5Fo
 E/W/iSrd8euMy4UkdtD6XfGYkkfO4yfhXpZjyvprhZ027p2X0l7eoRY3KycPYVF1
 gC3TfsCAVObIW0MuBQIDAQAB
 -----END PUBLIC KEY-----&quot;</span>;
-        <span class='kw'>let</span> <span class='ident'>private_key_pem</span> <span class='op'>=</span> <span class='string'>&quot;-----BEGIN RSA PRIVATE KEY-----
+        <span class="kw">let</span> <span class="ident">private_key_pem</span> <span class="op">=</span> <span class="string">&quot;-----BEGIN RSA PRIVATE KEY-----
 MIICXAIBAAKBgQCx5gqY8ZZK5MNFHI5V1OYkNXI7qFka5lHJcUFq6SaZqAXYteKc
 R4kugITcoILZIpVhM3yOp0octAackM2AOCGfo5FoE/W/iSrd8euMy4UkdtD6XfGY
 kkfO4yfhXpZjyvprhZ027p2X0l7eoRY3KycPYVF1gC3TfsCAVObIW0MuBQIDAQAB
@@ -494,7 +528,7 @@ MgyAnKm/AkEA0kSOEJ1qwOgLcStmHh4Q9T7zPdnhsDacvBY2EHA248YYgEjOmUFd
 iBXYq19uNTTG4iiYhn8CQG9KpMDscoqocTeBE78jA6pX6ZH0Ppu7me5sds0UtwuS
 p5HP/xmDtWJQv5hScT2aWKjjl2kC8eZOHTGgQvjrSm8=
 -----END RSA PRIVATE KEY-----&quot;</span>;
-        <span class='comment'>/*
+        <span class="comment">/*
         let rsa_ = Rsa::generate(1024).unwrap();
         let private_key_pem_b = rsa_.private_key_to_pem().unwrap();
         let private_key_pem = &amp;String::from_utf8(private_key_pem_b).unwrap();
@@ -504,85 +538,85 @@ p5HP/xmDtWJQv5hScT2aWKjjl2kC8eZOHTGgQvjrSm8=
         println!(&quot;\n\n {0} \n\n {1} \n\n&quot;, private_key_pem, public_key_pem);
         */</span>
 
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>claim</span> <span class='op'>=</span> <span class='ident'>Claim</span>::<span class='ident'>default</span>();
-        <span class='ident'>claim</span>.<span class='ident'>set_sub</span>(<span class='string'>&quot;1234567890&quot;</span>);
-        <span class='ident'>claim</span>.<span class='ident'>set_payload_field</span>(<span class='string'>&quot;name&quot;</span>, <span class='string'>&quot;John Doe&quot;</span>);
-        <span class='ident'>claim</span>.<span class='ident'>set_payload_field</span>(<span class='string'>&quot;admin&quot;</span>, <span class='bool-val'>true</span>);
-        <span class='kw'>let</span> <span class='ident'>result0</span> <span class='op'>=</span> <span class='ident'>encode</span>(<span class='kw-2'>&amp;</span><span class='ident'>claim</span>, <span class='ident'>private_key_pem</span>, <span class='ident'>Algorithm</span>::<span class='ident'>RS256</span>).<span class='ident'>unwrap</span>();
-        <span class='kw'>let</span> <span class='ident'>result1</span> <span class='op'>=</span> <span class='ident'>encode</span>(<span class='kw-2'>&amp;</span><span class='ident'>claim</span>, <span class='ident'>private_key_pem</span>, <span class='ident'>Algorithm</span>::<span class='ident'>RS384</span>).<span class='ident'>unwrap</span>();
-        <span class='kw'>let</span> <span class='ident'>result2</span> <span class='op'>=</span> <span class='ident'>encode</span>(<span class='kw-2'>&amp;</span><span class='ident'>claim</span>, <span class='ident'>private_key_pem</span>, <span class='ident'>Algorithm</span>::<span class='ident'>RS512</span>).<span class='ident'>unwrap</span>();
-        <span class='comment'>/*
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">claim</span> <span class="op">=</span> <span class="ident">Claim</span>::<span class="ident">default</span>();
+        <span class="ident">claim</span>.<span class="ident">set_sub</span>(<span class="string">&quot;1234567890&quot;</span>);
+        <span class="ident">claim</span>.<span class="ident">set_payload_field</span>(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;John Doe&quot;</span>);
+        <span class="ident">claim</span>.<span class="ident">set_payload_field</span>(<span class="string">&quot;admin&quot;</span>, <span class="bool-val">true</span>);
+        <span class="kw">let</span> <span class="ident">result0</span> <span class="op">=</span> <span class="ident">encode</span>(<span class="kw-2">&amp;</span><span class="ident">claim</span>, <span class="ident">private_key_pem</span>, <span class="ident">Algorithm</span>::<span class="ident">RS256</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">result1</span> <span class="op">=</span> <span class="ident">encode</span>(<span class="kw-2">&amp;</span><span class="ident">claim</span>, <span class="ident">private_key_pem</span>, <span class="ident">Algorithm</span>::<span class="ident">RS384</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">result2</span> <span class="op">=</span> <span class="ident">encode</span>(<span class="kw-2">&amp;</span><span class="ident">claim</span>, <span class="ident">private_key_pem</span>, <span class="ident">Algorithm</span>::<span class="ident">RS512</span>).<span class="ident">unwrap</span>();
+        <span class="comment">/*
         println!(&quot;{}&quot;, result0);
         println!(&quot;{}&quot;, result1);
         println!(&quot;{}&quot;, result2);
         */</span>
-        <span class='kw'>let</span> <span class='ident'>new_claim0</span> <span class='op'>=</span> <span class='ident'>decode</span>(<span class='kw-2'>&amp;</span><span class='ident'>result0</span>, <span class='ident'>public_key_pem</span>).<span class='ident'>unwrap</span>();
-        <span class='kw'>let</span> <span class='ident'>new_claim1</span> <span class='op'>=</span> <span class='ident'>decode</span>(<span class='kw-2'>&amp;</span><span class='ident'>result1</span>, <span class='ident'>public_key_pem</span>).<span class='ident'>unwrap</span>();
-        <span class='kw'>let</span> <span class='ident'>new_claim2</span> <span class='op'>=</span> <span class='ident'>decode</span>(<span class='kw-2'>&amp;</span><span class='ident'>result2</span>, <span class='ident'>public_key_pem</span>).<span class='ident'>unwrap</span>();
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>claim</span>, <span class='ident'>new_claim0</span>);
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>claim</span>, <span class='ident'>new_claim1</span>);
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>claim</span>, <span class='ident'>new_claim2</span>);
+        <span class="kw">let</span> <span class="ident">new_claim0</span> <span class="op">=</span> <span class="ident">decode</span>(<span class="kw-2">&amp;</span><span class="ident">result0</span>, <span class="ident">public_key_pem</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">new_claim1</span> <span class="op">=</span> <span class="ident">decode</span>(<span class="kw-2">&amp;</span><span class="ident">result1</span>, <span class="ident">public_key_pem</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">new_claim2</span> <span class="op">=</span> <span class="ident">decode</span>(<span class="kw-2">&amp;</span><span class="ident">result2</span>, <span class="ident">public_key_pem</span>).<span class="ident">unwrap</span>();
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">claim</span>, <span class="ident">new_claim0</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">claim</span>, <span class="ident">new_claim1</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">claim</span>, <span class="ident">new_claim2</span>);
 
-        <span class='kw'>let</span> <span class='ident'>s</span> <span class='op'>=</span> <span class='ident'>TestStruct</span> {<span class='ident'>field_u32</span>: <span class='number'>32</span>, <span class='ident'>field_str</span>: <span class='ident'>String</span>::<span class='ident'>from</span>(<span class='string'>&quot;hello&quot;</span>)};
-        <span class='kw'>let</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>encode</span>(<span class='kw-2'>&amp;</span><span class='ident'>s</span>, <span class='ident'>private_key_pem</span>, <span class='ident'>Algorithm</span>::<span class='ident'>RS512</span>).<span class='ident'>unwrap</span>();
-        <span class='kw'>let</span> <span class='ident'>new_s</span>: <span class='ident'>TestStruct</span> <span class='op'>=</span> <span class='ident'>decode</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>, <span class='ident'>public_key_pem</span>).<span class='ident'>unwrap</span>();
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>.<span class='ident'>field_u32</span>, <span class='ident'>new_s</span>.<span class='ident'>field_u32</span>);
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>.<span class='ident'>field_str</span>, <span class='ident'>new_s</span>.<span class='ident'>field_str</span>);
+        <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">TestStruct</span> {<span class="ident">field_u32</span>: <span class="number">32</span>, <span class="ident">field_str</span>: <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;hello&quot;</span>)};
+        <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">encode</span>(<span class="kw-2">&amp;</span><span class="ident">s</span>, <span class="ident">private_key_pem</span>, <span class="ident">Algorithm</span>::<span class="ident">RS512</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">new_s</span>: <span class="ident">TestStruct</span> <span class="op">=</span> <span class="ident">decode</span>(<span class="kw-2">&amp;</span><span class="ident">result</span>, <span class="ident">public_key_pem</span>).<span class="ident">unwrap</span>();
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">s</span>.<span class="ident">field_u32</span>, <span class="ident">new_s</span>.<span class="ident">field_u32</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">s</span>.<span class="ident">field_str</span>, <span class="ident">new_s</span>.<span class="ident">field_str</span>);
     }
 
 }
 
-<span class='kw'>use</span> <span class='ident'>base64</span>::{<span class='ident'>decode_config</span>, <span class='ident'>URL_SAFE</span>};
+<span class="kw">use</span> <span class="ident">base64</span>::{<span class="ident">decode_config</span>, <span class="ident">URL_SAFE</span>};
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>header</span>::{<span class='ident'>Header</span>, <span class='ident'>Algorithm</span>};
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>claim</span>::<span class='ident'>Claim</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>utils</span>::<span class='ident'>JWTStringConvertable</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>errors</span>::{<span class='ident'>JWTError</span>, <span class='prelude-ty'>Result</span>};
-<span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>digest</span>::{<span class='ident'>hs_signature</span>, <span class='ident'>hs_verify</span>, <span class='ident'>rsa_signature</span>, <span class='ident'>rsa_verify</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">header</span>::{<span class="ident">Header</span>, <span class="ident">Algorithm</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">claim</span>::<span class="ident">Claim</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">utils</span>::<span class="ident">JWTStringConvertable</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">errors</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="self">self</span>::<span class="ident">digest</span>::{<span class="ident">hs_signature</span>, <span class="ident">hs_verify</span>, <span class="ident">rsa_signature</span>, <span class="ident">rsa_verify</span>};
 
-<span class='doccomment'>/// encode a Claim to jwt string, if you are using RS256/384/512, secret should be your private key</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>encode</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>JWTStringConvertable</span><span class='op'>&gt;</span>(<span class='ident'>body</span>: <span class='kw-2'>&amp;</span><span class='ident'>T</span>, <span class='ident'>secret</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>alg</span>: <span class='ident'>Algorithm</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span> {
-    <span class='kw'>let</span> <span class='ident'>header</span> <span class='op'>=</span> <span class='ident'>Header</span>::<span class='ident'>new</span>(<span class='ident'>alg</span>);
+<span class="doccomment">/// encode a Claim to jwt string, if you are using RS256/384/512, secret should be your private key</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">encode</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">JWTStringConvertable</span><span class="op">&gt;</span>(<span class="ident">body</span>: <span class="kw-2">&amp;</span><span class="ident">T</span>, <span class="ident">secret</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">alg</span>: <span class="ident">Algorithm</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">header</span> <span class="op">=</span> <span class="ident">Header</span>::<span class="ident">new</span>(<span class="ident">alg</span>);
 
-    <span class='kw'>let</span> <span class='ident'>header_base64</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>header</span>.<span class='ident'>to_base64_str</span>());
-    <span class='kw'>let</span> <span class='ident'>body_base64</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>body</span>.<span class='ident'>to_base64_str</span>());
+    <span class="kw">let</span> <span class="ident">header_base64</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">header</span>.<span class="ident">to_base64_str</span>());
+    <span class="kw">let</span> <span class="ident">body_base64</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">body</span>.<span class="ident">to_base64_str</span>());
 
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>jwt_base64</span> <span class='op'>=</span> <span class='ident'>header_base64</span> <span class='op'>+</span> <span class='string'>&quot;.&quot;</span> <span class='op'>+</span> <span class='kw-2'>&amp;</span><span class='ident'>body_base64</span>;
-    <span class='kw'>let</span> <span class='ident'>secured_base64</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='kw'>match</span> <span class='ident'>header</span>.<span class='ident'>alg</span> {
-        <span class='ident'>Algorithm</span>::<span class='ident'>HS256</span> <span class='op'>|</span> <span class='ident'>Algorithm</span>::<span class='ident'>HS384</span> <span class='op'>|</span> <span class='ident'>Algorithm</span>::<span class='ident'>HS512</span>
-            <span class='op'>=&gt;</span> <span class='ident'>hs_signature</span>(<span class='ident'>secret</span>, <span class='kw-2'>&amp;</span><span class='ident'>jwt_base64</span>, <span class='ident'>header</span>.<span class='ident'>alg</span>),
-        <span class='ident'>Algorithm</span>::<span class='ident'>RS256</span> <span class='op'>|</span> <span class='ident'>Algorithm</span>::<span class='ident'>RS384</span> <span class='op'>|</span> <span class='ident'>Algorithm</span>::<span class='ident'>RS512</span>
-            <span class='op'>=&gt;</span> <span class='ident'>rsa_signature</span>(<span class='ident'>secret</span>, <span class='kw-2'>&amp;</span><span class='ident'>jwt_base64</span>, <span class='ident'>header</span>.<span class='ident'>alg</span>),
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">jwt_base64</span> <span class="op">=</span> <span class="ident">header_base64</span> <span class="op">+</span> <span class="string">&quot;.&quot;</span> <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">body_base64</span>;
+    <span class="kw">let</span> <span class="ident">secured_base64</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="kw">match</span> <span class="ident">header</span>.<span class="ident">alg</span> {
+        <span class="ident">Algorithm</span>::<span class="ident">HS256</span> <span class="op">|</span> <span class="ident">Algorithm</span>::<span class="ident">HS384</span> <span class="op">|</span> <span class="ident">Algorithm</span>::<span class="ident">HS512</span>
+            <span class="op">=&gt;</span> <span class="ident">hs_signature</span>(<span class="ident">secret</span>, <span class="kw-2">&amp;</span><span class="ident">jwt_base64</span>, <span class="ident">header</span>.<span class="ident">alg</span>),
+        <span class="ident">Algorithm</span>::<span class="ident">RS256</span> <span class="op">|</span> <span class="ident">Algorithm</span>::<span class="ident">RS384</span> <span class="op">|</span> <span class="ident">Algorithm</span>::<span class="ident">RS512</span>
+            <span class="op">=&gt;</span> <span class="ident">rsa_signature</span>(<span class="ident">secret</span>, <span class="kw-2">&amp;</span><span class="ident">jwt_base64</span>, <span class="ident">header</span>.<span class="ident">alg</span>),
     });
-    <span class='ident'>jwt_base64</span>.<span class='ident'>push</span>(<span class='string'>&#39;.&#39;</span>);
-    <span class='ident'>jwt_base64</span>.<span class='ident'>push_str</span>(<span class='kw-2'>&amp;</span><span class='ident'>secured_base64</span>);
-    <span class='prelude-val'>Ok</span>(<span class='ident'>jwt_base64</span>)
+    <span class="ident">jwt_base64</span>.<span class="ident">push</span>(<span class="string">&#39;.&#39;</span>);
+    <span class="ident">jwt_base64</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="ident">secured_base64</span>);
+    <span class="prelude-val">Ok</span>(<span class="ident">jwt_base64</span>)
 }
 
-<span class='doccomment'>/// decode a jwt string using algorithm in the jwt header field</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>decode</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>JWTStringConvertable</span><span class='op'>&gt;</span>(<span class='ident'>jwtstr</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>secret</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>let</span> <span class='ident'>vec</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>str</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>jwtstr</span>.<span class='ident'>split</span>(<span class='string'>&#39;.&#39;</span>).<span class='ident'>collect</span>();
-    <span class='kw'>if</span> <span class='ident'>vec</span>.<span class='ident'>len</span>() <span class='op'>!=</span> <span class='number'>3</span> {
-        <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>JWTError</span>::<span class='ident'>InvalidFormat</span>);
+<span class="doccomment">/// decode a jwt string using algorithm in the jwt header field</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">JWTStringConvertable</span><span class="op">&gt;</span>(<span class="ident">jwtstr</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">secret</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">vec</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">jwtstr</span>.<span class="ident">split</span>(<span class="string">&#39;.&#39;</span>).<span class="ident">collect</span>();
+    <span class="kw">if</span> <span class="ident">vec</span>.<span class="ident">len</span>() <span class="op">!=</span> <span class="number">3</span> {
+        <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ErrorKind</span>::<span class="ident">InvalidFormat</span>.<span class="ident">into</span>());
     }
 
-    <span class='comment'>// decode header first</span>
-    <span class='kw'>let</span> <span class='ident'>header</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>Header</span>::<span class='ident'>from_base64_str</span>(<span class='ident'>vec</span>[<span class='number'>0</span>]));
-    <span class='kw'>let</span> <span class='ident'>claim</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>T</span>::<span class='ident'>from_base64_str</span>(<span class='ident'>vec</span>[<span class='number'>1</span>]));
+    <span class="comment">// decode header first</span>
+    <span class="kw">let</span> <span class="ident">header</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">Header</span>::<span class="ident">from_base64_str</span>(<span class="ident">vec</span>[<span class="number">0</span>]));
+    <span class="kw">let</span> <span class="ident">claim</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">T</span>::<span class="ident">from_base64_str</span>(<span class="ident">vec</span>[<span class="number">1</span>]));
 
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>data</span> <span class='op'>=</span> <span class='ident'>vec</span>[<span class='number'>0</span>].<span class='ident'>to_string</span>();
-    <span class='ident'>data</span>.<span class='ident'>push</span>(<span class='string'>&#39;.&#39;</span>);
-    <span class='ident'>data</span>.<span class='ident'>push_str</span>(<span class='ident'>vec</span>[<span class='number'>1</span>]);
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">vec</span>[<span class="number">0</span>].<span class="ident">to_string</span>();
+    <span class="ident">data</span>.<span class="ident">push</span>(<span class="string">&#39;.&#39;</span>);
+    <span class="ident">data</span>.<span class="ident">push_str</span>(<span class="ident">vec</span>[<span class="number">1</span>]);
 
-    <span class='kw'>let</span> <span class='ident'>sig</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>decode_config</span>(<span class='kw-2'>&amp;</span><span class='ident'>vec</span>[<span class='number'>2</span>], <span class='ident'>URL_SAFE</span>));
+    <span class="kw">let</span> <span class="ident">sig</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">decode_config</span>(<span class="kw-2">&amp;</span><span class="ident">vec</span>[<span class="number">2</span>], <span class="ident">URL_SAFE</span>));
 
-    <span class='macro'>try</span><span class='macro'>!</span>(<span class='kw'>match</span> <span class='ident'>header</span>.<span class='ident'>alg</span> {
-        <span class='ident'>Algorithm</span>::<span class='ident'>HS256</span> <span class='op'>|</span> <span class='ident'>Algorithm</span>::<span class='ident'>HS384</span> <span class='op'>|</span> <span class='ident'>Algorithm</span>::<span class='ident'>HS512</span> 
-            <span class='op'>=&gt;</span> <span class='ident'>hs_verify</span>(<span class='ident'>secret</span>, <span class='kw-2'>&amp;</span><span class='ident'>data</span>, <span class='kw-2'>&amp;</span><span class='ident'>sig</span>, <span class='ident'>header</span>.<span class='ident'>alg</span>),
-        <span class='ident'>Algorithm</span>::<span class='ident'>RS256</span> <span class='op'>|</span> <span class='ident'>Algorithm</span>::<span class='ident'>RS384</span> <span class='op'>|</span> <span class='ident'>Algorithm</span>::<span class='ident'>RS512</span>
-            <span class='op'>=&gt;</span> <span class='ident'>rsa_verify</span>(<span class='ident'>secret</span>, <span class='kw-2'>&amp;</span><span class='ident'>data</span>, <span class='kw-2'>&amp;</span><span class='ident'>sig</span>, <span class='ident'>header</span>.<span class='ident'>alg</span>),
+    <span class="macro">try</span><span class="macro">!</span>(<span class="kw">match</span> <span class="ident">header</span>.<span class="ident">alg</span> {
+        <span class="ident">Algorithm</span>::<span class="ident">HS256</span> <span class="op">|</span> <span class="ident">Algorithm</span>::<span class="ident">HS384</span> <span class="op">|</span> <span class="ident">Algorithm</span>::<span class="ident">HS512</span> 
+            <span class="op">=&gt;</span> <span class="ident">hs_verify</span>(<span class="ident">secret</span>, <span class="kw-2">&amp;</span><span class="ident">data</span>, <span class="kw-2">&amp;</span><span class="ident">sig</span>, <span class="ident">header</span>.<span class="ident">alg</span>),
+        <span class="ident">Algorithm</span>::<span class="ident">RS256</span> <span class="op">|</span> <span class="ident">Algorithm</span>::<span class="ident">RS384</span> <span class="op">|</span> <span class="ident">Algorithm</span>::<span class="ident">RS512</span>
+            <span class="op">=&gt;</span> <span class="ident">rsa_verify</span>(<span class="ident">secret</span>, <span class="kw-2">&amp;</span><span class="ident">data</span>, <span class="kw-2">&amp;</span><span class="ident">sig</span>, <span class="ident">header</span>.<span class="ident">alg</span>),
     });
-    <span class='prelude-val'>Ok</span>(<span class='ident'>claim</span>)
+    <span class="prelude-val">Ok</span>(<span class="ident">claim</span>)
 }
 </pre>
 </section>

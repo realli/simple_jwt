@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -119,81 +119,81 @@
 <span id="74">74</span>
 <span id="75">75</span>
 <span id="76">76</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>openssl</span>::<span class='ident'>hash</span>::{<span class='ident'>MessageDigest</span>};
-<span class='kw'>use</span> <span class='ident'>openssl</span>::<span class='ident'>pkey</span>::<span class='ident'>PKey</span>;
-<span class='kw'>use</span> <span class='ident'>openssl</span>::<span class='ident'>rsa</span>::<span class='ident'>Rsa</span>;
-<span class='kw'>use</span> <span class='ident'>openssl</span>::<span class='ident'>sign</span>::{<span class='ident'>Signer</span>, <span class='ident'>Verifier</span>};
-<span class='kw'>use</span> <span class='ident'>openssl</span>::<span class='ident'>memcmp</span>::<span class='ident'>eq</span>;
-<span class='kw'>use</span> <span class='ident'>base64</span>::{<span class='ident'>encode_config</span>, <span class='ident'>URL_SAFE</span>};
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">openssl</span>::<span class="ident">hash</span>::{<span class="ident">MessageDigest</span>};
+<span class="kw">use</span> <span class="ident">openssl</span>::<span class="ident">pkey</span>::<span class="ident">PKey</span>;
+<span class="kw">use</span> <span class="ident">openssl</span>::<span class="ident">rsa</span>::<span class="ident">Rsa</span>;
+<span class="kw">use</span> <span class="ident">openssl</span>::<span class="ident">sign</span>::{<span class="ident">Signer</span>, <span class="ident">Verifier</span>};
+<span class="kw">use</span> <span class="ident">openssl</span>::<span class="ident">memcmp</span>::<span class="ident">eq</span>;
+<span class="kw">use</span> <span class="ident">base64</span>::{<span class="ident">encode_config</span>, <span class="ident">URL_SAFE</span>};
 
-<span class='kw'>use</span> <span class='kw'>super</span>::<span class='ident'>errors</span>::{<span class='prelude-ty'>Result</span>, <span class='ident'>JWTError</span>};
-<span class='kw'>use</span> <span class='kw'>super</span>::<span class='ident'>header</span>::<span class='ident'>Algorithm</span>;
+<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">errors</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">header</span>::<span class="ident">Algorithm</span>;
 
-<span class='kw'>fn</span> <span class='ident'>create_message_digest</span>(<span class='ident'>alg</span>: <span class='ident'>Algorithm</span>) <span class='op'>-&gt;</span> <span class='ident'>MessageDigest</span> {
-    <span class='kw'>match</span> <span class='ident'>alg</span> {
-        <span class='ident'>Algorithm</span>::<span class='ident'>HS256</span> <span class='op'>|</span> <span class='ident'>Algorithm</span>::<span class='ident'>RS256</span> <span class='op'>=&gt;</span> <span class='ident'>MessageDigest</span>::<span class='ident'>sha256</span>(),
-        <span class='ident'>Algorithm</span>::<span class='ident'>HS384</span> <span class='op'>|</span> <span class='ident'>Algorithm</span>::<span class='ident'>RS384</span> <span class='op'>=&gt;</span> <span class='ident'>MessageDigest</span>::<span class='ident'>sha384</span>(),
-        <span class='ident'>Algorithm</span>::<span class='ident'>HS512</span> <span class='op'>|</span> <span class='ident'>Algorithm</span>::<span class='ident'>RS512</span> <span class='op'>=&gt;</span> <span class='ident'>MessageDigest</span>::<span class='ident'>sha512</span>()
+<span class="kw">fn</span> <span class="ident">create_message_digest</span>(<span class="ident">alg</span>: <span class="ident">Algorithm</span>) <span class="op">-&gt;</span> <span class="ident">MessageDigest</span> {
+    <span class="kw">match</span> <span class="ident">alg</span> {
+        <span class="ident">Algorithm</span>::<span class="ident">HS256</span> <span class="op">|</span> <span class="ident">Algorithm</span>::<span class="ident">RS256</span> <span class="op">=&gt;</span> <span class="ident">MessageDigest</span>::<span class="ident">sha256</span>(),
+        <span class="ident">Algorithm</span>::<span class="ident">HS384</span> <span class="op">|</span> <span class="ident">Algorithm</span>::<span class="ident">RS384</span> <span class="op">=&gt;</span> <span class="ident">MessageDigest</span>::<span class="ident">sha384</span>(),
+        <span class="ident">Algorithm</span>::<span class="ident">HS512</span> <span class="op">|</span> <span class="ident">Algorithm</span>::<span class="ident">RS512</span> <span class="op">=&gt;</span> <span class="ident">MessageDigest</span>::<span class="ident">sha512</span>()
     }
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>hs_signature</span>(<span class='ident'>secret</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>,
-                 <span class='ident'>data</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>,
-                 <span class='ident'>alg</span>: <span class='ident'>Algorithm</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span> {
-    <span class='ident'>_hs_signature</span>(<span class='ident'>secret</span>, <span class='ident'>data</span>, <span class='ident'>alg</span>).<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>u8s</span><span class='op'>|</span> <span class='ident'>encode_config</span>(<span class='kw-2'>&amp;</span><span class='ident'>u8s</span>, <span class='ident'>URL_SAFE</span>))
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">hs_signature</span>(<span class="ident">secret</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+                 <span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+                 <span class="ident">alg</span>: <span class="ident">Algorithm</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+    <span class="ident">_hs_signature</span>(<span class="ident">secret</span>, <span class="ident">data</span>, <span class="ident">alg</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">u8s</span><span class="op">|</span> <span class="ident">encode_config</span>(<span class="kw-2">&amp;</span><span class="ident">u8s</span>, <span class="ident">URL_SAFE</span>))
 }
 
-<span class='kw'>fn</span> <span class='ident'>_hs_signature</span>(<span class='ident'>secret</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>,
-                 <span class='ident'>data</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>,
-                 <span class='ident'>alg</span>: <span class='ident'>Algorithm</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;&gt;</span> {
-    <span class='kw'>let</span> <span class='ident'>key</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>PKey</span>::<span class='ident'>hmac</span>(<span class='ident'>secret</span>.<span class='ident'>as_bytes</span>()));
-    <span class='kw'>let</span> <span class='ident'>message_digest</span> <span class='op'>=</span> <span class='ident'>create_message_digest</span>(<span class='ident'>alg</span>);
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>signer</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>Signer</span>::<span class='ident'>new</span>(<span class='ident'>message_digest</span>, <span class='kw-2'>&amp;</span><span class='ident'>key</span>));
-    <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>signer</span>.<span class='ident'>update</span>(<span class='ident'>data</span>.<span class='ident'>as_bytes</span>()));
-    <span class='kw'>let</span> <span class='ident'>byte_vec</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>signer</span>.<span class='ident'>finish</span>());
-    <span class='prelude-val'>Ok</span>(<span class='ident'>byte_vec</span>)
+<span class="kw">fn</span> <span class="ident">_hs_signature</span>(<span class="ident">secret</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+                 <span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+                 <span class="ident">alg</span>: <span class="ident">Algorithm</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;&gt;</span> {
+    <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">PKey</span>::<span class="ident">hmac</span>(<span class="ident">secret</span>.<span class="ident">as_bytes</span>()));
+    <span class="kw">let</span> <span class="ident">message_digest</span> <span class="op">=</span> <span class="ident">create_message_digest</span>(<span class="ident">alg</span>);
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">signer</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">Signer</span>::<span class="ident">new</span>(<span class="ident">message_digest</span>, <span class="kw-2">&amp;</span><span class="ident">key</span>));
+    <span class="macro">try</span><span class="macro">!</span>(<span class="ident">signer</span>.<span class="ident">update</span>(<span class="ident">data</span>.<span class="ident">as_bytes</span>()));
+    <span class="kw">let</span> <span class="ident">byte_vec</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">signer</span>.<span class="ident">finish</span>());
+    <span class="prelude-val">Ok</span>(<span class="ident">byte_vec</span>)
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>hs_verify</span>(<span class='ident'>secret</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>,
-                 <span class='ident'>data</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>,
-                 <span class='ident'>sig</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>],
-                 <span class='ident'>alg</span>: <span class='ident'>Algorithm</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
-    <span class='kw'>let</span> <span class='ident'>digest_u8s</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>_hs_signature</span>(<span class='ident'>secret</span>, <span class='ident'>data</span>, <span class='ident'>alg</span>));
-    <span class='kw'>if</span> <span class='ident'>digest_u8s</span>.<span class='ident'>len</span>() <span class='op'>!=</span> <span class='ident'>sig</span>.<span class='ident'>len</span>()
-        <span class='op'>||</span> <span class='op'>!</span><span class='ident'>eq</span>(<span class='ident'>digest_u8s</span>, <span class='ident'>sig</span>) {
-        <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>JWTError</span>::<span class='ident'>InvalidSignature</span>);
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">hs_verify</span>(<span class="ident">secret</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+                 <span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+                 <span class="ident">sig</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
+                 <span class="ident">alg</span>: <span class="ident">Algorithm</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">digest_u8s</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="macro">try</span><span class="macro">!</span>(<span class="ident">_hs_signature</span>(<span class="ident">secret</span>, <span class="ident">data</span>, <span class="ident">alg</span>));
+    <span class="kw">if</span> <span class="ident">digest_u8s</span>.<span class="ident">len</span>() <span class="op">!=</span> <span class="ident">sig</span>.<span class="ident">len</span>()
+        <span class="op">||</span> <span class="op">!</span><span class="ident">eq</span>(<span class="ident">digest_u8s</span>, <span class="ident">sig</span>) {
+        <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ErrorKind</span>::<span class="ident">InvalidSignature</span>.<span class="ident">into</span>());
     }
-    <span class='prelude-val'>Ok</span>(())
+    <span class="prelude-val">Ok</span>(())
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>rsa_signature</span>(<span class='ident'>pem_string</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>,
-                     <span class='ident'>data</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>,
-                     <span class='ident'>alg</span>: <span class='ident'>Algorithm</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rsa_signature</span>(<span class="ident">pem_string</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+                     <span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+                     <span class="ident">alg</span>: <span class="ident">Algorithm</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
 
-    <span class='kw'>let</span> <span class='ident'>rsa</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>Rsa</span>::<span class='ident'>private_key_from_pem</span>(<span class='ident'>pem_string</span>.<span class='ident'>as_bytes</span>()));
-    <span class='kw'>let</span> <span class='ident'>message_digest</span> <span class='op'>=</span> <span class='ident'>create_message_digest</span>(<span class='ident'>alg</span>);
-    <span class='kw'>let</span> <span class='ident'>key</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>PKey</span>::<span class='ident'>from_rsa</span>(<span class='ident'>rsa</span>));
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>signer</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>Signer</span>::<span class='ident'>new</span>(<span class='ident'>message_digest</span>, <span class='kw-2'>&amp;</span><span class='ident'>key</span>));
-    <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>signer</span>.<span class='ident'>update</span>(<span class='ident'>data</span>.<span class='ident'>as_bytes</span>()));
-    <span class='kw'>let</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>signer</span>.<span class='ident'>finish</span>());
-    <span class='kw'>return</span> <span class='prelude-val'>Ok</span>(<span class='ident'>encode_config</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>, <span class='ident'>URL_SAFE</span>));
+    <span class="kw">let</span> <span class="ident">rsa</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">Rsa</span>::<span class="ident">private_key_from_pem</span>(<span class="ident">pem_string</span>.<span class="ident">as_bytes</span>()));
+    <span class="kw">let</span> <span class="ident">message_digest</span> <span class="op">=</span> <span class="ident">create_message_digest</span>(<span class="ident">alg</span>);
+    <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">PKey</span>::<span class="ident">from_rsa</span>(<span class="ident">rsa</span>));
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">signer</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">Signer</span>::<span class="ident">new</span>(<span class="ident">message_digest</span>, <span class="kw-2">&amp;</span><span class="ident">key</span>));
+    <span class="macro">try</span><span class="macro">!</span>(<span class="ident">signer</span>.<span class="ident">update</span>(<span class="ident">data</span>.<span class="ident">as_bytes</span>()));
+    <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">signer</span>.<span class="ident">finish</span>());
+    <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">encode_config</span>(<span class="kw-2">&amp;</span><span class="ident">result</span>, <span class="ident">URL_SAFE</span>));
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>rsa_verify</span>(<span class='ident'>pem_string</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>,
-                  <span class='ident'>data</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>,
-                  <span class='ident'>sig</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>],
-                  <span class='ident'>alg</span>: <span class='ident'>Algorithm</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
-    <span class='kw'>let</span> <span class='ident'>message_digest</span> <span class='op'>=</span> <span class='ident'>create_message_digest</span>(<span class='ident'>alg</span>);
-    <span class='kw'>let</span> <span class='ident'>rsa</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>Rsa</span>::<span class='ident'>public_key_from_pem</span>(<span class='ident'>pem_string</span>.<span class='ident'>as_bytes</span>()));
-    <span class='kw'>let</span> <span class='ident'>key</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>PKey</span>::<span class='ident'>from_rsa</span>(<span class='ident'>rsa</span>));
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>verifier</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>Verifier</span>::<span class='ident'>new</span>(<span class='ident'>message_digest</span>, <span class='kw-2'>&amp;</span><span class='ident'>key</span>));
-    <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>verifier</span>.<span class='ident'>update</span>(<span class='ident'>data</span>.<span class='ident'>as_bytes</span>()));
-    <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>verifier</span>.<span class='ident'>finish</span>(<span class='ident'>sig</span>));
-    <span class='kw'>if</span> <span class='ident'>b</span> {
-        <span class='prelude-val'>Ok</span>(())
-    } <span class='kw'>else</span> {
-        <span class='prelude-val'>Err</span>(<span class='ident'>JWTError</span>::<span class='ident'>InvalidSignature</span>)
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rsa_verify</span>(<span class="ident">pem_string</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+                  <span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+                  <span class="ident">sig</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
+                  <span class="ident">alg</span>: <span class="ident">Algorithm</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">message_digest</span> <span class="op">=</span> <span class="ident">create_message_digest</span>(<span class="ident">alg</span>);
+    <span class="kw">let</span> <span class="ident">rsa</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">Rsa</span>::<span class="ident">public_key_from_pem</span>(<span class="ident">pem_string</span>.<span class="ident">as_bytes</span>()));
+    <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">PKey</span>::<span class="ident">from_rsa</span>(<span class="ident">rsa</span>));
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">verifier</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">Verifier</span>::<span class="ident">new</span>(<span class="ident">message_digest</span>, <span class="kw-2">&amp;</span><span class="ident">key</span>));
+    <span class="macro">try</span><span class="macro">!</span>(<span class="ident">verifier</span>.<span class="ident">update</span>(<span class="ident">data</span>.<span class="ident">as_bytes</span>()));
+    <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">verifier</span>.<span class="ident">finish</span>(<span class="ident">sig</span>));
+    <span class="kw">if</span> <span class="ident">b</span> {
+        <span class="prelude-val">Ok</span>(())
+    } <span class="kw">else</span> {
+        <span class="prelude-val">Err</span>(<span class="ident">ErrorKind</span>::<span class="ident">InvalidSignature</span>.<span class="ident">into</span>())
     }
 }
 </pre>

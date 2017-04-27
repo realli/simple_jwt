@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -121,82 +121,82 @@
 <span id="76">76</span>
 <span id="77">77</span>
 <span id="78">78</span>
-</pre><pre class='rust '>
-<span class='comment'>// Copyright 2017 Serde Developers</span>
-<span class='comment'>//</span>
-<span class='comment'>// Licensed under the Apache License, Version 2.0 &lt;LICENSE-APACHE or</span>
-<span class='comment'>// http://www.apache.org/licenses/LICENSE-2.0&gt; or the MIT license</span>
-<span class='comment'>// &lt;LICENSE-MIT or http://opensource.org/licenses/MIT&gt;, at your</span>
-<span class='comment'>// option. This file may not be copied, modified, or distributed</span>
-<span class='comment'>// except according to those terms.</span>
+</pre><pre class="rust ">
+<span class="comment">// Copyright 2017 Serde Developers</span>
+<span class="comment">//</span>
+<span class="comment">// Licensed under the Apache License, Version 2.0 &lt;LICENSE-APACHE or</span>
+<span class="comment">// http://www.apache.org/licenses/LICENSE-2.0&gt; or the MIT license</span>
+<span class="comment">// &lt;LICENSE-MIT or http://opensource.org/licenses/MIT&gt;, at your</span>
+<span class="comment">// option. This file may not be copied, modified, or distributed</span>
+<span class="comment">// except according to those terms.</span>
 
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>;
 
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>LineColIterator</span><span class='op'>&lt;</span><span class='ident'>I</span><span class='op'>&gt;</span> {
-    <span class='ident'>iter</span>: <span class='ident'>I</span>,
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">LineColIterator</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span> {
+    <span class="ident">iter</span>: <span class="ident">I</span>,
 
-    <span class='doccomment'>/// Index of the current line. Characters in the first line of the input</span>
-    <span class='doccomment'>/// (before the first newline character) are in line 1.</span>
-    <span class='ident'>line</span>: <span class='ident'>usize</span>,
+    <span class="doccomment">/// Index of the current line. Characters in the first line of the input</span>
+    <span class="doccomment">/// (before the first newline character) are in line 1.</span>
+    <span class="ident">line</span>: <span class="ident">usize</span>,
 
-    <span class='doccomment'>/// Index of the current column. The first character in the input and any</span>
-    <span class='doccomment'>/// characters immediately following a newline character are in column 1.</span>
-    <span class='doccomment'>/// The column is 0 immediately after a newline character has been read.</span>
-    <span class='ident'>col</span>: <span class='ident'>usize</span>,
+    <span class="doccomment">/// Index of the current column. The first character in the input and any</span>
+    <span class="doccomment">/// characters immediately following a newline character are in column 1.</span>
+    <span class="doccomment">/// The column is 0 immediately after a newline character has been read.</span>
+    <span class="ident">col</span>: <span class="ident">usize</span>,
 
-    <span class='doccomment'>/// Byte offset of the start of the current line. This is the sum of lenghts</span>
-    <span class='doccomment'>/// of all previous lines. Keeping track of things this way allows efficient</span>
-    <span class='doccomment'>/// computation of the current line, column, and byte offset while only</span>
-    <span class='doccomment'>/// updating one of the counters in `next()` in the common case.</span>
-    <span class='ident'>start_of_line</span>: <span class='ident'>usize</span>,
+    <span class="doccomment">/// Byte offset of the start of the current line. This is the sum of lenghts</span>
+    <span class="doccomment">/// of all previous lines. Keeping track of things this way allows efficient</span>
+    <span class="doccomment">/// computation of the current line, column, and byte offset while only</span>
+    <span class="doccomment">/// updating one of the counters in `next()` in the common case.</span>
+    <span class="ident">start_of_line</span>: <span class="ident">usize</span>,
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>I</span><span class='op'>&gt;</span> <span class='ident'>LineColIterator</span><span class='op'>&lt;</span><span class='ident'>I</span><span class='op'>&gt;</span>
-<span class='kw'>where</span>
-    <span class='ident'>I</span>: <span class='ident'>Iterator</span><span class='op'>&lt;</span><span class='ident'>Item</span> <span class='op'>=</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;&gt;</span>,
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span> <span class="ident">LineColIterator</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">I</span>: <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;&gt;</span>,
 {
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>iter</span>: <span class='ident'>I</span>) <span class='op'>-&gt;</span> <span class='ident'>LineColIterator</span><span class='op'>&lt;</span><span class='ident'>I</span><span class='op'>&gt;</span> {
-        <span class='ident'>LineColIterator</span> {
-            <span class='ident'>iter</span>: <span class='ident'>iter</span>,
-            <span class='ident'>line</span>: <span class='number'>1</span>,
-            <span class='ident'>col</span>: <span class='number'>0</span>,
-            <span class='ident'>start_of_line</span>: <span class='number'>0</span>,
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">iter</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="ident">LineColIterator</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span> {
+        <span class="ident">LineColIterator</span> {
+            <span class="ident">iter</span>: <span class="ident">iter</span>,
+            <span class="ident">line</span>: <span class="number">1</span>,
+            <span class="ident">col</span>: <span class="number">0</span>,
+            <span class="ident">start_of_line</span>: <span class="number">0</span>,
         }
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>line</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
-        <span class='self'>self</span>.<span class='ident'>line</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">line</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+        <span class="self">self</span>.<span class="ident">line</span>
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>col</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
-        <span class='self'>self</span>.<span class='ident'>col</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">col</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+        <span class="self">self</span>.<span class="ident">col</span>
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>byte_offset</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
-        <span class='self'>self</span>.<span class='ident'>start_of_line</span> <span class='op'>+</span> <span class='self'>self</span>.<span class='ident'>col</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">byte_offset</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+        <span class="self">self</span>.<span class="ident">start_of_line</span> <span class="op">+</span> <span class="self">self</span>.<span class="ident">col</span>
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>I</span><span class='op'>&gt;</span> <span class='ident'>Iterator</span> <span class='kw'>for</span> <span class='ident'>LineColIterator</span><span class='op'>&lt;</span><span class='ident'>I</span><span class='op'>&gt;</span>
-<span class='kw'>where</span>
-    <span class='ident'>I</span>: <span class='ident'>Iterator</span><span class='op'>&lt;</span><span class='ident'>Item</span> <span class='op'>=</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;&gt;</span>,
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">LineColIterator</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">I</span>: <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;&gt;</span>,
 {
-    <span class='kw'>type</span> <span class='ident'>Item</span> <span class='op'>=</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;</span>;
+    <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>;
 
-    <span class='kw'>fn</span> <span class='ident'>next</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;&gt;</span> {
-        <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>iter</span>.<span class='ident'>next</span>() {
-            <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>,
-            <span class='prelude-val'>Some</span>(<span class='prelude-val'>Ok</span>(<span class='string'>b&#39;\n&#39;</span>)) <span class='op'>=&gt;</span> {
-                <span class='self'>self</span>.<span class='ident'>start_of_line</span> <span class='op'>+=</span> <span class='self'>self</span>.<span class='ident'>col</span> <span class='op'>+</span> <span class='number'>1</span>;
-                <span class='self'>self</span>.<span class='ident'>line</span> <span class='op'>+=</span> <span class='number'>1</span>;
-                <span class='self'>self</span>.<span class='ident'>col</span> <span class='op'>=</span> <span class='number'>0</span>;
-                <span class='prelude-val'>Some</span>(<span class='prelude-val'>Ok</span>(<span class='string'>b&#39;\n&#39;</span>))
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;&gt;</span> {
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">iter</span>.<span class="ident">next</span>() {
+            <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
+            <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="string">b&#39;\n&#39;</span>)) <span class="op">=&gt;</span> {
+                <span class="self">self</span>.<span class="ident">start_of_line</span> <span class="op">+=</span> <span class="self">self</span>.<span class="ident">col</span> <span class="op">+</span> <span class="number">1</span>;
+                <span class="self">self</span>.<span class="ident">line</span> <span class="op">+=</span> <span class="number">1</span>;
+                <span class="self">self</span>.<span class="ident">col</span> <span class="op">=</span> <span class="number">0</span>;
+                <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="string">b&#39;\n&#39;</span>))
             }
-            <span class='prelude-val'>Some</span>(<span class='prelude-val'>Ok</span>(<span class='ident'>c</span>)) <span class='op'>=&gt;</span> {
-                <span class='self'>self</span>.<span class='ident'>col</span> <span class='op'>+=</span> <span class='number'>1</span>;
-                <span class='prelude-val'>Some</span>(<span class='prelude-val'>Ok</span>(<span class='ident'>c</span>))
+            <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="ident">c</span>)) <span class="op">=&gt;</span> {
+                <span class="self">self</span>.<span class="ident">col</span> <span class="op">+=</span> <span class="number">1</span>;
+                <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="ident">c</span>))
             }
-            <span class='prelude-val'>Some</span>(<span class='prelude-val'>Err</span>(<span class='ident'>e</span>)) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='prelude-val'>Err</span>(<span class='ident'>e</span>)),
+            <span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">e</span>)) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">e</span>)),
         }
     }
 }

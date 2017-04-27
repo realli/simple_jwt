@@ -1,4 +1,5 @@
 (function() {var implementors = {};
+implementors["error_chain"] = [];
 implementors["libc"] = [];
 implementors["openssl"] = [];
 implementors["serde"] = [];
