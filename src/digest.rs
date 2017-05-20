@@ -55,7 +55,7 @@ pub fn rsa_signature(pem_string: &str,
     let mut signer = try!(Signer::new(message_digest, &key));
     try!(signer.update(data.as_bytes()));
     let result = try!(signer.finish());
-    return Ok(encode_config(&result, URL_SAFE));
+    Ok(encode_config(&result, URL_SAFE))
 }
 
 pub fn rsa_verify(pem_string: &str,

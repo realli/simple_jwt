@@ -7,7 +7,7 @@ use base64::{encode_config, decode_config, URL_SAFE};
 use super::errors::*;
 
 /// trait that can be convert to/from base64 string
-/// impl for serde::Serialize+serde::Deserialize are already defined
+/// impl for `serde::Serialize`+`serde::Deserialize` are already defined
 pub trait JWTStringConvertable : Sized{
     fn from_base64_str(string: &str) -> Result<Self>; 
     fn to_base64_str(&self) -> Result<String>;

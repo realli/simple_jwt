@@ -98,44 +98,37 @@ impl JWTStringConvertable for Claim {
             let reg: &mut RegisteredClaim = &mut claim.registered;
             reg.exp = match map.remove("exp") {
                 Some(Value::Number(u)) => u.as_u64(),
-                Some(Value::Null) => None,
-                None => None,
+                Some(Value::Null) | None => None,
                 _ => return Err(ErrorKind::InvalidFormat.into()),
             };
             reg.nbf = match map.remove("nbf") {
                 Some(Value::Number(u)) => u.as_u64(),
-                Some(Value::Null) => None,
-                None => None,
+                Some(Value::Null) | None => None,
                 _ => return Err(ErrorKind::InvalidFormat.into()),
             };
             reg.iat = match map.remove("iat") {
                 Some(Value::Number(u)) => u.as_u64(),
-                Some(Value::Null) => None,
-                None => None,
+                Some(Value::Null) | None => None,
                 _ => return Err(ErrorKind::InvalidFormat.into()),
             };
             reg.iss = match map.remove("iss") {
                 Some(Value::String(u)) => Some(u),
-                Some(Value::Null) => None,
-                None => None,
+                Some(Value::Null) | None => None,
                 _ => return Err(ErrorKind::InvalidFormat.into()),
             };
             reg.aud = match map.remove("aud") {
                 Some(Value::String(u)) => Some(u),
-                Some(Value::Null) => None,
-                None => None,
+                Some(Value::Null) | None => None,
                 _ => return Err(ErrorKind::InvalidFormat.into()),
             };
             reg.sub = match map.remove("sub") {
                 Some(Value::String(u)) => Some(u),
-                Some(Value::Null) => None,
-                None => None,
+                Some(Value::Null) | None => None,
                 _ => return Err(ErrorKind::InvalidFormat.into()),
             };
             reg.jti = match map.remove("jti") {
                 Some(Value::String(u)) => Some(u),
-                Some(Value::Null) => None,
-                None => None,
+                Some(Value::Null) | None => None,
                 _ => return Err(ErrorKind::InvalidFormat.into()),
             };
         }
