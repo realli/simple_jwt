@@ -5,7 +5,7 @@
 //! [rust-openssl](https://github.com/sfackler/rust-openssl) to find the
 //! set-up of openssl runtime lib. 
 //!
-//! # Support Algirithm
+//! # Support Algorithm
 //!
 //! * HS256/384/512
 //! * RS256/384/512
@@ -231,6 +231,55 @@ p5HP/xmDtWJQv5hScT2aWKjjl2kC8eZOHTGgQvjrSm8=
         assert_eq!(s.field_str, new_s.field_str);
     }
 
+    #[test]
+    fn ecdsa_256_384_512_should_work() {
+        /*
+        use openssl::ec::{EcKey, EcGroup};
+        use openssl::nid;
+        use openssl::pkey::{PKey};
+
+        let group = EcGroup::from_curve_name(nid::X9_62_PRIME256V1).unwrap();
+        let ecdsa_ = EcKey::generate(&group).unwrap();
+        let private_key_pem_b = ecdsa_.private_key_to_pem().unwrap();
+        let private_key_pem = &String::from_utf8(private_key_pem_b).unwrap();
+
+        let pkey = PKey::from_ec_key(ecdsa_).unwrap();
+        let public_key_pem_b = pkey.public_key_to_pem().unwrap();
+        let public_key_pem = &String::from_utf8(public_key_pem_b).unwrap();
+        */
+        let public_key_pem = "-----BEGIN PUBLIC KEY-----
+MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEbSDOGvmz9BjL+MBTnss0KOve0a/n
+WvTCN3s52ZRZxpTnEifkoczAxRu4VNcdzsNPtAR1LsI2iBxccYHIJhRXyw==
+-----END PUBLIC KEY-----";
+        let private_key_pem = "-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIHetHzlW7+nBW2dAtT4o4sK69aroXx1jgdMqEIfA9vtYoAoGCCqGSM49
+AwEHoUQDQgAEbSDOGvmz9BjL+MBTnss0KOve0a/nWvTCN3s52ZRZxpTnEifkoczA
+xRu4VNcdzsNPtAR1LsI2iBxccYHIJhRXyw==
+-----END EC PRIVATE KEY-----";
+
+        let mut claim = Claim::default();
+        claim.set_sub("1234567890");
+        claim.set_payload_field("name", "John Doe");
+        claim.set_payload_field("admin", true);
+        let result0 = encode(&claim, private_key_pem, Algorithm::ES256).unwrap();
+        let result1 = encode(&claim, private_key_pem, Algorithm::ES384).unwrap();
+        let result2 = encode(&claim, private_key_pem, Algorithm::ES512).unwrap();
+
+        let new_claim0 = decode(&result0, public_key_pem).unwrap();
+        let new_claim1 = decode(&result1, public_key_pem).unwrap();
+        let new_claim2 = decode(&result2, public_key_pem).unwrap();
+
+        assert_eq!(claim, new_claim0);
+        assert_eq!(claim, new_claim1);
+        assert_eq!(claim, new_claim2);
+
+        let s = TestStruct {field_u32: 32, field_str: String::from("hello")};
+        let result = encode(&s, private_key_pem, Algorithm::ES512).unwrap();
+        let new_s: TestStruct = decode(&result, public_key_pem).unwrap();
+        assert_eq!(s.field_u32, new_s.field_u32);
+        assert_eq!(s.field_str, new_s.field_str);
+    }
+
 }
 
 use base64::{decode_config, URL_SAFE};
@@ -239,7 +288,9 @@ pub use self::header::{Header, Algorithm};
 pub use self::claim::Claim;
 pub use self::utils::JWTStringConvertable;
 pub use self::errors::*;
-use self::digest::{hs_signature, hs_verify, rsa_signature, rsa_verify};
+use self::digest::{hs_signature, hs_verify,
+                   rsa_signature, rsa_verify,
+                   ecdsa_signature, ecdsa_verify};
 
 /// encode a Claim to jwt string, if you are using RS256/384/512, secret should be your private key
 pub fn encode<T: JWTStringConvertable>(body: &T, secret: &str, alg: Algorithm) -> Result<String> {
@@ -254,6 +305,8 @@ pub fn encode<T: JWTStringConvertable>(body: &T, secret: &str, alg: Algorithm) -
             => hs_signature(secret, &jwt_base64, header.alg),
         Algorithm::RS256 | Algorithm::RS384 | Algorithm::RS512
             => rsa_signature(secret, &jwt_base64, header.alg),
+        Algorithm::ES256 | Algorithm::ES384 | Algorithm:: ES512
+            => ecdsa_signature(secret, &jwt_base64, header.alg),
     });
     jwt_base64.push('.');
     jwt_base64.push_str(&secured_base64);
@@ -282,6 +335,8 @@ pub fn decode<T: JWTStringConvertable>(jwtstr: &str, secret: &str) -> Result<T> 
             => hs_verify(secret, &data, &sig, header.alg),
         Algorithm::RS256 | Algorithm::RS384 | Algorithm::RS512
             => rsa_verify(secret, &data, &sig, header.alg),
+        Algorithm::ES256 | Algorithm::ES384 | Algorithm:: ES512
+            => ecdsa_verify(secret, &data, &sig, header.alg),
     });
     Ok(claim)
 }
