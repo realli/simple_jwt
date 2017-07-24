@@ -232,7 +232,7 @@ p5HP/xmDtWJQv5hScT2aWKjjl2kC8eZOHTGgQvjrSm8=
     }
 
     #[test]
-    fn ecdsa_256_384_512_should_work() {
+    fn es_256_should_work() {
         /*
         use openssl::ec::{EcKey, EcGroup};
         use openssl::nid;
@@ -262,19 +262,12 @@ xRu4VNcdzsNPtAR1LsI2iBxccYHIJhRXyw==
         claim.set_payload_field("name", "John Doe");
         claim.set_payload_field("admin", true);
         let result0 = encode(&claim, private_key_pem, Algorithm::ES256).unwrap();
-        let result1 = encode(&claim, private_key_pem, Algorithm::ES384).unwrap();
-        let result2 = encode(&claim, private_key_pem, Algorithm::ES512).unwrap();
 
         let new_claim0 = decode(&result0, public_key_pem).unwrap();
-        let new_claim1 = decode(&result1, public_key_pem).unwrap();
-        let new_claim2 = decode(&result2, public_key_pem).unwrap();
-
         assert_eq!(claim, new_claim0);
-        assert_eq!(claim, new_claim1);
-        assert_eq!(claim, new_claim2);
 
         let s = TestStruct {field_u32: 32, field_str: String::from("hello")};
-        let result = encode(&s, private_key_pem, Algorithm::ES512).unwrap();
+        let result = encode(&s, private_key_pem, Algorithm::ES256).unwrap();
         let new_s: TestStruct = decode(&result, public_key_pem).unwrap();
         assert_eq!(s.field_u32, new_s.field_u32);
         assert_eq!(s.field_str, new_s.field_str);

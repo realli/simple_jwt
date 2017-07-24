@@ -7,6 +7,7 @@ use base64::{encode_config, URL_SAFE};
 
 use super::errors::*;
 use super::header::Algorithm;
+use super::utils::{ecdsa_der_to_raw, ecdsa_raw_to_der};
 
 fn create_message_digest(alg: Algorithm) -> MessageDigest {
     match alg {
@@ -89,7 +90,8 @@ pub fn ecdsa_signature(pem_string: &str,
     let mut signer = try!(Signer::new(message_digest, &key));
     try!(signer.update(data.as_bytes()));
     let result = try!(signer.finish());
-    Ok(encode_config(&result, URL_SAFE))
+    let raw_result = ecdsa_der_to_raw(&result)?;
+    Ok(encode_config(&raw_result, URL_SAFE))
 }
 
 pub fn ecdsa_verify(pem_string: &str,
@@ -100,7 +102,9 @@ pub fn ecdsa_verify(pem_string: &str,
     let key = try!(PKey::public_key_from_pem(pem_string.as_bytes()));
     let mut verifier = try!(Verifier::new(message_digest, &key));
     try!(verifier.update(data.as_bytes()));
-    let b = try!(verifier.finish(sig));
+
+    let der_sig = ecdsa_raw_to_der(sig)?;
+    let b = try!(verifier.finish(&der_sig));
     if b {
         Ok(())
     } else {
