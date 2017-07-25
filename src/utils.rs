@@ -27,40 +27,78 @@ impl<T> JWTStringConvertable for T
     }
 }
 
+fn _safe_get_u8s(s: &[u8], i: usize) -> Result<u8> {
+    s.get(i).map(|u| u.clone()).ok_or(ErrorKind::InvalidSignature.into())
+}
 
 // some helper function to convert ecdsa signature der from/to raw format
 pub fn ecdsa_der_to_raw(s: &[u8]) -> Result<Vec<u8>> {
-    if s.len() < 6 {
-        return Err(ErrorKind::InvalidSignature.into());
-    }
-    let mut result = Vec::new();
-    if s[0] != 0x30 || s[2] != 0x02 {
-        return Err(ErrorKind::InvalidSignature.into());
-    }
-    let t_len = s[1] as usize;
-    if s.len() != 2 + t_len {
-        return Err(ErrorKind::InvalidSignature.into());
-    }
-    let r_len = s[3] as usize;
-    if r_len + 2 > t_len {
+    let mut idx = 0;
+    let s0 = _safe_get_u8s(s, idx)?;
+    idx += 1;
+    if s0 != 0x30 {
         return Err(ErrorKind::InvalidSignature.into());
     }
 
-    for i in 4..4+r_len {
-        if i == 4 && s[i] == 0x00 {
+    let mut result = Vec::new();
+
+    let t_len = _safe_get_u8s(s, idx)? as usize;
+    idx += 1;
+    if t_len > 127 { // more than one byte for len
+        idx += t_len - 128;
+    }
+
+    idx += 1; // skip the 0x02
+
+    let mut r_len = _safe_get_u8s(s, idx)? as usize;
+    idx += 1;
+    if r_len > 127 {
+        let bit_len = r_len - 128;
+        if bit_len > 4 || bit_len == 0 { // only deal with maximum 4 bytes
+            return Err(ErrorKind::InvalidSignature.into());
+        }
+        r_len = 0x0;
+        for _ in 0..bit_len {
+            r_len = r_len << 8;
+            r_len = r_len | (_safe_get_u8s(s, idx)? as usize);
+            idx += 1;
+        }
+    }
+
+    for i in 0..r_len {
+        let target = _safe_get_u8s(s, idx)?;
+        idx += 1;
+        if i == 0 && target == 0x00 {
             continue;
         }
-        result.push(s[i]);
+        result.push(target);
     }
-    let s_len = s[4 + r_len + 1] as usize;
-    if 4 + s_len + 2 + r_len > s.len() {
-        return Err(ErrorKind::InvalidSignature.into());
+
+    idx += 1; // skip the 0x02
+
+    let mut s_len = _safe_get_u8s(s, idx)? as usize;
+    idx += 1;
+
+    if s_len > 127 {
+        let bit_len = s_len - 128;
+        if bit_len > 4 || bit_len == 0 { // only deal with maximum 4 bytes
+            return Err(ErrorKind::InvalidSignature.into());
+        }
+        s_len = 0x0;
+        for _ in 0..bit_len {
+            s_len = s_len << 8;
+            s_len = s_len | (_safe_get_u8s(s, idx)? as usize);
+            idx += 1;
+        }
     }
-    for i in 6+r_len..6+r_len+s_len {
-        if i == 6 + r_len && s[i] == 0x00 {
+
+    for i in 0..s_len {
+        let target = _safe_get_u8s(s, idx)?;
+        idx += 1;
+        if i == 0 && target == 0x00 {
             continue;
         }
-        result.push(s[i]);
+        result.push(target);
     }
     Ok(result)
 }
@@ -86,11 +124,62 @@ pub fn ecdsa_raw_to_der(s: &[u8]) -> Result<Vec<u8>> {
         s_len += 1;
     }
 
+    let mut r_len_byte = 0;
+    if r_len > 127 {
+        r_len_byte = 1;
+        let mut temp = r_len;
+        temp = temp >> 8;
+        while temp > 0 {
+            r_len_byte += 1;
+            temp = temp >> 8;
+        }
+    }
+
+    let mut s_len_byte = 0;
+    if s_len > 127 {
+        s_len_byte = 1;
+        let mut temp = s_len;
+        temp = temp >> 8;
+        while temp > 0 {
+            s_len_byte += 1;
+            temp = temp >> 8;
+        }
+    }
+
+    let t_len = 2 + 2 + r_len_byte + s_len_byte + r_len + s_len;
+    let mut t_len_byte = 0;
+    if t_len > 127 {
+        t_len_byte = 1;
+        let mut temp = t_len;
+        temp = temp >> 8;
+        while temp > 0 {
+            t_len_byte += 1;
+            temp = temp >> 8;
+        }
+    }
+
     let mut result = Vec::new();
     result.push(0x30);
-    result.push(r_len as u8 + s_len as u8 + 4 );
+    if t_len > 127 {
+        result.push((t_len_byte + 128) as u8);
+        while t_len_byte > 0 {
+            t_len_byte -= 1;
+            result.push((t_len / 2^t_len_byte) as u8);
+        }
+    } else {
+        result.push(t_len as u8);
+    }
     result.push(0x02);
-    result.push(r_len as u8);
+    if r_len > 127 {
+        result.push((r_len_byte + 128) as u8);
+        while r_len_byte > 0 {
+            r_len_byte -= 1;
+            result.push((r_len / 2^r_len_byte) as u8);
+        }
+    } else {
+        result.push(r_len as u8);
+    }
+
     for i in 0..half_len {
         if i == 0 && r_append_zero {
             result.push(0x00);
@@ -98,7 +187,16 @@ pub fn ecdsa_raw_to_der(s: &[u8]) -> Result<Vec<u8>> {
         result.push(s[i]);
     }
     result.push(0x02);
-    result.push(s_len as u8);
+
+    if s_len > 127 {
+        result.push((s_len_byte + 128) as u8);
+        while s_len_byte > 0 {
+            s_len_byte -= 1;
+            result.push((s_len / 2^s_len_byte) as u8);
+        }
+    } else {
+        result.push(s_len as u8);
+    }
 
     for i in 0..half_len {
         if i == 0 && s_append_zero {
