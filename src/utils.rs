@@ -31,8 +31,12 @@ fn _safe_get_u8s(s: &[u8], i: usize) -> Result<u8> {
     s.get(i).map(|u| u.clone()).ok_or(ErrorKind::InvalidSignature.into())
 }
 
+
+pub const P256_ORDER_LEN: usize = 32;
+pub const P384_ORDER_LEN: usize = 48;
+pub const P521_ORDER_LEN: usize = 66;
 // some helper function to convert ecdsa signature der from/to raw format
-pub fn ecdsa_der_to_raw(s: &[u8]) -> Result<Vec<u8>> {
+pub fn ecdsa_der_to_raw(s: &[u8], order_len: usize) -> Result<Vec<u8>> {
     let mut idx = 0;
     let s0 = _safe_get_u8s(s, idx)?;
     idx += 1;
@@ -65,12 +69,25 @@ pub fn ecdsa_der_to_raw(s: &[u8]) -> Result<Vec<u8>> {
         }
     }
 
+    if r_len > order_len + 1 {
+        return Err(ErrorKind::InvalidSignature.into());
+    } else if r_len == order_len + 1 {
+        let _temp = _safe_get_u8s(s, idx)?;
+        idx += 1;
+        r_len = order_len;
+        if _temp != 0x0 {
+            return Err(ErrorKind::InvalidSignature.into());
+        }
+    }
+
     for i in 0..r_len {
+        if i == 0 && order_len > r_len {
+            for _ in 0..order_len-r_len {
+                result.push(0x0);
+            }
+        }
         let target = _safe_get_u8s(s, idx)?;
         idx += 1;
-        if i == 0 && target == 0x00 {
-            continue;
-        }
         result.push(target);
     }
 
@@ -92,33 +109,63 @@ pub fn ecdsa_der_to_raw(s: &[u8]) -> Result<Vec<u8>> {
         }
     }
 
+    if s_len > order_len + 1 {
+        return Err(ErrorKind::InvalidSignature.into());
+    } else if s_len == order_len + 1 {
+        let _temp = _safe_get_u8s(s, idx)?;
+        idx += 1;
+        s_len = order_len;
+        if _temp != 0x0 {
+            return Err(ErrorKind::InvalidSignature.into());
+        }
+    }
+
     for i in 0..s_len {
+        if i == 0 && order_len > s_len {
+            for _ in 0..order_len-s_len {
+                result.push(0x0);
+            }
+        }
         let target = _safe_get_u8s(s, idx)?;
         idx += 1;
-        if i == 0 && target == 0x00 {
-            continue;
-        }
         result.push(target);
     }
+
     Ok(result)
 }
 
-pub fn ecdsa_raw_to_der(s: &[u8]) -> Result<Vec<u8>> {
-    if s.len() <= 0 || s.len() % 2 != 0 {
+pub fn ecdsa_raw_to_der(s: &[u8], order_len: usize) -> Result<Vec<u8>> {
+    if s.len() != order_len * 2 {
         return Err(ErrorKind::InvalidSignature.into());
     }
-    let half_len = s.len() / 2;
+    let rs = &s[0..order_len];
+    let ss = &s[order_len..s.len()];
+    let mut idx = 0;
+    while idx < rs.len() && rs[idx] == 0x0 {
+        idx += 1;
+    }
+    let rs = &rs[idx..rs.len()];
 
-    let r_0 = s[0];
+    idx = 0;
+    while idx < ss.len() && ss[idx] == 0x0 {
+        idx += 1;
+    }
+    let ss = &ss[idx..ss.len()];
+
+    _ecdsa_raw_to_der(rs, ss)
+}
+
+fn _ecdsa_raw_to_der(rs: &[u8], ss: &[u8]) -> Result<Vec<u8>> {
+    let r_0 = rs[0];
     let mut r_append_zero = false;
-    let mut r_len = half_len;
+    let mut r_len = rs.len();
     if r_0 > 0x7f {
         r_append_zero = true;
         r_len += 1;
     }
-    let s_0 = s[half_len];
+    let s_0 = ss[0];
     let mut s_append_zero = false;
-    let mut s_len = half_len;
+    let mut s_len = ss.len();
     if s_0 > 0x7f {
         s_append_zero = true;
         s_len += 1;
@@ -164,27 +211,28 @@ pub fn ecdsa_raw_to_der(s: &[u8]) -> Result<Vec<u8>> {
         result.push((t_len_byte + 128) as u8);
         while t_len_byte > 0 {
             t_len_byte -= 1;
-            result.push((t_len / 2^t_len_byte) as u8);
+            result.push((t_len / (2 as usize).pow(t_len_byte)) as u8);
         }
     } else {
         result.push(t_len as u8);
     }
+
     result.push(0x02);
     if r_len > 127 {
         result.push((r_len_byte + 128) as u8);
         while r_len_byte > 0 {
             r_len_byte -= 1;
-            result.push((r_len / 2^r_len_byte) as u8);
+            result.push((r_len / (2 as usize).pow(r_len_byte as u32)) as u8);
         }
     } else {
         result.push(r_len as u8);
     }
 
-    for i in 0..half_len {
+    for i in 0..rs.len() {
         if i == 0 && r_append_zero {
             result.push(0x00);
         }
-        result.push(s[i]);
+        result.push(rs[i]);
     }
     result.push(0x02);
 
@@ -192,17 +240,17 @@ pub fn ecdsa_raw_to_der(s: &[u8]) -> Result<Vec<u8>> {
         result.push((s_len_byte + 128) as u8);
         while s_len_byte > 0 {
             s_len_byte -= 1;
-            result.push((s_len / 2^s_len_byte) as u8);
+            result.push((s_len / (2 as usize).pow(s_len_byte as u32)) as u8);
         }
     } else {
         result.push(s_len as u8);
     }
 
-    for i in 0..half_len {
+    for i in 0..ss.len() {
         if i == 0 && s_append_zero {
             result.push(0x00);
         }
-        result.push(s[half_len + i]);
+        result.push(ss[i]);
     }
     Ok(result)
 }

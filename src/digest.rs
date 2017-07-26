@@ -7,7 +7,13 @@ use base64::{encode_config, URL_SAFE};
 
 use super::errors::*;
 use super::header::Algorithm;
-use super::utils::{ecdsa_der_to_raw, ecdsa_raw_to_der};
+use super::utils::{
+    ecdsa_der_to_raw,
+    ecdsa_raw_to_der,
+    P256_ORDER_LEN,
+    P384_ORDER_LEN,
+    P521_ORDER_LEN,
+};
 
 fn create_message_digest(alg: Algorithm) -> MessageDigest {
     match alg {
@@ -20,6 +26,15 @@ fn create_message_digest(alg: Algorithm) -> MessageDigest {
         Algorithm::HS512
             | Algorithm::RS512
             | Algorithm::ES512 => MessageDigest::sha512()
+    }
+}
+
+fn get_order_len(alg:Algorithm) -> usize {
+    match alg {
+        Algorithm::ES256 => P256_ORDER_LEN,
+        Algorithm::ES384 => P384_ORDER_LEN,
+        Algorithm::ES512 => P521_ORDER_LEN,
+        _ => panic!("get_order_len should not be called using algorithm besides ES256/384/512")
     }
 }
 
@@ -90,7 +105,7 @@ pub fn ecdsa_signature(pem_string: &str,
     let mut signer = try!(Signer::new(message_digest, &key));
     try!(signer.update(data.as_bytes()));
     let result = try!(signer.finish());
-    let raw_result = ecdsa_der_to_raw(&result)?;
+    let raw_result = ecdsa_der_to_raw(&result, get_order_len(alg))?;
     Ok(encode_config(&raw_result, URL_SAFE))
 }
 
@@ -103,7 +118,7 @@ pub fn ecdsa_verify(pem_string: &str,
     let mut verifier = try!(Verifier::new(message_digest, &key));
     try!(verifier.update(data.as_bytes()));
 
-    let der_sig = ecdsa_raw_to_der(sig)?;
+    let der_sig = ecdsa_raw_to_der(sig, get_order_len(alg))?;
     let b = try!(verifier.finish(&der_sig));
     if b {
         Ok(())
