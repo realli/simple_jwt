@@ -3,7 +3,7 @@ Simple JWT
 
 [![](http://meritbadge.herokuapp.com/simple_jwt)](https://crates.io/crates/simple_jwt)
 
-[Documentation](https://docs.rs/simple_jwt/1.1.0/simple_jwt)
+[Documentation](https://realli.github.io/simple_jwt/simple_jwt/)
 
 
 A very simple crate to deal with [json web token](http://jwt.io), 
