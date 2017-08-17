@@ -1,10 +1,10 @@
 [package]
 name = "simple_jwt"
-version = "1.1.0"
+version = "1.2.0"
 license = "MIT"
 authors = ["realli <lrlanswer@gmail.com>"]
 keywords = ["jwt", "web", "json", "token"]
-description = "json web token(JWT) encode/decode"
+description = "simple JWT encoder/decoder"
 repository = "https://github.com/realli/simple_jwt"
 documentation = "http://realli.github.io/simple_jwt/simple_jwt/"
 
