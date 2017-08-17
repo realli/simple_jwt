@@ -55,16 +55,19 @@
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">fmt</span>:<span class="ident">expr</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">arg</span>:<span class="ident">tt</span>)<span class="op">+</span>) <span class="op">=&gt;</span> { ... };
 }</pre>
 <div class='docblock'><p>Exits a function early with an error</p>
+
 <p>The <code>bail!</code> macro provides an easy way to exit a function.
 <code>bail!(expr)</code> is equivalent to writing.</p>
 
 <pre class="rust rust-example-rendered">
     <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">expr</span>.<span class="ident">into</span>());</pre>
+
 <p>And as shorthand it takes a formatting string a la <code>println!</code>:</p>
 
 <pre class="rust rust-example-rendered">
 <span class="macro">bail</span><span class="macro">!</span>(<span class="string">&quot;bad number: {}&quot;</span>, <span class="ident">n</span>);</pre>
-<h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>
+
+<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
 <p>Bailing on a custom error:</p>
 
 <pre class="rust rust-example-rendered">
@@ -80,6 +83,7 @@
     <span class="prelude-val">Ok</span>(())
 }
 </pre>
+
 <p>Bailing on a formatted string:</p>
 
 <pre class="rust rust-example-rendered">

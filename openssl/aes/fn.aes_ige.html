@@ -50,7 +50,8 @@
                    </a>
                </span><a class='srclink' href='../../src/openssl/aes.rs.html#66-83' title='goto source code'>[src]</a></span></h1>
 <pre class='rust fn'>pub fn aes_ige(<br>&nbsp;&nbsp;&nbsp;&nbsp;in_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;out: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;mut [</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;key: &amp;<a class="struct" href="../../openssl/aes/struct.AesKey.html" title="struct openssl::aes::AesKey">AesKey</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;iv: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;mut [</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;mode: <a class="enum" href="../../openssl/symm/enum.Mode.html" title="enum openssl::symm::Mode">Mode</a><br>)</pre><div class='docblock'><p>Performs AES IGE encryption or decryption</p>
-<h1 id="panics" class="section-header"><a href="#panics">Panics</a></h1>
+
+<h1 id='panics' class='section-header'><a href='#panics'>Panics</a></h1>
 <p>Panics if <code>in_</code> is not the same length as <code>out</code>, if that length is not a multiple of 16, or if
 <code>iv</code> is not at least 32 bytes.</p>
 </div></section>

@@ -61,7 +61,7 @@
     pub tm_yday: <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a>,
     pub tm_isdst: <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a>,
     pub tm_gmtoff: <a class="type" href="../libc/type.c_long.html" title="type libc::c_long">c_long</a>,
-    pub tm_zone: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="../libc/type.c_char.html" title="type libc::c_char">c_char</a>,
+    pub tm_zone: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="type" href="../libc/type.c_char.html" title="type libc::c_char">c_char</a>,
 }</pre><h2 id='fields' class='fields'>Fields</h2><span id='structfield.tm_sec' class="structfield">
                            <span id='tm_sec.v' class='invisible'>
                            <code>tm_sec: <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a></code>
@@ -94,7 +94,7 @@
                            <code>tm_gmtoff: <a class="type" href="../libc/type.c_long.html" title="type libc::c_long">c_long</a></code>
                            </span></span><span id='structfield.tm_zone' class="structfield">
                            <span id='tm_zone.v' class='invisible'>
-                           <code>tm_zone: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="../libc/type.c_char.html" title="type libc::c_char">c_char</a></code>
+                           <code>tm_zone: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="type" href="../libc/type.c_char.html" title="type libc::c_char">c_char</a></code>
                            </span></span><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html" title="trait core::marker::Copy">Copy</a> for <a class="struct" href="../libc/struct.tm.html" title="struct libc::tm">tm</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/libc/macros.rs.html#44' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a> for <a class="struct" href="../libc/struct.tm.html" title="struct libc::tm">tm</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/libc/macros.rs.html#45-47' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.clone' class="method"><span id='clone.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class="struct" href="../libc/struct.tm.html" title="struct libc::tm">tm</a></code></span></h4>

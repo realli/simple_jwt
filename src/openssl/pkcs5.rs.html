@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/realli/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.8/src/pkcs5.rs`.">
+    <meta name="description" content="Source to the Rust file `/Users/realli/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/openssl-0.9.11/src/pkcs5.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>pkcs5.rs.html -- source</title>
@@ -425,8 +425,6 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="kw">use</span> <span class="ident">hex</span>::<span class="ident">ToHex</span>;
-
     <span class="kw">use</span> <span class="ident">hash</span>::<span class="ident">MessageDigest</span>;
     <span class="kw">use</span> <span class="ident">symm</span>::<span class="ident">Cipher</span>;
 
@@ -540,6 +538,8 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v110&quot;</span>, <span class="ident">ossl110</span>))]</span>
     <span class="kw">fn</span> <span class="ident">scrypt</span>() {
+        <span class="kw">use</span> <span class="ident">hex</span>::<span class="ident">ToHex</span>;
+
         <span class="kw">let</span> <span class="ident">pass</span> <span class="op">=</span> <span class="string">&quot;pleaseletmein&quot;</span>;
         <span class="kw">let</span> <span class="ident">salt</span> <span class="op">=</span> <span class="string">&quot;SodiumChloride&quot;</span>;
         <span class="kw">let</span> <span class="ident">expected</span> <span class="op">=</span> <span class="string">&quot;7023bdcb3afd7348461c06cd81fd38ebfda8fbba904f8e3ea9b543f6545da1f2d5432955613\

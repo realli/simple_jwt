@@ -48,17 +48,21 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/backtrace/symbolize/mod.rs.html#37-39' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/backtrace/symbolize/mod.rs.html#39-41' title='goto source code'>[src]</a></span></h1>
 <pre class='rust fn'>pub fn resolve&lt;F:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/trait.FnMut.html" title="trait core::ops::FnMut">FnMut</a>(&amp;<a class="struct" href="../backtrace/struct.Symbol.html" title="struct backtrace::Symbol">Symbol</a>)&gt;(addr: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="enum" href="https://doc.rust-lang.org/nightly/std/os/raw/enum.c_void.html" title="enum std::os::raw::c_void">c_void</a>, cb: F)</pre><div class='docblock'><p>Resolve an address to a symbol, passing the symbol to the specified
 closure.</p>
+
 <p>This function will look up the given address in areas such as the local
 symbol table, dynamic symbol table, or DWARF debug info (depending on the
 activated implementation) to find symbols to yield.</p>
+
 <p>The closure may not be called if resolution could not be performed, and it
 also may be called more than once in the case of inlined functions.</p>
+
 <p>Symbols yielded represent the execution at the specified <code>addr</code>, returning
 file/line pairs for that addres (if available).</p>
-<h1 id="example" class="section-header"><a href="#example">Example</a></h1>
+
+<h1 id='example' class='section-header'><a href='#example'>Example</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">backtrace</span>;
 

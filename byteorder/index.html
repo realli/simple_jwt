@@ -51,13 +51,15 @@
                </span><a class='srclink' href='../src/byteorder/lib.rs.html#1-819' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>This crate provides convenience methods for encoding and decoding numbers
 in either big-endian or little-endian order.</p>
+
 <p>The organization of the crate is pretty simple. A trait, <code>ByteOrder</code>, specifies
 byte conversion methods for each type of number in Rust (sans numbers that have
 a platform dependent size like <code>usize</code> and <code>isize</code>). Two types, <code>BigEndian</code>
 and <code>LittleEndian</code> implement these methods. Finally, <code>ReadBytesExt</code> and
 <code>WriteBytesExt</code> provide convenience methods available to all types that
 implement <code>Read</code> and <code>Write</code>.</p>
-<h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>
+
+<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
 <p>Read unsigned 16 bit big-endian integers from a <code>Read</code> type:</p>
 
 <pre class="rust rust-example-rendered">
@@ -69,6 +71,7 @@ implement <code>Read</code> and <code>Write</code>.</p>
 <span class="comment">// we want!</span>
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">517</span>, <span class="ident">rdr</span>.<span class="ident">read_u16</span>::<span class="op">&lt;</span><span class="ident">BigEndian</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>());
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">768</span>, <span class="ident">rdr</span>.<span class="ident">read_u16</span>::<span class="op">&lt;</span><span class="ident">BigEndian</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>());</pre>
+
 <p>Write unsigned 16 bit little-endian integers to a <code>Write</code> type:</p>
 
 <pre class="rust rust-example-rendered">
@@ -85,7 +88,6 @@ implement <code>Read</code> and <code>Write</code>.</p>
                                   title='enum byteorder::BigEndian'>BigEndian</a></td>
                            <td class='docblock-short'>
                                 <p>Defines big-endian serialization.</p>
-
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -93,7 +95,6 @@ implement <code>Read</code> and <code>Write</code>.</p>
                                   title='enum byteorder::LittleEndian'>LittleEndian</a></td>
                            <td class='docblock-short'>
                                 <p>Defines little-endian serialization.</p>
-
                            </td>
                        </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
@@ -102,7 +103,6 @@ implement <code>Read</code> and <code>Write</code>.</p>
                                   title='trait byteorder::ByteOrder'>ByteOrder</a></td>
                            <td class='docblock-short'>
                                 <p>ByteOrder describes types that can serialize integers as bytes.</p>
-
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -110,7 +110,6 @@ implement <code>Read</code> and <code>Write</code>.</p>
                                   title='trait byteorder::ReadBytesExt'>ReadBytesExt</a></td>
                            <td class='docblock-short'>
                                 <p>Extends <code>Read</code> with methods for reading numbers. (For <code>std::io</code>.)</p>
-
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -118,7 +117,6 @@ implement <code>Read</code> and <code>Write</code>.</p>
                                   title='trait byteorder::WriteBytesExt'>WriteBytesExt</a></td>
                            <td class='docblock-short'>
                                 <p>Extends <code>Write</code> with methods for writing numbers. (For <code>std::io</code>.)</p>
-
                            </td>
                        </tr></table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
 <table>
@@ -127,7 +125,6 @@ implement <code>Read</code> and <code>Write</code>.</p>
                                   title='type byteorder::NativeEndian'>NativeEndian</a></td>
                            <td class='docblock-short'>
                                 <p>Defines system native-endian serialization.</p>
-
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -135,7 +132,6 @@ implement <code>Read</code> and <code>Write</code>.</p>
                                   title='type byteorder::NetworkEndian'>NetworkEndian</a></td>
                            <td class='docblock-short'>
                                 <p>Defines network byte order serialization.</p>
-
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>

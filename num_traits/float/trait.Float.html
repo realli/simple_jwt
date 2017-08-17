@@ -328,6 +328,7 @@ number is <code>Float::nan()</code>.</p>
 
 <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">f64</span>::<span class="ident">NAN</span>.<span class="ident">abs</span>().<span class="ident">is_nan</span>());<a class="test-arrow" target="_blank" href="http://play.integer32.com/?code=extern%20crate%20num_traits%3B%0Afn%20main()%20%7B%0Ause%20num_traits%3A%3AFloat%3B%0Ause%20std%3A%3Af64%3B%0A%0Alet%20x%20%3D%203.5%3B%0Alet%20y%20%3D%20-3.5%3B%0A%0Alet%20abs_difference_x%20%3D%20(x.abs()%20-%20x).abs()%3B%0Alet%20abs_difference_y%20%3D%20(y.abs()%20-%20(-y)).abs()%3B%0A%0Aassert!(abs_difference_x%20%3C%201e-10)%3B%0Aassert!(abs_difference_y%20%3C%201e-10)%3B%0A%0Aassert!(f64%3A%3ANAN.abs().is_nan())%3B%0A%7D">Run</a></pre>
 </div><h3 id='tymethod.signum' class='method'><span id='signum.v' class='invisible'><code>fn <a href='#tymethod.signum' class='fnname'>signum</a>(self) -&gt; Self</code></span></h3><div class='docblock'><p>Returns a number that represents the sign of <code>self</code>.</p>
+
 <ul>
 <li><code>1.0</code> if the number is positive, <code>+0.0</code> or <code>Float::infinity()</code></li>
 <li><code>-1.0</code> if the number is negative, <code>-0.0</code> or <code>Float::neg_infinity()</code></li>
@@ -401,6 +402,7 @@ a separate multiplication operation followed by an add.</p>
 
 <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">abs_difference</span> <span class="op">&lt;</span> <span class="number">1e-10</span>);<a class="test-arrow" target="_blank" href="http://play.integer32.com/?code=extern%20crate%20num_traits%3B%0Afn%20main()%20%7B%0Ause%20num_traits%3A%3AFloat%3B%0A%0Alet%20x%20%3D%202.0%3B%0Alet%20abs_difference%20%3D%20(x.recip()%20-%20(1.0%2Fx)).abs()%3B%0A%0Aassert!(abs_difference%20%3C%201e-10)%3B%0A%7D">Run</a></pre>
 </div><h3 id='tymethod.powi' class='method'><span id='powi.v' class='invisible'><code>fn <a href='#tymethod.powi' class='fnname'>powi</a>(self, n: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Raise a number to an integer power.</p>
+
 <p>Using this function is generally faster than using <code>powf</code></p>
 
 <pre class="rust rust-example-rendered">
@@ -420,6 +422,7 @@ a separate multiplication operation followed by an add.</p>
 
 <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">abs_difference</span> <span class="op">&lt;</span> <span class="number">1e-10</span>);<a class="test-arrow" target="_blank" href="http://play.integer32.com/?code=extern%20crate%20num_traits%3B%0Afn%20main()%20%7B%0Ause%20num_traits%3A%3AFloat%3B%0A%0Alet%20x%20%3D%202.0%3B%0Alet%20abs_difference%20%3D%20(x.powf(2.0)%20-%20x*x).abs()%3B%0A%0Aassert!(abs_difference%20%3C%201e-10)%3B%0A%7D">Run</a></pre>
 </div><h3 id='tymethod.sqrt' class='method'><span id='sqrt.v' class='invisible'><code>fn <a href='#tymethod.sqrt' class='fnname'>sqrt</a>(self) -&gt; Self</code></span></h3><div class='docblock'><p>Take the square root of a number.</p>
+
 <p>Returns NaN if <code>self</code> is a negative number.</p>
 
 <pre class="rust rust-example-rendered">
@@ -526,6 +529,7 @@ a separate multiplication operation followed by an add.</p>
 
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">x</span>.<span class="ident">min</span>(<span class="ident">y</span>), <span class="ident">x</span>);<a class="test-arrow" target="_blank" href="http://play.integer32.com/?code=extern%20crate%20num_traits%3B%0Afn%20main()%20%7B%0Ause%20num_traits%3A%3AFloat%3B%0A%0Alet%20x%20%3D%201.0%3B%0Alet%20y%20%3D%202.0%3B%0A%0Aassert_eq!(x.min(y)%2C%20x)%3B%0A%7D">Run</a></pre>
 </div><h3 id='tymethod.abs_sub' class='method'><span id='abs_sub.v' class='invisible'><code>fn <a href='#tymethod.abs_sub' class='fnname'>abs_sub</a>(self, other: Self) -&gt; Self</code></span></h3><div class='docblock'><p>The positive difference of two numbers.</p>
+
 <ul>
 <li>If <code>self &lt;= other</code>: <code>0:0</code></li>
 <li>Else: <code>self - other</code></li>
@@ -639,6 +643,7 @@ range [-pi/2, pi/2];</p>
 
 <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">abs_difference</span> <span class="op">&lt;</span> <span class="number">1e-10</span>);<a class="test-arrow" target="_blank" href="http://play.integer32.com/?code=extern%20crate%20num_traits%3B%0Afn%20main()%20%7B%0Ause%20num_traits%3A%3AFloat%3B%0A%0Alet%20f%20%3D%201.0%3B%0A%0A%2F%2F%20atan(tan(1))%0Alet%20abs_difference%20%3D%20(f.tan().atan()%20-%201.0).abs()%3B%0A%0Aassert!(abs_difference%20%3C%201e-10)%3B%0A%7D">Run</a></pre>
 </div><h3 id='tymethod.atan2' class='method'><span id='atan2.v' class='invisible'><code>fn <a href='#tymethod.atan2' class='fnname'>atan2</a>(self, other: Self) -&gt; Self</code></span></h3><div class='docblock'><p>Computes the four quadrant arctangent of <code>self</code> (<code>y</code>) and <code>other</code> (<code>x</code>).</p>
+
 <ul>
 <li><code>x = 0</code>, <code>y = 0</code>: <code>0</code></li>
 <li><code>x &gt;= 0</code>: <code>arctan(y/x)</code> -&gt; <code>[-pi/2, pi/2]</code></li>
@@ -815,7 +820,8 @@ The floating point encoding is documented in the <a href="../../../../../referen
 <span class="kw">let</span> <span class="ident">x</span>: <span class="ident">f64</span> <span class="op">=</span> <span class="ident">Float</span>::<span class="ident">epsilon</span>();
 
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">x</span>, <span class="ident">f64</span>::<span class="ident">EPSILON</span>);<a class="test-arrow" target="_blank" href="http://play.integer32.com/?code=extern%20crate%20num_traits%3B%0Afn%20main()%20%7B%0Ause%20num_traits%3A%3AFloat%3B%0Ause%20std%3A%3Af64%3B%0A%0Alet%20x%3A%20f64%20%3D%20Float%3A%3Aepsilon()%3B%0A%0Aassert_eq!(x%2C%20f64%3A%3AEPSILON)%3B%0A%7D">Run</a></pre>
-<h1 id="panics" class="section-header"><a href="#panics">Panics</a></h1>
+
+<h1 id='panics' class='section-header'><a href='#panics'>Panics</a></h1>
 <p>The default implementation will panic if <code>f32::EPSILON</code> cannot
 be cast to <code>Self</code>.</p>
 </div><h3 id='method.to_degrees' class='method'><span id='to_degrees.v' class='invisible'><code>fn <a href='#method.to_degrees' class='fnname'>to_degrees</a>(self) -&gt; Self</code></span></h3><div class='docblock'><p>Converts radians to degrees.</p>

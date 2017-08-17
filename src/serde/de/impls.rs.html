@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/realli/.cargo/registry/src/github.com-1ecc6299db9ec823/serde-1.0.0/src/de/impls.rs`.">
+    <meta name="description" content="Source to the Rust file `/Users/realli/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/serde-1.0.1/src/de/impls.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>impls.rs.html -- source</title>
@@ -1646,6 +1646,8 @@
 <span id="1601">1601</span>
 <span id="1602">1602</span>
 <span id="1603">1603</span>
+<span id="1604">1604</span>
+<span id="1605">1605</span>
 </pre><pre class="rust ">
 <span class="comment">// Copyright 2017 Serde Developers</span>
 <span class="comment">//</span>
@@ -3120,22 +3122,24 @@
 <span class="comment">////////////////////////////////////////////////////////////////////////////////</span>
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;unstable&quot;</span>)]</span>
-<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">deprecated</span>)]</span> <span class="comment">// num::Zero is deprecated but there is no replacement</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Deserialize</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">NonZero</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">Deserialize</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">PartialEq</span> <span class="op">+</span> <span class="ident">Zeroable</span> <span class="op">+</span> <span class="ident">Zero</span>,
+    <span class="ident">T</span>: <span class="ident">Deserialize</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Zeroable</span>,
 {
     <span class="kw">fn</span> <span class="ident">deserialize</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">deserializer</span>: <span class="ident">D</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">NonZero</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">D</span>::<span class="ident">Error</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">D</span>: <span class="ident">Deserializer</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
     {
         <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">Deserialize</span>::<span class="ident">deserialize</span>(<span class="ident">deserializer</span>));
-        <span class="kw">if</span> <span class="ident">value</span> <span class="op">==</span> <span class="ident">Zero</span>::<span class="ident">zero</span>() {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">custom</span>(<span class="string">&quot;expected a non-zero value&quot;</span>));
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">ptr</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">value</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">T</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>;
+            <span class="kw">if</span> <span class="ident">slice</span>::<span class="ident">from_raw_parts</span>(<span class="ident">ptr</span>, <span class="ident">mem</span>::<span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>()).<span class="ident">iter</span>().<span class="ident">all</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">b</span><span class="op">|</span> <span class="ident">b</span> <span class="op">==</span> <span class="number">0</span>) {
+                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">custom</span>(<span class="string">&quot;expected a non-zero value&quot;</span>));
+            }
+            <span class="comment">// Waiting for a safe way to construct NonZero&lt;T&gt;:</span>
+            <span class="comment">// https://github.com/rust-lang/rust/issues/27730#issuecomment-269726075</span>
+            <span class="prelude-val">Ok</span>(<span class="ident">NonZero</span>::<span class="ident">new</span>(<span class="ident">value</span>))
         }
-        <span class="comment">// Waiting for a safe way to construct NonZero&lt;T&gt;:</span>
-        <span class="comment">// https://github.com/rust-lang/rust/issues/27730#issuecomment-269726075</span>
-        <span class="kw">unsafe</span> { <span class="prelude-val">Ok</span>(<span class="ident">NonZero</span>::<span class="ident">new</span>(<span class="ident">value</span>)) }
     }
 }
 

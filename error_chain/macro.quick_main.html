@@ -62,12 +62,14 @@ use it with a separated function:</p>
 <span class="kw">fn</span> <span class="ident">run</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
     <span class="prelude-val">Err</span>(<span class="string">&quot;error&quot;</span>.<span class="ident">into</span>())
 }</pre>
+
 <p>or with a closure:</p>
 
 <pre class="rust rust-example-rendered">
 <span class="macro">quick_main</span><span class="macro">!</span>(<span class="op">||</span> <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
     <span class="prelude-val">Err</span>(<span class="string">&quot;error&quot;</span>.<span class="ident">into</span>())
 });</pre>
+
 <p>You can also set the exit value of the process by returning a type that implements <a href="trait.ExitCode.html"><code>ExitCode</code></a>:</p>
 
 <pre class="rust rust-example-rendered">

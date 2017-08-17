@@ -50,16 +50,18 @@
                    </a>
                </span></span></h1>
 <pre class='rust struct'>pub struct Error(pub <a class="enum" href="../simple_jwt/enum.ErrorKind.html" title="enum simple_jwt::ErrorKind">ErrorKind</a>, _);</pre><div class='docblock'><p>The Error type.</p>
+
 <p>This tuple struct is made of two elements:</p>
+
 <ul>
 <li>an <code>ErrorKind</code> which is used to determine the type of the error.</li>
 <li>An internal <code>State</code>, not meant for direct use outside of <code>error_chain</code>
 internals, containing:
+
 <ul>
 <li>a backtrace, generated when the error is created.</li>
 <li>an error chain, used for the implementation of <code>Error::cause()</code>.</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 </div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../simple_jwt/struct.Error.html" title="struct simple_jwt::Error">Error</a></code></span><span class='out-of-band'></span></h3>
 <div class='impl-items'><h4 id='method.from_kind' class="method"><span id='from_kind.v' class='invisible'><code>fn <a href='#method.from_kind' class='fnname'>from_kind</a>(kind: <a class="enum" href="../simple_jwt/enum.ErrorKind.html" title="enum simple_jwt::ErrorKind">ErrorKind</a>) -&gt; <a class="struct" href="../simple_jwt/struct.Error.html" title="struct simple_jwt::Error">Error</a></code></span></h4>

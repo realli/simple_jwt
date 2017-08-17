@@ -54,8 +54,11 @@
 <div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class="struct" href="../../openssl/x509/struct.X509Generator.html" title="struct openssl::x509::X509Generator">X509Generator</a></code></span></h4>
 <div class='stability'><div class='stab deprecated'>Deprecated since 0.9.7<p>: use X509Builder and X509ReqBuilder instead</p>
 </div></div><div class='docblock'><p>Creates a new generator with the following defaults:</p>
+
 <p>validity period: 365 days</p>
+
 <p>CN: &quot;rust-openssl&quot;</p>
+
 <p>hash: SHA1</p>
 </div><h4 id='method.set_valid_period' class="method"><span id='set_valid_period.v' class='invisible'><code>fn <a href='#method.set_valid_period' class='fnname'>set_valid_period</a>(self, days: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <a class="struct" href="../../openssl/x509/struct.X509Generator.html" title="struct openssl::x509::X509Generator">X509Generator</a></code></span></h4>
 <div class='stability'><div class='stab deprecated'>Deprecated since 0.9.7<p>: use X509Builder and X509ReqBuilder instead</p>
@@ -75,6 +78,7 @@
 </div><h4 id='method.add_extension' class="method"><span id='add_extension.v' class='invisible'><code>fn <a href='#method.add_extension' class='fnname'>add_extension</a>(self, ext: <a class="enum" href="../../openssl/x509/extension/enum.Extension.html" title="enum openssl::x509::extension::Extension">Extension</a>) -&gt; <a class="struct" href="../../openssl/x509/struct.X509Generator.html" title="struct openssl::x509::X509Generator">X509Generator</a></code></span></h4>
 <div class='stability'><div class='stab deprecated'>Deprecated since 0.9.7<p>: use X509Builder and X509ReqBuilder instead</p>
 </div></div><div class='docblock'><p>Add an extension to a certificate</p>
+
 <p>If the extension already exists, it will be replaced.</p>
 
 <pre class="rust rust-example-rendered">
@@ -85,6 +89,7 @@
 </div><h4 id='method.add_extensions' class="method"><span id='add_extensions.v' class='invisible'><code>fn <a href='#method.add_extensions' class='fnname'>add_extensions</a>&lt;I&gt;(self, exts: I) -&gt; <a class="struct" href="../../openssl/x509/struct.X509Generator.html" title="struct openssl::x509::X509Generator">X509Generator</a> <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html" title="trait core::iter::traits::IntoIterator">IntoIterator</a>&lt;Item = <a class="enum" href="../../openssl/x509/extension/enum.Extension.html" title="enum openssl::x509::extension::Extension">Extension</a>&gt;,&nbsp;</span></code></span></h4>
 <div class='stability'><div class='stab deprecated'>Deprecated since 0.9.7<p>: use X509Builder and X509ReqBuilder instead</p>
 </div></div><div class='docblock'><p>Add multiple extensions to a certificate</p>
+
 <p>If any of the extensions already exist, they will be replaced.</p>
 
 <pre class="rust rust-example-rendered">

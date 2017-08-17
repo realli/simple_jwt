@@ -51,9 +51,13 @@
                </span><a class='srclink' href='../src/libc/macros.rs.html#42' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'><div class="docblock attributes">#[repr(C)]
 </div>pub struct sockaddr_storage {
+    pub ss_len: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>,
     pub ss_family: <a class="type" href="../libc/type.sa_family_t.html" title="type libc::sa_family_t">sa_family_t</a>,
     // some fields omitted
-}</pre><h2 id='fields' class='fields'>Fields</h2><span id='structfield.ss_family' class="structfield">
+}</pre><h2 id='fields' class='fields'>Fields</h2><span id='structfield.ss_len' class="structfield">
+                           <span id='ss_len.v' class='invisible'>
+                           <code>ss_len: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a></code>
+                           </span></span><span id='structfield.ss_family' class="structfield">
                            <span id='ss_family.v' class='invisible'>
                            <code>ss_family: <a class="type" href="../libc/type.sa_family_t.html" title="type libc::sa_family_t">sa_family_t</a></code>
                            </span></span><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html" title="trait core::marker::Copy">Copy</a> for <a class="struct" href="../libc/struct.sockaddr_storage.html" title="struct libc::sockaddr_storage">sockaddr_storage</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/libc/macros.rs.html#44' title='goto source code'>[src]</a></span></h3>

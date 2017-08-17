@@ -52,6 +52,7 @@
 <pre class='rust trait'>pub trait Read&lt;'de&gt;: Sealed { }</pre><div class='docblock'><p>Trait used by the deserializer for iterating over input. This is manually
 &quot;specialized&quot; for iterating over &amp;[u8]. Once feature(specialization) is
 stable we can use actual specialization.</p>
+
 <p>This trait is sealed and cannot be implemented for types outside of
 <code>serde_json</code>.</p>
 </div>

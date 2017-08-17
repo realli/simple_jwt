@@ -52,6 +52,7 @@
 <pre class='rust struct'>pub struct BigNumRef(_);</pre><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../../openssl/bn/struct.BigNumRef.html" title="struct openssl::bn::BigNumRef">BigNumRef</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/bn.rs.html#59-525' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.clear' class="method"><span id='clear.v' class='invisible'><code>fn <a href='#method.clear' class='fnname'>clear</a>(&amp;mut self)</code></span></h4>
 <div class='docblock'><p>Erases the memory used by this <code>BigNum</code>, resetting its value to 0.</p>
+
 <p>This can be used to destroy sensitive data such as keys when they are no longer needed.</p>
 </div><h4 id='method.add_word' class="method"><span id='add_word.v' class='invisible'><code>fn <a href='#method.add_word' class='fnname'>add_word</a>(&amp;mut self, w: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, <a class="struct" href="../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt;</code></span></h4>
 <div class='docblock'><p>Adds a <code>u32</code> to <code>self</code>.</p>
@@ -70,14 +71,17 @@ number less than <code>self</code> in <code>rnd</code>.</p>
 <div class='docblock'><p>The cryptographically weak counterpart to <code>rand_in_range</code>.</p>
 </div><h4 id='method.set_bit' class="method"><span id='set_bit.v' class='invisible'><code>fn <a href='#method.set_bit' class='fnname'>set_bit</a>(&amp;mut self, n: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, <a class="struct" href="../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt;</code></span></h4>
 <div class='docblock'><p>Sets bit <code>n</code>. Equivalent to <code>self |= (1 &lt;&lt; n)</code>.</p>
+
 <p>When setting a bit outside of <code>self</code>, it is expanded.</p>
 </div><h4 id='method.clear_bit' class="method"><span id='clear_bit.v' class='invisible'><code>fn <a href='#method.clear_bit' class='fnname'>clear_bit</a>(&amp;mut self, n: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, <a class="struct" href="../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt;</code></span></h4>
 <div class='docblock'><p>Clears bit <code>n</code>, setting it to 0. Equivalent to <code>self &amp;= ~(1 &lt;&lt; n)</code>.</p>
+
 <p>When clearing a bit outside of <code>self</code>, an error is returned.</p>
 </div><h4 id='method.is_bit_set' class="method"><span id='is_bit_set.v' class='invisible'><code>fn <a href='#method.is_bit_set' class='fnname'>is_bit_set</a>(&amp;self, n: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h4>
 <div class='docblock'><p>Returns <code>true</code> if the <code>n</code>th bit of <code>self</code> is set to 1, <code>false</code> otherwise.</p>
 </div><h4 id='method.mask_bits' class="method"><span id='mask_bits.v' class='invisible'><code>fn <a href='#method.mask_bits' class='fnname'>mask_bits</a>(&amp;mut self, n: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, <a class="struct" href="../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt;</code></span></h4>
 <div class='docblock'><p>Truncates <code>self</code> to the lowest <code>n</code> bits.</p>
+
 <p>An error occurs if <code>self</code> is already shorter than <code>n</code> bits.</p>
 </div><h4 id='method.lshift1' class="method"><span id='lshift1.v' class='invisible'><code>fn <a href='#method.lshift1' class='fnname'>lshift1</a>(&amp;mut self, a: &amp;<a class="struct" href="../../openssl/bn/struct.BigNumRef.html" title="struct openssl::bn::BigNumRef">BigNumRef</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, <a class="struct" href="../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt;</code></span></h4>
 <div class='docblock'><p>Places <code>a &lt;&lt; 1</code> in <code>self</code>.</p>
@@ -109,7 +113,8 @@ number less than <code>self</code> in <code>rnd</code>.</p>
 <div class='docblock'><p>Returns the size of <code>self</code> in bytes.</p>
 </div><h4 id='method.rand' class="method"><span id='rand.v' class='invisible'><code>fn <a href='#method.rand' class='fnname'>rand</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self, <br>&nbsp;&nbsp;&nbsp;&nbsp;bits: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;msb: <a class="struct" href="../../openssl/bn/struct.MsbOption.html" title="struct openssl::bn::MsbOption">MsbOption</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;odd: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a><br>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, <a class="struct" href="../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt;</code></span></h4>
 <div class='docblock'><p>Generates a cryptographically strong pseudo-random <code>BigNum</code>, placing it in <code>self</code>.</p>
-<h1 id="parameters" class="section-header"><a href="#parameters">Parameters</a></h1>
+
+<h1 id='parameters' class='section-header'><a href='#parameters'>Parameters</a></h1>
 <ul>
 <li><code>bits</code>: Length of the number in bits.</li>
 <li><code>msb</code>: The desired properties of the number.</li>
@@ -119,7 +124,8 @@ number less than <code>self</code> in <code>rnd</code>.</p>
 <div class='docblock'><p>The cryptographically weak counterpart to <code>rand</code>.</p>
 </div><h4 id='method.generate_prime' class="method"><span id='generate_prime.v' class='invisible'><code>fn <a href='#method.generate_prime' class='fnname'>generate_prime</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self, <br>&nbsp;&nbsp;&nbsp;&nbsp;bits: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;safe: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;add: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;<a class="struct" href="../../openssl/bn/struct.BigNumRef.html" title="struct openssl::bn::BigNumRef">BigNumRef</a>&gt;, <br>&nbsp;&nbsp;&nbsp;&nbsp;rem: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;<a class="struct" href="../../openssl/bn/struct.BigNumRef.html" title="struct openssl::bn::BigNumRef">BigNumRef</a>&gt;<br>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, <a class="struct" href="../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt;</code></span></h4>
 <div class='docblock'><p>Generates a prime number, placing it in <code>self</code>.</p>
-<h1 id="parameters-1" class="section-header"><a href="#parameters-1">Parameters</a></h1>
+
+<h1 id='parameters-1' class='section-header'><a href='#parameters-1'>Parameters</a></h1>
 <ul>
 <li><code>bits</code>: The length of the prime in bits (lower bound).</li>
 <li><code>safe</code>: If true, returns a &quot;safe&quot; prime <code>p</code> so that <code>(p-1)/2</code> is also prime.</li>
@@ -156,17 +162,22 @@ generated prime and <code>rem</code> is <code>1</code> if not specified (<code>N
 <div class='docblock'><p>Places the greatest common denominator of <code>a</code> and <code>b</code> in <code>self</code>.</p>
 </div><h4 id='method.is_prime' class="method"><span id='is_prime.v' class='invisible'><code>fn <a href='#method.is_prime' class='fnname'>is_prime</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;checks: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;ctx: &amp;mut <a class="struct" href="../../openssl/bn/struct.BigNumContextRef.html" title="struct openssl::bn::BigNumContextRef">BigNumContextRef</a><br>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>, <a class="struct" href="../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt;</code></span></h4>
 <div class='docblock'><p>Checks whether <code>self</code> is prime.</p>
+
 <p>Performs a Miller-Rabin probabilistic primality test with <code>checks</code> iterations.</p>
+
 <p>Returns <code>true</code> if <code>self</code> is prime with an error probability of less than <code>0.25 ^ checks</code>.</p>
 </div><h4 id='method.is_prime_fasttest' class="method"><span id='is_prime_fasttest.v' class='invisible'><code>fn <a href='#method.is_prime_fasttest' class='fnname'>is_prime_fasttest</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;checks: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;ctx: &amp;mut <a class="struct" href="../../openssl/bn/struct.BigNumContextRef.html" title="struct openssl::bn::BigNumContextRef">BigNumContextRef</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;do_trial_division: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a><br>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>, <a class="struct" href="../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt;</code></span></h4>
 <div class='docblock'><p>Checks whether <code>self</code> is prime with optional trial division.</p>
+
 <p>If <code>do_trial_division</code> is <code>true</code>, first performs trial division by a number of small primes.
 Then, like <code>is_prime</code>, performs a Miller-Rabin probabilistic primality test with <code>checks</code>
 iterations.</p>
-<h1 id="return-value" class="section-header"><a href="#return-value">Return Value</a></h1>
+
+<h1 id='return-value' class='section-header'><a href='#return-value'>Return Value</a></h1>
 <p>Returns <code>true</code> if <code>self</code> is prime with an error probability of less than <code>0.25 ^ checks</code>.</p>
 </div><h4 id='method.to_vec' class="method"><span id='to_vec.v' class='invisible'><code>fn <a href='#method.to_vec' class='fnname'>to_vec</a>(&amp;self) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;</code></span></h4>
 <div class='docblock'><p>Returns a big-endian byte vector representation of the absolute value of <code>self</code>.</p>
+
 <p><code>self</code> can be recreated by using <code>from_slice</code>.</p>
 
 <pre class="rust rust-example-rendered">

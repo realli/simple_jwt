@@ -57,6 +57,7 @@
     Array(<a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;<a class="enum" href="../../serde_json/value/enum.Value.html" title="enum serde_json::value::Value">Value</a>&gt;),
     Object(<a class="struct" href="../../serde_json/map/struct.Map.html" title="struct serde_json::map::Map">Map</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>, <a class="enum" href="../../serde_json/value/enum.Value.html" title="enum serde_json::value::Value">Value</a>&gt;),
 }</pre><div class='docblock'><p>Represents any valid JSON value.</p>
+
 <p>See the <code>serde_json::value</code> module documentation for usage examples.</p>
 </div><h2 id='variants' class='variants'>Variants</h2>
 <span id='variant.Null' class='variant'><span id='Null.v' class='invisible'><code>Null</code></span></span><div class='docblock'><p>Represents a JSON null value.</p>
@@ -80,6 +81,7 @@
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class="ident">v</span> <span class="op">=</span> <span class="macro">json</span><span class="macro">!</span>([<span class="string">&quot;an&quot;</span>, <span class="string">&quot;array&quot;</span>]);</pre>
 </div><span id='variant.Object' class='variant'><span id='Object.v' class='invisible'><code>Object(<a class="struct" href="../../serde_json/map/struct.Map.html" title="struct serde_json::map::Map">Map</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>, <a class="enum" href="../../serde_json/value/enum.Value.html" title="enum serde_json::value::Value">Value</a>&gt;)</code></span></span><div class='docblock'><p>Represents a JSON object.</p>
+
 <p>By default the map is backed by a BTreeMap. Enable the <code>preserve_order</code>
 feature of serde_json to use LinkedHashMap instead, which preserves
 entries in the order they are inserted into the map. In particular, this
@@ -93,6 +95,7 @@ string while retaining the order of map keys in the input.</p>
 <div class='docblock'><p>Index into a JSON array or map. A string index can be used to access a
 value in a map, and a usize index can be used to access an element of an
 array.</p>
+
 <p>Returns <code>None</code> if the type of <code>self</code> does not match the type of the
 index, for example if the index is a string and <code>self</code> is an array or a
 number. Also returns <code>None</code> if the given key does not exist in the map
@@ -106,6 +109,7 @@ or the given index is not within the bounds of the array.</p>
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">*</span><span class="ident">array</span>.<span class="ident">get</span>(<span class="number">2</span>).<span class="ident">unwrap</span>(), <span class="macro">json</span><span class="macro">!</span>(<span class="string">&quot;C&quot;</span>));
 
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">array</span>.<span class="ident">get</span>(<span class="string">&quot;A&quot;</span>), <span class="prelude-val">None</span>);</pre>
+
 <p>Square brackets can also be used to index into a value in a more concise
 way. This returns <code>Value::Null</code> in cases where <code>get</code> would have returned
 <code>None</code>.</p>
@@ -124,6 +128,7 @@ way. This returns <code>Value::Null</code> in cases where <code>get</code> would
 <div class='docblock'><p>Mutably index into a JSON array or map. A string index can be used to
 access a value in a map, and a usize index can be used to access an
 element of an array.</p>
+
 <p>Returns <code>None</code> if the type of <code>self</code> does not match the type of the
 index, for example if the index is a string and <code>self</code> is an array or a
 number. Also returns <code>None</code> if the given key does not exist in the map
@@ -137,6 +142,7 @@ or the given index is not within the bounds of the array.</p>
 <span class="kw-2">*</span><span class="ident">array</span>.<span class="ident">get_mut</span>(<span class="number">2</span>).<span class="ident">unwrap</span>() <span class="op">=</span> <span class="macro">json</span><span class="macro">!</span>(<span class="string">&quot;D&quot;</span>);</pre>
 </div><h4 id='method.is_object' class="method"><span id='is_object.v' class='invisible'><code>fn <a href='#method.is_object' class='fnname'>is_object</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h4>
 <div class='docblock'><p>Returns true if the <code>Value</code> is an Object. Returns false otherwise.</p>
+
 <p>For any Value on which <code>is_object</code> returns true, <code>as_object</code> and
 <code>as_object_mut</code> are guaranteed to return the map representation of the
 object.</p>
@@ -173,6 +179,7 @@ Returns None otherwise.</p>
 </pre>
 </div><h4 id='method.is_array' class="method"><span id='is_array.v' class='invisible'><code>fn <a href='#method.is_array' class='fnname'>is_array</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h4>
 <div class='docblock'><p>Returns true if the <code>Value</code> is an Array. Returns false otherwise.</p>
+
 <p>For any Value on which <code>is_array</code> returns true, <code>as_array</code> and
 <code>as_array_mut</code> are guaranteed to return the vector representing the
 array.</p>
@@ -207,6 +214,7 @@ Returns None otherwise.</p>
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">v</span>, <span class="macro">json</span><span class="macro">!</span>({ <span class="string">&quot;a&quot;</span>: [] }));</pre>
 </div><h4 id='method.is_string' class="method"><span id='is_string.v' class='invisible'><code>fn <a href='#method.is_string' class='fnname'>is_string</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h4>
 <div class='docblock'><p>Returns true if the <code>Value</code> is a String. Returns false otherwise.</p>
+
 <p>For any Value on which <code>is_string</code> returns true, <code>as_str</code> is guaranteed
 to return the string slice.</p>
 
@@ -241,6 +249,7 @@ otherwise.</p>
 </div><h4 id='method.is_i64' class="method"><span id='is_i64.v' class='invisible'><code>fn <a href='#method.is_i64' class='fnname'>is_i64</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h4>
 <div class='docblock'><p>Returns true if the <code>Value</code> is an integer between <code>i64::MIN</code> and
 <code>i64::MAX</code>.</p>
+
 <p>For any Value on which <code>is_i64</code> returns true, <code>as_i64</code> is guaranteed to
 return the integer value.</p>
 
@@ -257,6 +266,7 @@ return the integer value.</p>
 <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">v</span>[<span class="string">&quot;c&quot;</span>].<span class="ident">is_i64</span>());</pre>
 </div><h4 id='method.is_u64' class="method"><span id='is_u64.v' class='invisible'><code>fn <a href='#method.is_u64' class='fnname'>is_u64</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h4>
 <div class='docblock'><p>Returns true if the <code>Value</code> is an integer between zero and <code>u64::MAX</code>.</p>
+
 <p>For any Value on which <code>is_u64</code> returns true, <code>as_u64</code> is guaranteed to
 return the integer value.</p>
 
@@ -272,8 +282,10 @@ return the integer value.</p>
 <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">v</span>[<span class="string">&quot;c&quot;</span>].<span class="ident">is_u64</span>());</pre>
 </div><h4 id='method.is_f64' class="method"><span id='is_f64.v' class='invisible'><code>fn <a href='#method.is_f64' class='fnname'>is_f64</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h4>
 <div class='docblock'><p>Returns true if the <code>Value</code> is a number that can be represented by f64.</p>
+
 <p>For any Value on which <code>is_f64</code> returns true, <code>as_f64</code> is guaranteed to
 return the floating point value.</p>
+
 <p>Currently this function returns true if and only if both <code>is_i64</code> and
 <code>is_u64</code> return false but this is not a guarantee in the future.</p>
 
@@ -318,6 +330,7 @@ None otherwise.</p>
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">v</span>[<span class="string">&quot;c&quot;</span>].<span class="ident">as_f64</span>(), <span class="prelude-val">Some</span>(<span class="op">-</span><span class="number">64.0</span>));</pre>
 </div><h4 id='method.is_boolean' class="method"><span id='is_boolean.v' class='invisible'><code>fn <a href='#method.is_boolean' class='fnname'>is_boolean</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h4>
 <div class='docblock'><p>Returns true if the <code>Value</code> is a Boolean. Returns false otherwise.</p>
+
 <p>For any Value on which <code>is_boolean</code> returns true, <code>as_bool</code> is
 guaranteed to return the boolean value.</p>
 
@@ -341,6 +354,7 @@ otherwise.</p>
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">v</span>[<span class="string">&quot;b&quot;</span>].<span class="ident">as_bool</span>(), <span class="prelude-val">None</span>);</pre>
 </div><h4 id='method.is_null' class="method"><span id='is_null.v' class='invisible'><code>fn <a href='#method.is_null' class='fnname'>is_null</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h4>
 <div class='docblock'><p>Returns true if the <code>Value</code> is a Null. Returns false otherwise.</p>
+
 <p>For any Value on which <code>is_null</code> returns true, <code>as_null</code> is guaranteed
 to return <code>Some(())</code>.</p>
 
@@ -363,14 +377,18 @@ to return <code>Some(())</code>.</p>
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">v</span>[<span class="string">&quot;b&quot;</span>].<span class="ident">as_null</span>(), <span class="prelude-val">None</span>);</pre>
 </div><h4 id='method.pointer' class="method"><span id='pointer.v' class='invisible'><code>fn <a href='#method.pointer' class='fnname'>pointer</a>&lt;'a&gt;(&amp;'a self, pointer: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;'a <a class="enum" href="../../serde_json/value/enum.Value.html" title="enum serde_json::value::Value">Value</a>&gt;</code></span></h4>
 <div class='docblock'><p>Looks up a value by a JSON Pointer.</p>
+
 <p>JSON Pointer defines a string syntax for identifying a specific value
 within a JavaScript Object Notation (JSON) document.</p>
+
 <p>A Pointer is a Unicode string with the reference tokens separated by <code>/</code>.
 Inside tokens <code>/</code> is replaced by <code>~1</code> and <code>~</code> is replaced by <code>~0</code>. The
 addressed value is returned and if there is no such value <code>None</code> is
 returned.</p>
+
 <p>For more information read <a href="https://tools.ietf.org/html/rfc6901">RFC6901</a>.</p>
-<h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>
+
+<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="macro">json</span><span class="macro">!</span>({
     <span class="string">&quot;x&quot;</span>: {
@@ -383,14 +401,18 @@ returned.</p>
 </div><h4 id='method.pointer_mut' class="method"><span id='pointer_mut.v' class='invisible'><code>fn <a href='#method.pointer_mut' class='fnname'>pointer_mut</a>&lt;'a&gt;(&amp;'a mut self, pointer: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;'a mut <a class="enum" href="../../serde_json/value/enum.Value.html" title="enum serde_json::value::Value">Value</a>&gt;</code></span></h4>
 <div class='docblock'><p>Looks up a value by a JSON Pointer and returns a mutable reference to
 that value.</p>
+
 <p>JSON Pointer defines a string syntax for identifying a specific value
 within a JavaScript Object Notation (JSON) document.</p>
+
 <p>A Pointer is a Unicode string with the reference tokens separated by <code>/</code>.
 Inside tokens <code>/</code> is replaced by <code>~1</code> and <code>~</code> is replaced by <code>~0</code>. The
 addressed value is returned and if there is no such value <code>None</code> is
 returned.</p>
+
 <p>For more information read <a href="https://tools.ietf.org/html/rfc6901">RFC6901</a>.</p>
-<h1 id="example-of-use" class="section-header"><a href="#example-of-use">Example of Use</a></h1>
+
+<h1 id='example-of-use' class='section-header'><a href='#example-of-use'>Example of Use</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">serde_json</span>;
 
@@ -428,8 +450,10 @@ returned.</p>
 <div class='docblock'><p>This method tests for <code>!=</code>.</p>
 </div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html" title="trait core::default::Default">Default</a> for <a class="enum" href="../../serde_json/value/enum.Value.html" title="enum serde_json::value::Value">Value</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/serde_json/value.rs.html#909-913' title='goto source code'>[src]</a></span></h3>
 <div class='docblock'><p>The default value is <code>Value::Null</code>.</p>
+
 <p>This is useful for handling omitted <code>Value</code> fields when deserializing.</p>
-<h1 id="examples-1" class="section-header"><a href="#examples-1">Examples</a></h1>
+
+<h1 id='examples-1' class='section-header'><a href='#examples-1'>Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">serde_json</span>::<span class="ident">Value</span>;
 
@@ -453,13 +477,16 @@ returned.</p>
 </div><h4 id='method.index' class="method"><span id='index.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/ops/trait.Index.html#tymethod.index' class='fnname'>index</a>(&amp;self, index: I) -&gt; &amp;<a class="enum" href="../../serde_json/value/enum.Value.html" title="enum serde_json::value::Value">Value</a></code></span></h4>
 <div class='docblock'><p>Index into a <code>serde_json::Value</code> using the syntax <code>value[0]</code> or
 <code>value[&quot;k&quot;]</code>.</p>
+
 <p>Returns <code>Value::Null</code> if the type of <code>self</code> does not match the type of
 the index, for example if the index is a string and <code>self</code> is an array
 or a number. Also returns <code>Value::Null</code> if the given key does not exist
 in the map or the given index is not within the bounds of the array.</p>
+
 <p>For retrieving deeply nested values, you should have a look at the
 <code>Value::pointer</code> method.</p>
-<h1 id="examples-2" class="section-header"><a href="#examples-2">Examples</a></h1>
+
+<h1 id='examples-2' class='section-header'><a href='#examples-2'>Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="macro">json</span><span class="macro">!</span>({
     <span class="string">&quot;x&quot;</span>: {
@@ -476,14 +503,17 @@ in the map or the given index is not within the bounds of the array.</p>
 <div class='impl-items'><h4 id='method.index_mut' class="method"><span id='index_mut.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/ops/trait.IndexMut.html#tymethod.index_mut' class='fnname'>index_mut</a>(&amp;mut self, index: I) -&gt; &amp;mut <a class="enum" href="../../serde_json/value/enum.Value.html" title="enum serde_json::value::Value">Value</a></code></span></h4>
 <div class='docblock'><p>Write into a <code>serde_json::Value</code> using the syntax <code>value[0] = ...</code> or
 <code>value[&quot;k&quot;] = ...</code>.</p>
+
 <p>If the index is a number, the value must be an array of length bigger
 than the index. Indexing into a value that is not an array or an array
 that is too small will panic.</p>
+
 <p>If the index is a string, the value must be an object or null which is
 treated like an empty object. If the key is not already present in the
 object, it will be inserted with a value of null. Indexing into a value
 that is neither an object nor null will panic.</p>
-<h1 id="examples-3" class="section-header"><a href="#examples-3">Examples</a></h1>
+
+<h1 id='examples-3' class='section-header'><a href='#examples-3'>Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">data</span> <span class="op">=</span> <span class="macro">json</span><span class="macro">!</span>({ <span class="string">&quot;x&quot;</span>: <span class="number">0</span> });
 
@@ -728,7 +758,8 @@ that is neither an object nor null will panic.</p>
 </div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.From.html" title="trait core::convert::From">From</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>&gt; for <a class="enum" href="../../serde_json/value/enum.Value.html" title="enum serde_json::value::Value">Value</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/serde_json/value.rs.html#1256-1274' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.from-10' class="method"><span id='from.v-10' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from' class='fnname'>from</a>(f: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Convert 32-bit floating point number to <code>Value</code></p>
-<h1 id="examples-4" class="section-header"><a href="#examples-4">Examples</a></h1>
+
+<h1 id='examples-4' class='section-header'><a href='#examples-4'>Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">serde_json</span>::<span class="ident">Value</span>;
 
@@ -737,7 +768,8 @@ that is neither an object nor null will panic.</p>
 </div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.From.html" title="trait core::convert::From">From</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>&gt; for <a class="enum" href="../../serde_json/value/enum.Value.html" title="enum serde_json::value::Value">Value</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/serde_json/value.rs.html#1276-1294' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.from-11' class="method"><span id='from.v-11' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from' class='fnname'>from</a>(f: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Convert 64-bit floating point number to <code>Value</code></p>
-<h1 id="examples-5" class="section-header"><a href="#examples-5">Examples</a></h1>
+
+<h1 id='examples-5' class='section-header'><a href='#examples-5'>Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">serde_json</span>::<span class="ident">Value</span>;
 
@@ -746,7 +778,8 @@ that is neither an object nor null will panic.</p>
 </div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.From.html" title="trait core::convert::From">From</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>&gt; for <a class="enum" href="../../serde_json/value/enum.Value.html" title="enum serde_json::value::Value">Value</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/serde_json/value.rs.html#1296-1314' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.from-12' class="method"><span id='from.v-12' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from' class='fnname'>from</a>(f: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Convert boolean to <code>Value</code></p>
-<h1 id="examples-6" class="section-header"><a href="#examples-6">Examples</a></h1>
+
+<h1 id='examples-6' class='section-header'><a href='#examples-6'>Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">serde_json</span>::<span class="ident">Value</span>;
 
@@ -755,7 +788,8 @@ that is neither an object nor null will panic.</p>
 </div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.From.html" title="trait core::convert::From">From</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>&gt; for <a class="enum" href="../../serde_json/value/enum.Value.html" title="enum serde_json::value::Value">Value</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/serde_json/value.rs.html#1316-1334' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.from-13' class="method"><span id='from.v-13' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from' class='fnname'>from</a>(f: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Convert <code>String</code> to <code>Value</code></p>
-<h1 id="examples-7" class="section-header"><a href="#examples-7">Examples</a></h1>
+
+<h1 id='examples-7' class='section-header'><a href='#examples-7'>Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">serde_json</span>::<span class="ident">Value</span>;
 
@@ -764,7 +798,8 @@ that is neither an object nor null will panic.</p>
 </div></div><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.From.html" title="trait core::convert::From">From</a>&lt;&amp;'a <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt; for <a class="enum" href="../../serde_json/value/enum.Value.html" title="enum serde_json::value::Value">Value</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/serde_json/value.rs.html#1336-1354' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.from-14' class="method"><span id='from.v-14' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from' class='fnname'>from</a>(f: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Convert string slice to <code>Value</code></p>
-<h1 id="examples-8" class="section-header"><a href="#examples-8">Examples</a></h1>
+
+<h1 id='examples-8' class='section-header'><a href='#examples-8'>Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">serde_json</span>::<span class="ident">Value</span>;
 
@@ -773,7 +808,8 @@ that is neither an object nor null will panic.</p>
 </div></div><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.From.html" title="trait core::convert::From">From</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/collections/borrow/enum.Cow.html" title="enum collections::borrow::Cow">Cow</a>&lt;'a, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;&gt; for <a class="enum" href="../../serde_json/value/enum.Value.html" title="enum serde_json::value::Value">Value</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/serde_json/value.rs.html#1356-1387' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.from-15' class="method"><span id='from.v-15' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from' class='fnname'>from</a>(f: <a class="enum" href="https://doc.rust-lang.org/nightly/collections/borrow/enum.Cow.html" title="enum collections::borrow::Cow">Cow</a>&lt;'a, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Convert copy-on-write string to <code>Value</code></p>
-<h1 id="examples-9" class="section-header"><a href="#examples-9">Examples</a></h1>
+
+<h1 id='examples-9' class='section-header'><a href='#examples-9'>Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">serde_json</span>::<span class="ident">Value</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
@@ -790,7 +826,8 @@ that is neither an object nor null will panic.</p>
 </div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.From.html" title="trait core::convert::From">From</a>&lt;<a class="struct" href="../../serde_json/map/struct.Map.html" title="struct serde_json::map::Map">Map</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>, <a class="enum" href="../../serde_json/value/enum.Value.html" title="enum serde_json::value::Value">Value</a>&gt;&gt; for <a class="enum" href="../../serde_json/value/enum.Value.html" title="enum serde_json::value::Value">Value</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/serde_json/value.rs.html#1389-1408' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.from-16' class="method"><span id='from.v-16' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from' class='fnname'>from</a>(f: <a class="struct" href="../../serde_json/map/struct.Map.html" title="struct serde_json::map::Map">Map</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>, <a class="enum" href="../../serde_json/value/enum.Value.html" title="enum serde_json::value::Value">Value</a>&gt;) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Convert map (with string keys) to <code>Value</code></p>
-<h1 id="examples-10" class="section-header"><a href="#examples-10">Examples</a></h1>
+
+<h1 id='examples-10' class='section-header'><a href='#examples-10'>Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">serde_json</span>::{<span class="ident">Map</span>, <span class="ident">Value</span>};
 
@@ -800,7 +837,8 @@ that is neither an object nor null will panic.</p>
 </div></div><h3 class='impl'><span class='in-band'><code>impl&lt;T:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="enum" href="../../serde_json/value/enum.Value.html" title="enum serde_json::value::Value">Value</a>&gt;&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.From.html" title="trait core::convert::From">From</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;T&gt;&gt; for <a class="enum" href="../../serde_json/value/enum.Value.html" title="enum serde_json::value::Value">Value</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/serde_json/value.rs.html#1410-1428' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.from-17' class="method"><span id='from.v-17' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from' class='fnname'>from</a>(f: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;T&gt;) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Convert a <code>Vec</code> to <code>Value</code></p>
-<h1 id="examples-11" class="section-header"><a href="#examples-11">Examples</a></h1>
+
+<h1 id='examples-11' class='section-header'><a href='#examples-11'>Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">serde_json</span>::<span class="ident">Value</span>;
 
@@ -809,7 +847,8 @@ that is neither an object nor null will panic.</p>
 </div></div><h3 class='impl'><span class='in-band'><code>impl&lt;'a, T:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="enum" href="../../serde_json/value/enum.Value.html" title="enum serde_json::value::Value">Value</a>&gt;&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.From.html" title="trait core::convert::From">From</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;'a [</a>T<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>&gt; for <a class="enum" href="../../serde_json/value/enum.Value.html" title="enum serde_json::value::Value">Value</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/serde_json/value.rs.html#1430-1448' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.from-18' class="method"><span id='from.v-18' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from' class='fnname'>from</a>(f: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;'a [</a>T<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Convert a slice to <code>Value</code></p>
-<h1 id="examples-12" class="section-header"><a href="#examples-12">Examples</a></h1>
+
+<h1 id='examples-12' class='section-header'><a href='#examples-12'>Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">serde_json</span>::<span class="ident">Value</span>;
 
@@ -818,7 +857,8 @@ that is neither an object nor null will panic.</p>
 </div></div><h3 class='impl'><span class='in-band'><code>impl&lt;T:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="enum" href="../../serde_json/value/enum.Value.html" title="enum serde_json::value::Value">Value</a>&gt;&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.FromIterator.html" title="trait core::iter::traits::FromIterator">FromIterator</a>&lt;T&gt; for <a class="enum" href="../../serde_json/value/enum.Value.html" title="enum serde_json::value::Value">Value</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/serde_json/value.rs.html#1450-1492' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.from_iter' class="method"><span id='from_iter.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/iter/traits/trait.FromIterator.html#tymethod.from_iter' class='fnname'>from_iter</a>&lt;I:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html" title="trait core::iter::traits::IntoIterator">IntoIterator</a>&lt;Item = T&gt;&gt;(iter: I) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Convert an iteratable type to a <code>Value</code></p>
-<h1 id="examples-13" class="section-header"><a href="#examples-13">Examples</a></h1>
+
+<h1 id='examples-13' class='section-header'><a href='#examples-13'>Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">serde_json</span>::<span class="ident">Value</span>;
 
@@ -930,7 +970,7 @@ that is neither an object nor null will panic.</p>
 </div><h4 id='method.deserialize_identifier' class="method"><span id='deserialize_identifier.v' class='invisible'><code>fn <a href='../../serde/de/trait.Deserializer.html#tymethod.deserialize_identifier' class='fnname'>deserialize_identifier</a>&lt;V&gt;(self, visitor: V) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;V::<a class="trait" href="../../serde/de/trait.Visitor.html" title="trait serde::de::Visitor">Value</a>, Self::<a class="trait" href="../../serde/de/trait.Deserializer.html" title="trait serde::de::Deserializer">Error</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;V: <a class="trait" href="../../serde/de/trait.Visitor.html" title="trait serde::de::Visitor">Visitor</a>&lt;'de&gt;,&nbsp;</span></code></span></h4>
 <div class='docblock'><p>Hint that the <code>Deserialize</code> type is expecting the name of a struct field or the discriminant of an enum variant. <a href="../../serde/de/trait.Deserializer.html#tymethod.deserialize_identifier">Read more</a></p>
 </div><h4 id='method.deserialize_ignored_any' class="method"><span id='deserialize_ignored_any.v' class='invisible'><code>fn <a href='../../serde/de/trait.Deserializer.html#tymethod.deserialize_ignored_any' class='fnname'>deserialize_ignored_any</a>&lt;V&gt;(self, visitor: V) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;V::<a class="trait" href="../../serde/de/trait.Visitor.html" title="trait serde::de::Visitor">Value</a>, Self::<a class="trait" href="../../serde/de/trait.Deserializer.html" title="trait serde::de::Deserializer">Error</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;V: <a class="trait" href="../../serde/de/trait.Visitor.html" title="trait serde::de::Visitor">Visitor</a>&lt;'de&gt;,&nbsp;</span></code></span></h4>
-<div class='docblock'><p>Hint that the <code>Deserialize</code> type needs to deserialize a value whose type doesn't matter because it is ignored. <a href="../../serde/de/trait.Deserializer.html#tymethod.deserialize_ignored_any">Read more</a></p>
+<div class='docblock'><p>Hint that the <code>Deserialize</code> type needs to deserialize a value whose type doesn&#39;t matter because it is ignored. <a href="../../serde/de/trait.Deserializer.html#tymethod.deserialize_ignored_any">Read more</a></p>
 </div></div><h3 class='impl'><span class='in-band'><code>impl&lt;'de&gt; <a class="trait" href="../../serde/de/trait.Deserializer.html" title="trait serde::de::Deserializer">Deserializer</a>&lt;'de&gt; for &amp;'de <a class="enum" href="../../serde_json/value/enum.Value.html" title="enum serde_json::value::Value">Value</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/serde_json/value.rs.html#2378-2485' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='associatedtype.Error-1' class="type"><span id='Error.t-1' class='invisible'><code>type <a href='../../serde/de/trait.Deserializer.html#associatedtype.Error' class="type">Error</a> = <a class="struct" href="../../serde_json/error/struct.Error.html" title="struct serde_json::error::Error">Error</a></code></span></h4>
 <div class='docblock'><p>The error type that can be returned if some error occurs during deserialization. <a href="../../serde/de/trait.Deserializer.html#associatedtype.Error">Read more</a></p>
@@ -991,7 +1031,7 @@ that is neither an object nor null will panic.</p>
 </div><h4 id='method.deserialize_identifier-1' class="method"><span id='deserialize_identifier.v-1' class='invisible'><code>fn <a href='../../serde/de/trait.Deserializer.html#tymethod.deserialize_identifier' class='fnname'>deserialize_identifier</a>&lt;V&gt;(self, visitor: V) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;V::<a class="trait" href="../../serde/de/trait.Visitor.html" title="trait serde::de::Visitor">Value</a>, Self::<a class="trait" href="../../serde/de/trait.Deserializer.html" title="trait serde::de::Deserializer">Error</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;V: <a class="trait" href="../../serde/de/trait.Visitor.html" title="trait serde::de::Visitor">Visitor</a>&lt;'de&gt;,&nbsp;</span></code></span></h4>
 <div class='docblock'><p>Hint that the <code>Deserialize</code> type is expecting the name of a struct field or the discriminant of an enum variant. <a href="../../serde/de/trait.Deserializer.html#tymethod.deserialize_identifier">Read more</a></p>
 </div><h4 id='method.deserialize_ignored_any-1' class="method"><span id='deserialize_ignored_any.v-1' class='invisible'><code>fn <a href='../../serde/de/trait.Deserializer.html#tymethod.deserialize_ignored_any' class='fnname'>deserialize_ignored_any</a>&lt;V&gt;(self, visitor: V) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;V::<a class="trait" href="../../serde/de/trait.Visitor.html" title="trait serde::de::Visitor">Value</a>, Self::<a class="trait" href="../../serde/de/trait.Deserializer.html" title="trait serde::de::Deserializer">Error</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;V: <a class="trait" href="../../serde/de/trait.Visitor.html" title="trait serde::de::Visitor">Visitor</a>&lt;'de&gt;,&nbsp;</span></code></span></h4>
-<div class='docblock'><p>Hint that the <code>Deserialize</code> type needs to deserialize a value whose type doesn't matter because it is ignored. <a href="../../serde/de/trait.Deserializer.html#tymethod.deserialize_ignored_any">Read more</a></p>
+<div class='docblock'><p>Hint that the <code>Deserialize</code> type needs to deserialize a value whose type doesn&#39;t matter because it is ignored. <a href="../../serde/de/trait.Deserializer.html#tymethod.deserialize_ignored_any">Read more</a></p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
 

@@ -48,7 +48,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/openssl_sys/ossl10x.rs.html#251-278' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/openssl_sys/ossl10x.rs.html#252-279' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'><div class="docblock attributes">#[repr(C)]
 </div>pub struct X509 {
     pub cert_info: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../openssl_sys/struct.X509_CINF.html" title="struct openssl_sys::X509_CINF">X509_CINF</a>,
@@ -56,14 +56,14 @@
     pub signature: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="enum" href="../openssl_sys/enum.ASN1_BIT_STRING.html" title="enum openssl_sys::ASN1_BIT_STRING">ASN1_BIT_STRING</a>,
     pub valid: <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a>,
     pub references: <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a>,
-    pub name: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>,
+    pub name: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="type" href="../libc/unix/bsd/type.c_char.html" title="type libc::unix::bsd::c_char">c_char</a>,
     pub ex_data: <a class="struct" href="../openssl_sys/struct.CRYPTO_EX_DATA.html" title="struct openssl_sys::CRYPTO_EX_DATA">CRYPTO_EX_DATA</a>,
-    pub ex_pathlen: <a class="type" href="../libc/unix/notbsd/linux/other/b64/type.c_long.html" title="type libc::unix::notbsd::linux::other::b64::c_long">c_long</a>,
-    pub ex_pcpathlen: <a class="type" href="../libc/unix/notbsd/linux/other/b64/type.c_long.html" title="type libc::unix::notbsd::linux::other::b64::c_long">c_long</a>,
-    pub ex_flags: <a class="type" href="../libc/unix/notbsd/linux/other/b64/type.c_ulong.html" title="type libc::unix::notbsd::linux::other::b64::c_ulong">c_ulong</a>,
-    pub ex_kusage: <a class="type" href="../libc/unix/notbsd/linux/other/b64/type.c_ulong.html" title="type libc::unix::notbsd::linux::other::b64::c_ulong">c_ulong</a>,
-    pub ex_xkusage: <a class="type" href="../libc/unix/notbsd/linux/other/b64/type.c_ulong.html" title="type libc::unix::notbsd::linux::other::b64::c_ulong">c_ulong</a>,
-    pub ex_nscert: <a class="type" href="../libc/unix/notbsd/linux/other/b64/type.c_ulong.html" title="type libc::unix::notbsd::linux::other::b64::c_ulong">c_ulong</a>,
+    pub ex_pathlen: <a class="type" href="../libc/unix/bsd/apple/b64/type.c_long.html" title="type libc::unix::bsd::apple::b64::c_long">c_long</a>,
+    pub ex_pcpathlen: <a class="type" href="../libc/unix/bsd/apple/b64/type.c_long.html" title="type libc::unix::bsd::apple::b64::c_long">c_long</a>,
+    pub ex_flags: <a class="type" href="../libc/unix/bsd/apple/b64/type.c_ulong.html" title="type libc::unix::bsd::apple::b64::c_ulong">c_ulong</a>,
+    pub ex_kusage: <a class="type" href="../libc/unix/bsd/apple/b64/type.c_ulong.html" title="type libc::unix::bsd::apple::b64::c_ulong">c_ulong</a>,
+    pub ex_xkusage: <a class="type" href="../libc/unix/bsd/apple/b64/type.c_ulong.html" title="type libc::unix::bsd::apple::b64::c_ulong">c_ulong</a>,
+    pub ex_nscert: <a class="type" href="../libc/unix/bsd/apple/b64/type.c_ulong.html" title="type libc::unix::bsd::apple::b64::c_ulong">c_ulong</a>,
     // some fields omitted
 }</pre><h2 id='fields' class='fields'>Fields</h2><span id='structfield.cert_info' class="structfield">
                            <span id='cert_info.v' class='invisible'>
@@ -82,28 +82,28 @@
                            <code>references: <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a></code>
                            </span></span><span id='structfield.name' class="structfield">
                            <span id='name.v' class='invisible'>
-                           <code>name: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a></code>
+                           <code>name: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="type" href="../libc/unix/bsd/type.c_char.html" title="type libc::unix::bsd::c_char">c_char</a></code>
                            </span></span><span id='structfield.ex_data' class="structfield">
                            <span id='ex_data.v' class='invisible'>
                            <code>ex_data: <a class="struct" href="../openssl_sys/struct.CRYPTO_EX_DATA.html" title="struct openssl_sys::CRYPTO_EX_DATA">CRYPTO_EX_DATA</a></code>
                            </span></span><span id='structfield.ex_pathlen' class="structfield">
                            <span id='ex_pathlen.v' class='invisible'>
-                           <code>ex_pathlen: <a class="type" href="../libc/unix/notbsd/linux/other/b64/type.c_long.html" title="type libc::unix::notbsd::linux::other::b64::c_long">c_long</a></code>
+                           <code>ex_pathlen: <a class="type" href="../libc/unix/bsd/apple/b64/type.c_long.html" title="type libc::unix::bsd::apple::b64::c_long">c_long</a></code>
                            </span></span><span id='structfield.ex_pcpathlen' class="structfield">
                            <span id='ex_pcpathlen.v' class='invisible'>
-                           <code>ex_pcpathlen: <a class="type" href="../libc/unix/notbsd/linux/other/b64/type.c_long.html" title="type libc::unix::notbsd::linux::other::b64::c_long">c_long</a></code>
+                           <code>ex_pcpathlen: <a class="type" href="../libc/unix/bsd/apple/b64/type.c_long.html" title="type libc::unix::bsd::apple::b64::c_long">c_long</a></code>
                            </span></span><span id='structfield.ex_flags' class="structfield">
                            <span id='ex_flags.v' class='invisible'>
-                           <code>ex_flags: <a class="type" href="../libc/unix/notbsd/linux/other/b64/type.c_ulong.html" title="type libc::unix::notbsd::linux::other::b64::c_ulong">c_ulong</a></code>
+                           <code>ex_flags: <a class="type" href="../libc/unix/bsd/apple/b64/type.c_ulong.html" title="type libc::unix::bsd::apple::b64::c_ulong">c_ulong</a></code>
                            </span></span><span id='structfield.ex_kusage' class="structfield">
                            <span id='ex_kusage.v' class='invisible'>
-                           <code>ex_kusage: <a class="type" href="../libc/unix/notbsd/linux/other/b64/type.c_ulong.html" title="type libc::unix::notbsd::linux::other::b64::c_ulong">c_ulong</a></code>
+                           <code>ex_kusage: <a class="type" href="../libc/unix/bsd/apple/b64/type.c_ulong.html" title="type libc::unix::bsd::apple::b64::c_ulong">c_ulong</a></code>
                            </span></span><span id='structfield.ex_xkusage' class="structfield">
                            <span id='ex_xkusage.v' class='invisible'>
-                           <code>ex_xkusage: <a class="type" href="../libc/unix/notbsd/linux/other/b64/type.c_ulong.html" title="type libc::unix::notbsd::linux::other::b64::c_ulong">c_ulong</a></code>
+                           <code>ex_xkusage: <a class="type" href="../libc/unix/bsd/apple/b64/type.c_ulong.html" title="type libc::unix::bsd::apple::b64::c_ulong">c_ulong</a></code>
                            </span></span><span id='structfield.ex_nscert' class="structfield">
                            <span id='ex_nscert.v' class='invisible'>
-                           <code>ex_nscert: <a class="type" href="../libc/unix/notbsd/linux/other/b64/type.c_ulong.html" title="type libc::unix::notbsd::linux::other::b64::c_ulong">c_ulong</a></code>
+                           <code>ex_nscert: <a class="type" href="../libc/unix/bsd/apple/b64/type.c_ulong.html" title="type libc::unix::bsd::apple::b64::c_ulong">c_ulong</a></code>
                            </span></span></section>
     <section id='search' class="content hidden"></section>
 

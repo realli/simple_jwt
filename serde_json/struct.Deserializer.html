@@ -54,7 +54,9 @@
 <div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(read: R) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Create a JSON deserializer from one of the possible serde_json input
 sources.</p>
+
 <p>Typically it is more convenient to use one of these methods instead:</p>
+
 <ul>
 <li>Deserializer::from_str</li>
 <li>Deserializer::from_bytes</li>
@@ -91,14 +93,17 @@ value, a <code>[..]</code>, or a <code>{..}</code>.</p>
 </div><h4 id='method.deserialize_bytes' class="method"><span id='deserialize_bytes.v' class='invisible'><code>fn <a href='../serde/de/trait.Deserializer.html#tymethod.deserialize_bytes' class='fnname'>deserialize_bytes</a>&lt;V&gt;(self, visitor: V) -&gt; <a class="type" href="../serde_json/type.Result.html" title="type serde_json::Result">Result</a>&lt;V::<a class="trait" href="../serde/de/trait.Visitor.html" title="trait serde::de::Visitor">Value</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;V: <a class="trait" href="../serde/de/trait.Visitor.html" title="trait serde::de::Visitor">Visitor</a>&lt;'de&gt;,&nbsp;</span></code></span></h4>
 <div class='docblock'><p>Parses a JSON string as bytes. Note that this function does not check
 whether the bytes represent a valid UTF-8 string.</p>
+
 <p>The relevant part of the JSON specification is Section 8.2 of <a href="https://tools.ietf.org/html/rfc7159">RFC
 7159</a>:</p>
+
 <blockquote>
 <p>When all the strings represented in a JSON text are composed entirely
 of Unicode characters (however escaped), then that JSON text is
 interoperable in the sense that all software implementations that
 parse it will agree on the contents of names and of string values in
 objects and arrays.</p>
+
 <p>However, the ABNF in this specification allows member names and string
 values to contain bit sequences that cannot encode Unicode characters;
 for example, &quot;\uDEAD&quot; (a single unpaired UTF-16 surrogate). Instances
@@ -109,12 +114,15 @@ containing such values is unpredictable; for example, implementations
 might return different values for the length of a string value or even
 suffer fatal runtime exceptions.</p>
 </blockquote>
+
 <p>The behavior of serde_json is specified to fail on non-UTF-8 strings
 when deserializing into Rust UTF-8 string types such as String, and
 succeed with non-UTF-8 bytes when deserializing using this method.</p>
+
 <p>Escape sequences are processed as usual, and for <code>\uXXXX</code> escapes it is
 still checked if the hex number represents a valid Unicode code point.</p>
-<h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>
+
+<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
 <p>You can use this to parse JSON strings containing invalid UTF-8 bytes.</p>
 
 <pre class="rust rust-example-rendered">
@@ -133,6 +141,7 @@ still checked if the hex number represents a valid Unicode code point.</p>
 
     <span class="prelude-val">Ok</span>(())
 }</pre>
+
 <p>Backslash escape sequences like <code>\n</code> are still interpreted and required
 to be valid, and <code>\u</code> escape sequences are required to represent valid
 Unicode code points.</p>
@@ -199,7 +208,7 @@ Unicode code points.</p>
 </div><h4 id='method.deserialize_identifier' class="method"><span id='deserialize_identifier.v' class='invisible'><code>fn <a href='../serde/de/trait.Deserializer.html#tymethod.deserialize_identifier' class='fnname'>deserialize_identifier</a>&lt;V&gt;(self, visitor: V) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;V::<a class="trait" href="../serde/de/trait.Visitor.html" title="trait serde::de::Visitor">Value</a>, Self::<a class="trait" href="../serde/de/trait.Deserializer.html" title="trait serde::de::Deserializer">Error</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;V: <a class="trait" href="../serde/de/trait.Visitor.html" title="trait serde::de::Visitor">Visitor</a>&lt;'de&gt;,&nbsp;</span></code></span></h4>
 <div class='docblock'><p>Hint that the <code>Deserialize</code> type is expecting the name of a struct field or the discriminant of an enum variant. <a href="../serde/de/trait.Deserializer.html#tymethod.deserialize_identifier">Read more</a></p>
 </div><h4 id='method.deserialize_ignored_any' class="method"><span id='deserialize_ignored_any.v' class='invisible'><code>fn <a href='../serde/de/trait.Deserializer.html#tymethod.deserialize_ignored_any' class='fnname'>deserialize_ignored_any</a>&lt;V&gt;(self, visitor: V) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;V::<a class="trait" href="../serde/de/trait.Visitor.html" title="trait serde::de::Visitor">Value</a>, Self::<a class="trait" href="../serde/de/trait.Deserializer.html" title="trait serde::de::Deserializer">Error</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;V: <a class="trait" href="../serde/de/trait.Visitor.html" title="trait serde::de::Visitor">Visitor</a>&lt;'de&gt;,&nbsp;</span></code></span></h4>
-<div class='docblock'><p>Hint that the <code>Deserialize</code> type needs to deserialize a value whose type doesn't matter because it is ignored. <a href="../serde/de/trait.Deserializer.html#tymethod.deserialize_ignored_any">Read more</a></p>
+<div class='docblock'><p>Hint that the <code>Deserialize</code> type needs to deserialize a value whose type doesn&#39;t matter because it is ignored. <a href="../serde/de/trait.Deserializer.html#tymethod.deserialize_ignored_any">Read more</a></p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
 

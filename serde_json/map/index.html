@@ -50,6 +50,7 @@
                    </a>
                </span><a class='srclink' href='../../src/serde_json/map.rs.html#9-796' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>A map of String to serde_json::Value.</p>
+
 <p>By default the map is backed by a <a href="https://doc.rust-lang.org/std/collections/struct.BTreeMap.html"><code>BTreeMap</code></a>. Enable the <code>preserve_order</code>
 feature of serde_json to use <a href="https://docs.rs/linked-hash-map/*/linked_hash_map/struct.LinkedHashMap.html"><code>LinkedHashMap</code></a> instead.</p>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
@@ -58,32 +59,28 @@ feature of serde_json to use <a href="https://docs.rs/linked-hash-map/*/linked_h
                            <td><a class="struct" href="struct.IntoIter.html"
                                   title='struct serde_json::map::IntoIter'>IntoIter</a></td>
                            <td class='docblock-short'>
-                                <p>An owning iterator over a serde_json::Map's entries.</p>
-
+                                <p>An owning iterator over a serde_json::Map&#39;s entries.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="struct" href="struct.Iter.html"
                                   title='struct serde_json::map::Iter'>Iter</a></td>
                            <td class='docblock-short'>
-                                <p>An iterator over a serde_json::Map's entries.</p>
-
+                                <p>An iterator over a serde_json::Map&#39;s entries.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="struct" href="struct.IterMut.html"
                                   title='struct serde_json::map::IterMut'>IterMut</a></td>
                            <td class='docblock-short'>
-                                <p>A mutable iterator over a serde_json::Map's entries.</p>
-
+                                <p>A mutable iterator over a serde_json::Map&#39;s entries.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="struct" href="struct.Keys.html"
                                   title='struct serde_json::map::Keys'>Keys</a></td>
                            <td class='docblock-short'>
-                                <p>An iterator over a serde_json::Map's keys.</p>
-
+                                <p>An iterator over a serde_json::Map&#39;s keys.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -91,7 +88,6 @@ feature of serde_json to use <a href="https://docs.rs/linked-hash-map/*/linked_h
                                   title='struct serde_json::map::Map'>Map</a></td>
                            <td class='docblock-short'>
                                 <p>Represents a JSON key/value type.</p>
-
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -99,7 +95,6 @@ feature of serde_json to use <a href="https://docs.rs/linked-hash-map/*/linked_h
                                   title='struct serde_json::map::OccupiedEntry'>OccupiedEntry</a></td>
                            <td class='docblock-short'>
                                 <p>An occupied Entry. It is part of the <a href="enum.Entry.html"><code>Entry</code></a> enum.</p>
-
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -107,15 +102,13 @@ feature of serde_json to use <a href="https://docs.rs/linked-hash-map/*/linked_h
                                   title='struct serde_json::map::VacantEntry'>VacantEntry</a></td>
                            <td class='docblock-short'>
                                 <p>A vacant Entry. It is part of the <a href="enum.Entry.html"><code>Entry</code></a> enum.</p>
-
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="struct" href="struct.Values.html"
                                   title='struct serde_json::map::Values'>Values</a></td>
                            <td class='docblock-short'>
-                                <p>An iterator over a serde_json::Map's values.</p>
-
+                                <p>An iterator over a serde_json::Map&#39;s values.</p>
                            </td>
                        </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
@@ -125,7 +118,6 @@ feature of serde_json to use <a href="https://docs.rs/linked-hash-map/*/linked_h
                            <td class='docblock-short'>
                                 <p>A view into a single entry in a map, which may either be vacant or occupied.
 This enum is constructed from the <a href="struct.Map.html#method.entry"><code>entry</code></a> method on <a href="struct.Map.html"><code>Map</code></a>.</p>
-
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>

@@ -60,9 +60,11 @@
 stream.</p>
 </div><span id='variant.Syntax' class='variant'><span id='Syntax.v' class='invisible'><code>Syntax</code></span></span><div class='docblock'><p>The error was caused by input that was not syntactically valid JSON.</p>
 </div><span id='variant.Data' class='variant'><span id='Data.v' class='invisible'><code>Data</code></span></span><div class='docblock'><p>The error was caused by input data that was semantically incorrect.</p>
+
 <p>For example, JSON containing a number is semantically incorrect when the
 type being deserialized into holds a String.</p>
 </div><span id='variant.Eof' class='variant'><span id='Eof.v' class='invisible'><code>Eof</code></span></span><div class='docblock'><p>The error was caused by prematurely reaching the end of the input data.</p>
+
 <p>Callers that process streaming input may be interested in retrying the
 deserialization once more data is available.</p>
 </div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html" title="trait core::marker::Copy">Copy</a> for <a class="enum" href="../../serde_json/error/enum.Category.html" title="enum serde_json::error::Category">Category</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/serde_json/error.rs.html#116' title='goto source code'>[src]</a></span></h3>

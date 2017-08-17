@@ -52,6 +52,7 @@
 <pre class='rust struct'>pub struct X509StoreBuilder(_);</pre><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../../../openssl/x509/store/struct.X509StoreBuilder.html" title="struct openssl::x509::store::X509StoreBuilder">X509StoreBuilder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/openssl/x509/store.rs.html#17-35' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="../../../openssl/x509/store/struct.X509StoreBuilder.html" title="struct openssl::x509::store::X509StoreBuilder">X509StoreBuilder</a>, <a class="struct" href="../../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt;</code></span></h4>
 <div class='docblock'><p>Returns a builder for a certificate store.</p>
+
 <p>The store is initially empty.</p>
 </div><h4 id='method.build' class="method"><span id='build.v' class='invisible'><code>fn <a href='#method.build' class='fnname'>build</a>(self) -&gt; <a class="struct" href="../../../openssl/x509/store/struct.X509Store.html" title="struct openssl::x509::store::X509Store">X509Store</a></code></span></h4>
 <div class='docblock'><p>Constructs the <code>X509Store</code>.</p>
@@ -59,6 +60,7 @@
 <div class='docblock'><p>Adds a certificate to the certificate store.</p>
 </div><h4 id='method.set_default_paths' class="method"><span id='set_default_paths.v' class='invisible'><code>fn <a href='#method.set_default_paths' class='fnname'>set_default_paths</a>(&amp;mut self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, <a class="struct" href="../../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt;</code></span></h4>
 <div class='docblock'><p>Load certificates from their default locations.</p>
+
 <p>These locations are read from the <code>SSL_CERT_FILE</code> and <code>SSL_CERT_DIR</code>
 environment variables if present, or defaults specified at OpenSSL
 build time otherwise.</p>
