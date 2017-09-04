@@ -11,6 +11,12 @@ this lib use the `rust-openssl`, so you may want to check the
 [rust-openssl](https://github.com/sfackler/rust-openssl) to find the
 set-up of openssl runtime lib. 
 
+Why use this crate
+==============
+
+* Multiple algorithms support, maybe the only Rust JWT lib support ESXXX family
+* support for custom claims types.
+
 # Support Algirithm
 * HS256/384/512
 * RS256/384/512
