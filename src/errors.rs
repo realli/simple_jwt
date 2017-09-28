@@ -6,7 +6,7 @@ error_chain! {
     links {}
     foreign_links {
         JsonError(serde_json::Error);
-        Base64Error(base64::Base64Error);
+        Base64Error(base64::DecodeError);
         CryptoFailure(openssl::error::ErrorStack);
     }
     errors {
