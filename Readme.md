@@ -2,7 +2,7 @@ Simple JWT
 =============
 
 [![](http://meritbadge.herokuapp.com/simple_jwt)](https://crates.io/crates/simple_jwt)
-[![](https://travis-ci.org/realli/simple_jwt/pull_requests#)](https://travis-ci.org/realli/simple_jwt/pull_requests#)
+[![Build Status](https://travis-ci.org/realli/simple_jwt.svg?branch=master)](https://travis-ci.org/realli/simple_jwt)
 
 [Documentation](https://realli.github.io/simple_jwt/simple_jwt/)
 
