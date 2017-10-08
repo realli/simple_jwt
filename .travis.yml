@@ -7,3 +7,4 @@ matrix:
         - rust: nightly
 branches:
     only: master
+cache: cargo
