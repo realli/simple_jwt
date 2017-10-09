@@ -52,15 +52,16 @@
 <pre class='rust enum'>pub enum ErrorKind {
     Msg(<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>),
     JsonError(<a class="struct" href="../serde_json/error/struct.Error.html" title="struct serde_json::error::Error">Error</a>),
-    Base64Error(<a class="enum" href="../base64/enum.Base64Error.html" title="enum base64::Base64Error">Base64Error</a>),
+    Base64Error(<a class="enum" href="../base64/enum.DecodeError.html" title="enum base64::DecodeError">DecodeError</a>),
     CryptoFailure(<a class="struct" href="../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>),
     UnsupportAlgorithm,
     InvalidFormat,
     InvalidSignature,
+    // some variants omitted
 }</pre><div class='docblock'><p>The kind of an error.</p>
 </div><h2 id='variants' class='variants'>Variants</h2>
 <span id='variant.Msg' class='variant'><span id='Msg.v' class='invisible'><code>Msg(<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>)</code></span></span><div class='docblock'><p>A convenient variant for String.</p>
-</div><span id='variant.JsonError' class='variant'><span id='JsonError.v' class='invisible'><code>JsonError(<a class="struct" href="../serde_json/error/struct.Error.html" title="struct serde_json::error::Error">Error</a>)</code></span></span><span id='variant.Base64Error' class='variant'><span id='Base64Error.v' class='invisible'><code>Base64Error(<a class="enum" href="../base64/enum.Base64Error.html" title="enum base64::Base64Error">Base64Error</a>)</code></span></span><span id='variant.CryptoFailure' class='variant'><span id='CryptoFailure.v' class='invisible'><code>CryptoFailure(<a class="struct" href="../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>)</code></span></span><span id='variant.UnsupportAlgorithm' class='variant'><span id='UnsupportAlgorithm.v' class='invisible'><code>UnsupportAlgorithm</code></span></span><span id='variant.InvalidFormat' class='variant'><span id='InvalidFormat.v' class='invisible'><code>InvalidFormat</code></span></span><span id='variant.InvalidSignature' class='variant'><span id='InvalidSignature.v' class='invisible'><code>InvalidSignature</code></span></span><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="enum" href="../simple_jwt/enum.ErrorKind.html" title="enum simple_jwt::ErrorKind">ErrorKind</a></code></span><span class='out-of-band'></span></h3>
+</div><span id='variant.JsonError' class='variant'><span id='JsonError.v' class='invisible'><code>JsonError(<a class="struct" href="../serde_json/error/struct.Error.html" title="struct serde_json::error::Error">Error</a>)</code></span></span><span id='variant.Base64Error' class='variant'><span id='Base64Error.v' class='invisible'><code>Base64Error(<a class="enum" href="../base64/enum.DecodeError.html" title="enum base64::DecodeError">DecodeError</a>)</code></span></span><span id='variant.CryptoFailure' class='variant'><span id='CryptoFailure.v' class='invisible'><code>CryptoFailure(<a class="struct" href="../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>)</code></span></span><span id='variant.UnsupportAlgorithm' class='variant'><span id='UnsupportAlgorithm.v' class='invisible'><code>UnsupportAlgorithm</code></span></span><span id='variant.InvalidFormat' class='variant'><span id='InvalidFormat.v' class='invisible'><code>InvalidFormat</code></span></span><span id='variant.InvalidSignature' class='variant'><span id='InvalidSignature.v' class='invisible'><code>InvalidSignature</code></span></span><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="enum" href="../simple_jwt/enum.ErrorKind.html" title="enum simple_jwt::ErrorKind">ErrorKind</a></code></span><span class='out-of-band'></span></h3>
 <div class='impl-items'><h4 id='method.description' class="method"><span id='description.v' class='invisible'><code>fn <a href='#method.description' class='fnname'>description</a>(&amp;self) -&gt; &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a></code></span></h4>
 <div class='docblock'><p>A string describing the error kind.</p>
 </div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="enum" href="../simple_jwt/enum.ErrorKind.html" title="enum simple_jwt::ErrorKind">ErrorKind</a></code></span><span class='out-of-band'></span></h3>
@@ -135,7 +136,6 @@
         window.rootPath = "../";
         window.currentCrate = "simple_jwt";
     </script>
-    <script src="../jquery.js"></script>
     <script src="../main.js"></script>
     <script defer src="../search-index.js"></script>
 </body>

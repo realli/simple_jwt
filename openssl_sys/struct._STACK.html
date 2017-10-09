@@ -48,20 +48,20 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/openssl_sys/ossl10x.rs.html#56-62' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/openssl_sys/ossl10x.rs.html#58-64' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'><div class="docblock attributes">#[repr(C)]
 </div>pub struct _STACK {
     pub num: <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a>,
-    pub data: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="type" href="../libc/unix/bsd/type.c_char.html" title="type libc::unix::bsd::c_char">c_char</a>,
+    pub data: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>,
     pub sorted: <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a>,
     pub num_alloc: <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a>,
-    pub comp: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="enum" href="../libc/enum.c_void.html" title="enum libc::c_void">c_void</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="enum" href="../libc/enum.c_void.html" title="enum libc::c_void">c_void</a>) -&gt; <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a>&gt;,
+    pub comp: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="enum" href="../libc/enum.c_void.html" title="enum libc::c_void">c_void</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="enum" href="../libc/enum.c_void.html" title="enum libc::c_void">c_void</a>) -&gt; <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a>&gt;,
 }</pre><h2 id='fields' class='fields'>Fields</h2><span id='structfield.num' class="structfield">
                            <span id='num.v' class='invisible'>
                            <code>num: <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a></code>
                            </span></span><span id='structfield.data' class="structfield">
                            <span id='data.v' class='invisible'>
-                           <code>data: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="type" href="../libc/unix/bsd/type.c_char.html" title="type libc::unix::bsd::c_char">c_char</a></code>
+                           <code>data: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a></code>
                            </span></span><span id='structfield.sorted' class="structfield">
                            <span id='sorted.v' class='invisible'>
                            <code>sorted: <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a></code>
@@ -70,7 +70,7 @@
                            <code>num_alloc: <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a></code>
                            </span></span><span id='structfield.comp' class="structfield">
                            <span id='comp.v' class='invisible'>
-                           <code>comp: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="enum" href="../libc/enum.c_void.html" title="enum libc::c_void">c_void</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="enum" href="../libc/enum.c_void.html" title="enum libc::c_void">c_void</a>) -&gt; <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a>&gt;</code>
+                           <code>comp: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="enum" href="../libc/enum.c_void.html" title="enum libc::c_void">c_void</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="enum" href="../libc/enum.c_void.html" title="enum libc::c_void">c_void</a>) -&gt; <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a>&gt;</code>
                            </span></span></section>
     <section id='search' class="content hidden"></section>
 
@@ -128,7 +128,6 @@
         window.rootPath = "../";
         window.currentCrate = "openssl_sys";
     </script>
-    <script src="../jquery.js"></script>
     <script src="../main.js"></script>
     <script defer src="../search-index.js"></script>
 </body>

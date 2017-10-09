@@ -1175,7 +1175,7 @@ parameter in-place.</p>
 <pre class="rust rust-example-rendered">
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="string">&quot;abc&quot;</span>.<span class="ident">repeat</span>(<span class="number">4</span>), <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;abcabcabcabc&quot;</span>));</pre>
 </div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="../../openssl/types/trait.OpenSslTypeRef.html" title="trait openssl::types::OpenSslTypeRef">ForeignTypeRef</a> for <a class="struct" href="../../openssl/string/struct.OpensslStringRef.html" title="struct openssl::string::OpensslStringRef">OpensslStringRef</a></code></span><span class='out-of-band'></span></h3>
-<div class='impl-items'><h4 id='associatedtype.CType' class="type"><span id='CType.t' class='invisible'><code>type <a href='../../openssl/types/trait.OpenSslTypeRef.html#associatedtype.CType' class="type">CType</a> = <a class="type" href="../../libc/unix/bsd/type.c_char.html" title="type libc::unix::bsd::c_char">c_char</a></code></span></h4>
+<div class='impl-items'><h4 id='associatedtype.CType' class="type"><span id='CType.t' class='invisible'><code>type <a href='../../openssl/types/trait.OpenSslTypeRef.html#associatedtype.CType' class="type">CType</a> = <a class="type" href="../../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a></code></span></h4>
 <div class='docblock'><p>The raw C type.</p>
 </div><h4 id='method.from_ptr' class="method"><span id='from_ptr.v' class='invisible'><code>unsafe fn <a href='../../openssl/types/trait.OpenSslTypeRef.html#method.from_ptr' class='fnname'>from_ptr</a>&lt;'a&gt;(ptr: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a>Self::<a class="trait" href="../../openssl/types/trait.OpenSslTypeRef.html" title="trait openssl::types::OpenSslTypeRef">CType</a>) -&gt; &amp;'a Self</code></span></h4>
 <div class='docblock'><p>Constructs a shared instance of this type from its raw type.</p>
@@ -1251,7 +1251,6 @@ parameter in-place.</p>
         window.rootPath = "../../";
         window.currentCrate = "openssl";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

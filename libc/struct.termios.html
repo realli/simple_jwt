@@ -55,7 +55,8 @@
     pub c_oflag: <a class="type" href="../libc/type.tcflag_t.html" title="type libc::tcflag_t">tcflag_t</a>,
     pub c_cflag: <a class="type" href="../libc/type.tcflag_t.html" title="type libc::tcflag_t">tcflag_t</a>,
     pub c_lflag: <a class="type" href="../libc/type.tcflag_t.html" title="type libc::tcflag_t">tcflag_t</a>,
-    pub c_cc: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">[</a><a class="type" href="../libc/type.cc_t.html" title="type libc::cc_t">cc_t</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">; 20]</a>,
+    pub c_line: <a class="type" href="../libc/type.cc_t.html" title="type libc::cc_t">cc_t</a>,
+    pub c_cc: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">[</a><a class="type" href="../libc/type.cc_t.html" title="type libc::cc_t">cc_t</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">; 32]</a>,
     pub c_ispeed: <a class="type" href="../libc/type.speed_t.html" title="type libc::speed_t">speed_t</a>,
     pub c_ospeed: <a class="type" href="../libc/type.speed_t.html" title="type libc::speed_t">speed_t</a>,
 }</pre><h2 id='fields' class='fields'>Fields</h2><span id='structfield.c_iflag' class="structfield">
@@ -70,9 +71,12 @@
                            </span></span><span id='structfield.c_lflag' class="structfield">
                            <span id='c_lflag.v' class='invisible'>
                            <code>c_lflag: <a class="type" href="../libc/type.tcflag_t.html" title="type libc::tcflag_t">tcflag_t</a></code>
+                           </span></span><span id='structfield.c_line' class="structfield">
+                           <span id='c_line.v' class='invisible'>
+                           <code>c_line: <a class="type" href="../libc/type.cc_t.html" title="type libc::cc_t">cc_t</a></code>
                            </span></span><span id='structfield.c_cc' class="structfield">
                            <span id='c_cc.v' class='invisible'>
-                           <code>c_cc: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">[</a><a class="type" href="../libc/type.cc_t.html" title="type libc::cc_t">cc_t</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">; 20]</a></code>
+                           <code>c_cc: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">[</a><a class="type" href="../libc/type.cc_t.html" title="type libc::cc_t">cc_t</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">; 32]</a></code>
                            </span></span><span id='structfield.c_ispeed' class="structfield">
                            <span id='c_ispeed.v' class='invisible'>
                            <code>c_ispeed: <a class="type" href="../libc/type.speed_t.html" title="type libc::speed_t">speed_t</a></code>
@@ -142,7 +146,6 @@
         window.rootPath = "../";
         window.currentCrate = "libc";
     </script>
-    <script src="../jquery.js"></script>
     <script src="../main.js"></script>
     <script defer src="../search-index.js"></script>
 </body>

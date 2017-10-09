@@ -78,7 +78,7 @@
     <span class="ident">links</span> {}
     <span class="ident">foreign_links</span> {
         <span class="ident">JsonError</span>(<span class="ident">serde_json</span>::<span class="ident">Error</span>);
-        <span class="ident">Base64Error</span>(<span class="ident">base64</span>::<span class="ident">Base64Error</span>);
+        <span class="ident">Base64Error</span>(<span class="ident">base64</span>::<span class="ident">DecodeError</span>);
         <span class="ident">CryptoFailure</span>(<span class="ident">openssl</span>::<span class="ident">error</span>::<span class="ident">ErrorStack</span>);
     }
     <span class="ident">errors</span> {
@@ -154,7 +154,6 @@
         window.rootPath = "../../";
         window.currentCrate = "simple_jwt";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>
