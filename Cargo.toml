@@ -6,6 +6,7 @@ authors = ["realli <lrlanswer@gmail.com>"]
 keywords = ["jwt", "web", "json", "token"]
 description = "simple JWT encoder/decoder"
 repository = "https://github.com/realli/simple_jwt"
+readme = "Readme.md"
 documentation = "http://realli.github.io/simple_jwt/simple_jwt/"
 
 [dependencies]
@@ -17,3 +18,6 @@ error-chain = "0.11"
 
 [dependencies.openssl]
 version = "0.9.19"
+
+[badges]
+travis-ci = { repository = "realli/simple_jwt" }
