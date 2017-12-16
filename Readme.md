@@ -1,6 +1,8 @@
 Simple JWT
 =============
 
+[![Join the chat at https://gitter.im/simple_jwt/dev](https://badges.gitter.im/simple_jwt/dev.svg)](https://gitter.im/simple_jwt/dev?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![](http://meritbadge.herokuapp.com/simple_jwt)](https://crates.io/crates/simple_jwt)
 [![Build Status](https://travis-ci.org/realli/simple_jwt.svg?branch=master)](https://travis-ci.org/realli/simple_jwt)
 
