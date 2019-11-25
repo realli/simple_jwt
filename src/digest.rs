@@ -47,11 +47,11 @@ pub fn hs_signature(secret: &str,
 fn _hs_signature(secret: &str,
                  data: &str,
                  alg: Algorithm) -> Result<Vec<u8>> {
-    let key = try!(PKey::hmac(secret.as_bytes()));
+    let key = PKey::hmac(secret.as_bytes())?;
     let message_digest = create_message_digest(alg);
-    let mut signer = try!(Signer::new(message_digest, &key));
-    try!(signer.update(data.as_bytes()));
-    let byte_vec = try!(signer.finish());
+    let mut signer = Signer::new(message_digest, &key)?;
+    signer.update(data.as_bytes())?;
+    let byte_vec = signer.sign_to_vec()?;
     Ok(byte_vec)
 }
 
@@ -59,7 +59,7 @@ pub fn hs_verify(secret: &str,
                  data: &str,
                  sig: &[u8],
                  alg: Algorithm) -> Result<()> {
-    let digest_u8s = &try!(_hs_signature(secret, data, alg));
+    let digest_u8s = &_hs_signature(secret, data, alg)?;
     if digest_u8s.len() != sig.len()
         || !eq(digest_u8s, sig) {
         return Err(ErrorKind::InvalidSignature.into());
@@ -71,12 +71,12 @@ pub fn rsa_signature(pem_string: &str,
                      data: &str,
                      alg: Algorithm) -> Result<String> {
 
-    let rsa = try!(Rsa::private_key_from_pem(pem_string.as_bytes()));
+    let rsa = Rsa::private_key_from_pem(pem_string.as_bytes())?;
     let message_digest = create_message_digest(alg);
-    let key = try!(PKey::from_rsa(rsa));
-    let mut signer = try!(Signer::new(message_digest, &key));
-    try!(signer.update(data.as_bytes()));
-    let result = try!(signer.finish());
+    let key = PKey::from_rsa(rsa)?;
+    let mut signer = Signer::new(message_digest, &key)?;
+    signer.update(data.as_bytes())?;
+    let result = signer.sign_to_vec()?;
     Ok(encode_config(&result, URL_SAFE))
 }
 
@@ -85,11 +85,11 @@ pub fn rsa_verify(pem_string: &str,
                   sig: &[u8],
                   alg: Algorithm) -> Result<()> {
     let message_digest = create_message_digest(alg);
-    let rsa = try!(Rsa::public_key_from_pem(pem_string.as_bytes()));
-    let key = try!(PKey::from_rsa(rsa));
-    let mut verifier = try!(Verifier::new(message_digest, &key));
-    try!(verifier.update(data.as_bytes()));
-    let b = try!(verifier.finish(sig));
+    let rsa = Rsa::public_key_from_pem(pem_string.as_bytes())?;
+    let key = PKey::from_rsa(rsa)?;
+    let mut verifier = Verifier::new(message_digest, &key)?;
+    verifier.update(data.as_bytes())?;
+    let b = verifier.verify(sig)?;
     if b {
         Ok(())
     } else {
@@ -100,11 +100,11 @@ pub fn rsa_verify(pem_string: &str,
 pub fn ecdsa_signature(pem_string: &str,
                        data: &str,
                        alg: Algorithm) -> Result<String> {
-    let key = try!(PKey::private_key_from_pem(pem_string.as_bytes()));
+    let key = PKey::private_key_from_pem(pem_string.as_bytes())?;
     let message_digest = create_message_digest(alg);
-    let mut signer = try!(Signer::new(message_digest, &key));
-    try!(signer.update(data.as_bytes()));
-    let result = try!(signer.finish());
+    let mut signer = Signer::new(message_digest, &key)?;
+    signer.update(data.as_bytes())?;
+    let result = signer.sign_to_vec()?;
     let raw_result = ecdsa_der_to_raw(&result, get_order_len(alg))?;
     Ok(encode_config(&raw_result, URL_SAFE))
 }
@@ -114,12 +114,12 @@ pub fn ecdsa_verify(pem_string: &str,
                     sig: &[u8],
                     alg: Algorithm) -> Result<()> {
     let message_digest = create_message_digest(alg);
-    let key = try!(PKey::public_key_from_pem(pem_string.as_bytes()));
-    let mut verifier = try!(Verifier::new(message_digest, &key));
-    try!(verifier.update(data.as_bytes()));
+    let key = PKey::public_key_from_pem(pem_string.as_bytes())?;
+    let mut verifier = Verifier::new(message_digest, &key)?;
+    verifier.update(data.as_bytes())?;
 
     let der_sig = ecdsa_raw_to_der(sig, get_order_len(alg))?;
-    let b = try!(verifier.finish(&der_sig));
+    let b = verifier.verify(&der_sig)?;
     if b {
         Ok(())
     } else {
