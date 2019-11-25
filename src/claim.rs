@@ -86,13 +86,13 @@ impl Claim {
 
 impl JWTStringConvertable for Claim {
     fn from_base64_str(string: &str) -> Result<Claim> {
-        let slice = try!(decode_config(string, URL_SAFE));
-        let obj: Value = try!(serde_json::from_slice(&slice));
+        let slice = decode_config(string, URL_SAFE)?;
+        let obj: Value = serde_json::from_slice(&slice)?;
         let mut map = match obj {
             Value::Object(map) => map,
             _ => return Err(ErrorKind::InvalidFormat.into())
         };
-        // dispatch every items to 
+        // dispatch every items to
         let mut claim = Claim::default();
         {
             let reg: &mut RegisteredClaim = &mut claim.registered;
@@ -139,31 +139,31 @@ impl JWTStringConvertable for Claim {
     fn to_base64_str(&self) -> Result<String> {
         let mut map: Map<String, Value> = self.payload.clone();
         if let Some(v) = self.registered.exp {
-            let value = try!(to_value(v));
+            let value = to_value(v)?;
             map.insert("exp".to_string(), value);
         };
         if let Some(ref v) = self.registered.nbf {
-            let value = try!(to_value(v));
+            let value = to_value(v)?;
             map.insert("nbf".to_string(), value);
         };
         if let Some(ref v) = self.registered.iat {
-            let value = try!(to_value(v));
+            let value = to_value(v)?;
             map.insert("iat".to_string(), value);
         };
         if let Some(ref v) = self.registered.iss {
-            let value = try!(to_value(v));
+            let value = to_value(v)?;
             map.insert("iss".to_string(), value);
         };
         if let Some(ref v) = self.registered.aud {
-            let value = try!(to_value(v));
+            let value = to_value(v)?;
             map.insert("aud".to_string(), value);
         };
         if let Some(ref v) = self.registered.sub {
-            let value = try!(to_value(v));
+            let value = to_value(v)?;
             map.insert("sub".to_string(), value);
         };
 
-        let b_string = try!(serde_json::to_vec(&map));
+        let b_string = serde_json::to_vec(&map)?;
         Ok(encode_config(&b_string, URL_SAFE))
     }
 }

@@ -1,9 +1,9 @@
 //! # Introduction
 //!
-//! A very simple crate to deal with [json web token](http://jwt.io), 
+//! A very simple crate to deal with [json web token](http://jwt.io),
 //! this lib use the `rust-openssl`, so you may want to check the
 //! [rust-openssl](https://github.com/sfackler/rust-openssl) to find the
-//! set-up of openssl runtime lib. 
+//! set-up of openssl runtime lib.
 //!
 //! # Support Algorithm
 //!
@@ -83,7 +83,7 @@ mod tests {
     // A helper macro to compare error
     // copy from https://github.com/brson/error-chain/issues/95
     //
-    // usage: 
+    // usage:
     // assert_error_kind!(some_err, ErrorKind::MyErrorType)
     macro_rules! assert_error_kind {
         ($err:expr, $kind:pat) => (match $err.kind() {
@@ -337,18 +337,18 @@ use self::digest::{hs_signature, hs_verify,
 pub fn encode<T: JWTStringConvertable>(body: &T, secret: &str, alg: Algorithm) -> Result<String> {
     let header = Header::new(alg);
 
-    let header_base64 = try!(header.to_base64_str());
-    let body_base64 = try!(body.to_base64_str());
+    let header_base64 = header.to_base64_str()?;
+    let body_base64 = body.to_base64_str()?;
 
     let mut jwt_base64 = header_base64 + "." + &body_base64;
-    let secured_base64 = try!(match header.alg {
+    let secured_base64 = match header.alg {
         Algorithm::HS256 | Algorithm::HS384 | Algorithm::HS512
             => hs_signature(secret, &jwt_base64, header.alg),
         Algorithm::RS256 | Algorithm::RS384 | Algorithm::RS512
             => rsa_signature(secret, &jwt_base64, header.alg),
         Algorithm::ES256 | Algorithm::ES384 | Algorithm:: ES512
             => ecdsa_signature(secret, &jwt_base64, header.alg),
-    });
+    }?;
     jwt_base64.push('.');
     jwt_base64.push_str(&secured_base64);
     Ok(jwt_base64)
@@ -362,22 +362,22 @@ pub fn decode<T: JWTStringConvertable>(jwtstr: &str, secret: &str) -> Result<T> 
     }
 
     // decode header first
-    let header = try!(Header::from_base64_str(vec[0]));
-    let claim = try!(T::from_base64_str(vec[1]));
+    let header = Header::from_base64_str(vec[0])?;
+    let claim = T::from_base64_str(vec[1])?;
 
     let mut data = vec[0].to_string();
     data.push('.');
     data.push_str(vec[1]);
 
-    let sig = try!(decode_config(&vec[2], URL_SAFE));
+    let sig = decode_config(&vec[2], URL_SAFE)?;
 
-    try!(match header.alg {
-        Algorithm::HS256 | Algorithm::HS384 | Algorithm::HS512 
+    match header.alg {
+        Algorithm::HS256 | Algorithm::HS384 | Algorithm::HS512
             => hs_verify(secret, &data, &sig, header.alg),
         Algorithm::RS256 | Algorithm::RS384 | Algorithm::RS512
             => rsa_verify(secret, &data, &sig, header.alg),
         Algorithm::ES256 | Algorithm::ES384 | Algorithm:: ES512
             => ecdsa_verify(secret, &data, &sig, header.alg),
-    });
+    }?;
     Ok(claim)
 }
